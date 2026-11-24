@@ -1,0 +1,76 @@
+table Groups_Dim
+	lineageTag: 7c0c3df1-da78-41a1-a10d-0fc8f119ffb6
+
+	column GROUPS
+		dataType: string
+		lineageTag: 4bd88094-77e7-4c50-82a6-9a41887c7c4a
+		summarizeBy: none
+		sourceColumn: GROUPS
+
+		annotation SummarizationSetBy = Automatic
+
+	column GroupName
+		dataType: string
+		lineageTag: 12db0b26-c021-4b05-af68-c605e0c6cb86
+		summarizeBy: none
+		sourceColumn: GroupName
+
+		annotation SummarizationSetBy = Automatic
+
+	column Group_Key
+		dataType: string
+		lineageTag: fb38d9cd-f20e-45ff-bca8-3ab410a25168
+		summarizeBy: none
+		sourceColumn: Group_Key
+
+		annotation SummarizationSetBy = Automatic
+
+	column Attribute
+		dataType: string
+		lineageTag: 70c7ad4a-486e-4edb-b0d3-be83815589f1
+		summarizeBy: none
+		sourceColumn: Attribute
+
+		annotation SummarizationSetBy = Automatic
+
+	column GroupName_CurrentFy
+		dataType: string
+		lineageTag: 62c822d2-ef04-4368-bdac-642af44cdd85
+		summarizeBy: none
+		sourceColumn: GroupName_CurrentFy
+
+		annotation SummarizationSetBy = Automatic
+
+	column EmployeeCount
+		dataType: int64
+		formatString: 0
+		lineageTag: 3c11eb0a-b94f-4de3-af0e-336728927d4f
+		summarizeBy: sum
+		sourceColumn: EmployeeCount
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Groups_Dim = m
+		mode: import
+		queryGroup: Gold
+		source =
+				let
+				    Source = FY22_Hours,
+				  #"Removed columns" = Table.RemoveColumns(Source, {"Attribute", "Value", "FY"}),
+				  #"Removed duplicates" = Table.Distinct(#"Removed columns", {"GROUPS"}),
+				  #"Duplicated column" = Table.DuplicateColumn(#"Removed duplicates", "GROUPS", "GROUPS - Copy"),
+				  #"Split column by delimiter 1" = Table.ExpandListColumn(Table.TransformColumns(#"Duplicated column", {{"GROUPS - Copy", Splitter.SplitTextByDelimiter(", "), let itemType = (type nullable text) meta [Serialized.Text = true] in type {itemType}}}), "GROUPS - Copy"),
+				  #"Split column by delimiter 3" = Table.ExpandListColumn(Table.TransformColumns(#"Split column by delimiter 1", {{"GROUPS - Copy", Splitter.SplitTextByDelimiter("+"), let itemType = (type nullable text) meta [Serialized.Text = true] in type {itemType}}}), "GROUPS - Copy"),
+				  #"Renamed columns" = Table.RenameColumns(#"Split column by delimiter 3", {{"GROUPS - Copy", "GroupName"}}),
+				  #"Inserted conditional column" = Table.AddColumn(#"Renamed columns", "Group_Key", each if Text.Contains([GroupName], "WQ") then "WQLAB" else if [GroupName] = "FLEET" then "Fleet  mission and SWRP" else [GroupName]),
+				  #"Merged queries" = Table.NestedJoin(#"Inserted conditional column", {"Group_Key"}, Groups_CurrentFY, {"GroupName_CurrentKey.1"}, "Groups_CurrentFY", JoinKind.FullOuter),
+				  #"Changed column type" = Table.TransformColumnTypes(#"Merged queries", {{"GroupName", type text}}),
+				  #"Expanded Groups_CurrentFY" = Table.ExpandTableColumn(#"Changed column type", "Groups_CurrentFY", {"Attribute", "GroupName_CurrentFy", "EmployeeCount", "GroupName_CurrentKey.1"}, {"Attribute", "GroupName_CurrentFy", "EmployeeCount", "GroupName_CurrentKey.1"}),
+				  #"Removed columns 1" = Table.RemoveColumns(#"Expanded Groups_CurrentFY", {"GroupName_CurrentKey.1"}),
+				  #"Changed column type 1" = Table.TransformColumnTypes(#"Removed columns 1", {{"Group_Key", type text}})
+				
+				in
+				    #"Changed column type 1"
+
+	annotation PBI_ResultType = Table
+

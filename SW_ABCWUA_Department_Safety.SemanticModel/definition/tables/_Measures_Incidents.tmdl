@@ -1,0 +1,68 @@
+table _Measures_Incidents
+	lineageTag: 97289d38-6fd8-482f-bcfe-873899a7a622
+
+	measure 'Total Hazards Identified' =
+			
+			COALESCE(
+			    CALCULATE(
+			        SUM(Hazards[HazardCount]),
+			        Hazards[HazardType] = "Identified"
+			    ),
+			    0
+			)
+		formatString: 0
+		lineageTag: 03e0e46a-bc08-4b3b-9cd1-8bff63d00954
+
+	measure 'High Hazards Identified' =
+			
+			COALESCE(
+			    CALCULATE(
+			        SUM(Hazards[HazardCount]),
+			        Hazards[HazardType] = "Identified",
+			        Hazards[HazardRisk] = "High"
+			    ),
+			    0
+			)
+		formatString: 0
+		lineageTag: 3f69be80-83b6-4192-8fef-aed8d8d902e2
+
+	measure 'High Hazards Resolved' =
+			
+			COALESCE(
+			    CALCULATE(
+			        SUM(Hazards[HazardCount]),
+			        Hazards[HazardType] = "Resolved",
+			        Hazards[HazardRisk] = "High"
+			    ),
+			    0
+			)
+		formatString: 0
+		lineageTag: c4bd5b7c-8c66-4e1d-81af-b84c4f381dbd
+
+	measure 'High Hazards Resolved %' =
+			
+			DIVIDE(
+			    [High Hazards Resolved],
+			    [High Hazards Identified],
+			    "N/A"
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: aee7b473-3dc8-4055-9c1d-a84e67575bf8
+
+	column Column
+		formatString: 0
+		lineageTag: ad8956fb-a322-47af-84f4-e1cc1259a974
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Column]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition _Measures_Incidents = calculated
+		mode: import
+		source = Row("Column", BLANK())
+
+	annotation PBI_Id = bcd74338f95b48cdada4ec0269d3adfd
+
+	annotation 436ba87b-9c83-4389-a31b-ebd06a36be98 = {"Expression":""}
+

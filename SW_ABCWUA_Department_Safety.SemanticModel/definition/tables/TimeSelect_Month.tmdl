@@ -1,0 +1,17 @@
+table TimeSelect_Month
+	lineageTag: 4aa3e65d-2617-4fa3-8432-1ea4b1cd2a5e
+
+	column MonthName
+		lineageTag: a185fb09-5673-4ecc-af35-fd137f4e9706
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: Calendar[MonthName]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition TimeSelect_Month = calculated
+		mode: import
+		source = DISTINCT('Calendar'[MonthName])
+
+	annotation PBI_Id = c54293aef0bd42d99bfddfb3d2db4c03
+

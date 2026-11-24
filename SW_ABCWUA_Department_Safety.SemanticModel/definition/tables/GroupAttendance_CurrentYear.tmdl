@@ -1,0 +1,91 @@
+table GroupAttendance_CurrentYear
+	lineageTag: fcaa100c-4216-4dbe-9884-8e008f251912
+
+	column Month
+		dataType: string
+		lineageTag: 44c7d6e8-3d87-497b-9c73-c16dde0332ee
+		summarizeBy: none
+		sourceColumn: Month
+
+		annotation SummarizationSetBy = Automatic
+
+	column Attribute
+		dataType: string
+		lineageTag: 9d638a31-d2db-4e2d-bfc1-4020113bba4c
+		summarizeBy: none
+		sourceColumn: Attribute
+
+		annotation SummarizationSetBy = Automatic
+
+	column Value
+		dataType: double
+		lineageTag: c2008559-11d9-45d1-973f-b0f90b219fb9
+		summarizeBy: sum
+		sourceColumn: Value
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column MonthNumber
+		dataType: int64
+		formatString: 0
+		lineageTag: 0581250f-dc94-4516-99f1-38bfa2108bd4
+		summarizeBy: sum
+		sourceColumn: MonthNumber
+
+		annotation SummarizationSetBy = Automatic
+
+	column FY
+		dataType: int64
+		formatString: 0
+		lineageTag: 8617a19a-de23-495c-977f-59065e33fcae
+		summarizeBy: sum
+		sourceColumn: FY
+
+		annotation SummarizationSetBy = Automatic
+
+	column CalendarYear
+		dataType: int64
+		formatString: 0
+		lineageTag: 515e5f79-9514-47e8-a87e-b372827cf572
+		summarizeBy: sum
+		sourceColumn: CalendarYear
+
+		annotation SummarizationSetBy = Automatic
+
+	column MonthStartDate
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 0cf47fdb-ede2-4367-abd2-219dd55fbdfa
+		summarizeBy: none
+		sourceColumn: MonthStartDate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	partition GroupAttendance_CurrentYear = m
+		mode: import
+		queryGroup: Gold
+		source =
+				let
+				  Source = Source_SafetyInspections,
+				  Navigation = Source{[Item = "FY26 Attendance", Kind = "Sheet"]}[Data],
+				  #"Promoted headers" = Table.PromoteHeaders(Navigation, [PromoteAllScalars = true]),
+				  #"Changed column type" = Table.TransformColumnTypes(#"Promoted headers", {{"GROUPS", type text}, {"Warehouse (Mission +SWRP)#(lf)13 Employees", Int64.Type}, {"CON (controllers)#(lf)7 Employees", Int64.Type}, {"CI Capital Improvement)#(lf)5 Employees", Int64.Type}, {"5FP#(lf)5 Employees", Int64.Type}, {"WQLAB (SWRP+ SJCWTP)#(lf) 54 Employees", Int64.Type}, {"CS#(lf)47 Employees", Int64.Type}, {"SWRPOM#(lf)65 employees", Int64.Type}, {"ENG#(lf)32 employees", Int64.Type}, {"CO#(lf)65 employees", Int64.Type}, {"SAF#(lf)13 Employees", Int64.Type}, {"WUC#(lf)13 Employees", Int64.Type}, {"GW#(lf)55 Employees", Int64.Type}, {"IT#(lf)49 Employees", Int64.Type}, {"SJCWTP#(lf)32 Employees", Int64.Type}, {"Fleet  mission and SWRP#(lf)17 Employees", Int64.Type}, {"FD#(lf)150 Employees", Int64.Type}, {"Total Monthly Attendance", Int64.Type}, {"Quarterly Percentage (attendance)", type text}, {"# Personal Injury Reports /month", Int64.Type}, {"Accident Type ", type text}, {"Recordable cases", Int64.Type}}),
+				  #"Filtered rows" = Table.SelectRows(#"Changed column type", each ([GROUPS] <> null and [GROUPS] <> "TOTAL SAFETY HRS COMPLETED PER MONTH ( by all employees)")),
+				  #"Removed columns" = Table.RemoveColumns(#"Filtered rows", {"Total Monthly Attendance", "Quarterly Percentage (attendance)", "# Personal Injury Reports /month", "Accident Type ", "Recordable cases"}),
+				  #"Unpivoted other columns" = Table.UnpivotOtherColumns(#"Removed columns", {"GROUPS"}, "Attribute", "Value"),
+				  #"Changed column type 1" = Table.TransformColumnTypes(#"Unpivoted other columns", {{"Value", type number}}),
+				  #"Renamed columns" = Table.RenameColumns(#"Changed column type 1", {{"GROUPS", "Month"}}),
+				  #"Added custom" = Table.TransformColumnTypes(Table.AddColumn(#"Renamed columns", "MonthNumber", each Date.Month(Date.FromText([Month] & " 1"))), {{"MonthNumber", Int64.Type}}),
+				  #"Added custom 1" = Table.AddColumn(#"Added custom", "FY", each 2026),
+				  #"Inserted conditional column" = Table.AddColumn(#"Added custom 1", "CalendarYear", each if [MonthNumber] >= 7 then ([FY] -1) else [FY]),
+				  #"Added custom 2" = Table.TransformColumnTypes(Table.AddColumn(#"Inserted conditional column", "MonthStartDate", each #date(Number.From([CalendarYear]), Number.From([MonthNumber]), 1)), {{"MonthStartDate", type date}}),
+				  #"Changed column type 4" = Table.TransformColumnTypes(#"Added custom 2", {{"CalendarYear", Int64.Type}, {"FY", Int64.Type}, {"MonthNumber", Int64.Type}})
+				in
+				  #"Changed column type 4"
+
+	annotation PBI_ResultType = Table
+

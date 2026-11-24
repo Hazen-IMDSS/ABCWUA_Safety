@@ -1,0 +1,17 @@
+table Time_FYSelect
+	lineageTag: ce823368-a4f7-4b30-83a9-f5cd3913e7a5
+
+	column FY
+		lineageTag: 9eaa9889-a91d-4c7a-a098-a8d45183de7f
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: Calendar[FY]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Time_FYSelect = calculated
+		mode: import
+		source = DISTINCT('Calendar'[FY])
+
+	annotation PBI_Id = f3c51ca20e2d4b7a8d5e58aa38edd673
+

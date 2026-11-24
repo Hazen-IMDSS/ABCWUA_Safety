@@ -1,0 +1,247 @@
+table LIMS_Training
+	lineageTag: 12f375b5-0982-403a-b2d5-8da5e1ca2440
+
+	column Username
+		dataType: string
+		lineageTag: 3c69d62f-bef0-434a-a420-f7ced7793e7f
+		summarizeBy: none
+		sourceColumn: Username
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'First Name'
+		dataType: string
+		lineageTag: f08edd69-b1cd-4300-b3d2-5e3061d1ad23
+		summarizeBy: none
+		sourceColumn: First Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Last Name'
+		dataType: string
+		lineageTag: 853bc099-a7af-44ad-a094-5cd318b978b1
+		summarizeBy: none
+		sourceColumn: Last Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Course title'
+		dataType: string
+		lineageTag: 13c3b57c-af00-4469-b728-6db7d6e8cbf9
+		summarizeBy: none
+		sourceColumn: Course title
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'CEUs Obtainable Through This Course?'
+		dataType: string
+		lineageTag: e5e025a5-b388-4a39-b4df-55725f8eaa3d
+		summarizeBy: none
+		sourceColumn: CEUs Obtainable Through This Course?
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Archived Course'
+		dataType: string
+		lineageTag: 3e127eab-162e-4bf0-80bb-f40f7008c76f
+		summarizeBy: none
+		sourceColumn: Archived Course
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Course Category'
+		dataType: string
+		lineageTag: 45b3f1fa-1d3e-444d-8ae6-5e68a94ff884
+		summarizeBy: none
+		sourceColumn: Course Category
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Course Category Code'
+		dataType: string
+		lineageTag: a4eacbc0-2b5c-4af7-9a6c-e8c62343a364
+		summarizeBy: none
+		sourceColumn: Course Category Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Course code'
+		dataType: string
+		lineageTag: b10ac05f-7345-4fc9-89cd-326e2fd0dd59
+		summarizeBy: none
+		sourceColumn: Course code
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Course Creation Date'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 3ef8fbdd-15c0-4025-a366-b15101697c3a
+		summarizeBy: none
+		sourceColumn: Course Creation Date
+
+		variation Variation
+			isDefault
+			relationship: d1e364bf-b887-459a-907d-5ae3c51ec84e
+			defaultHierarchy: LocalDateTable_1178160c-e647-46dc-b667-c7ed7ab57f1a.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Course duration'
+		dataType: int64
+		formatString: 0
+		lineageTag: 828f12ee-ac21-4416-9f68-91943f945846
+		summarizeBy: sum
+		sourceColumn: Course duration
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Course end date'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: ba3fd3eb-5191-4964-8690-690207a0e6a6
+		summarizeBy: none
+		sourceColumn: Course end date
+
+		variation Variation
+			isDefault
+			relationship: ecbfa868-742c-4a78-b2a2-49b93b97527b
+			defaultHierarchy: LocalDateTable_5d9554d1-be5f-42fc-a6f8-f201f450e618.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Course has expired'
+		dataType: string
+		lineageTag: 40067e8d-271b-491d-9cc4-c5adb326d4bd
+		summarizeBy: none
+		sourceColumn: Course has expired
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Course Internal ID'
+		dataType: int64
+		formatString: 0
+		lineageTag: 20e72b15-4056-4ead-bb04-6d21373426a3
+		summarizeBy: count
+		sourceColumn: Course Internal ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Course Start Date'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 16bea264-5ce1-4612-bde1-7656b6482fb3
+		summarizeBy: none
+		sourceColumn: Course Start Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Course Status'
+		dataType: string
+		lineageTag: bd04015a-16c1-4169-a018-aa4d019e3909
+		summarizeBy: none
+		sourceColumn: Course Status
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Course Type'
+		dataType: string
+		lineageTag: e4e77c93-ad2d-4de1-a12e-1bf691c2c3d1
+		summarizeBy: none
+		sourceColumn: Course Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Course Unique ID'
+		dataType: string
+		lineageTag: 48d619ce-6c9f-475d-9c9b-fc80ddf714cc
+		summarizeBy: none
+		sourceColumn: Course Unique ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Credits (CEUs)'
+		dataType: double
+		lineageTag: 6ea898a3-6a85-4881-8bc0-96ada69d6dba
+		summarizeBy: sum
+		sourceColumn: Credits (CEUs)
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Skills in course'
+		dataType: string
+		lineageTag: b4a1b9a6-fa3c-4aed-aad0-7f032746b418
+		summarizeBy: none
+		sourceColumn: Skills in course
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'WUA Course Type (Mandatory Field!)'
+		dataType: string
+		lineageTag: 4dc2a76c-919e-45df-b008-c158dd738a06
+		summarizeBy: none
+		sourceColumn: WUA Course Type (Mandatory Field!)
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Course Progress (%)'
+		dataType: int64
+		formatString: 0
+		lineageTag: 1a95d948-0f66-423c-ae40-a4b2a8ebaea0
+		summarizeBy: sum
+		sourceColumn: Course Progress (%)
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Number of Sessions'
+		dataType: int64
+		formatString: 0
+		lineageTag: bf7d1e66-e309-418b-9502-d9bfc1614b84
+		summarizeBy: sum
+		sourceColumn: Number of Sessions
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Session Time (min)'
+		dataType: int64
+		formatString: 0
+		lineageTag: 9abc9d12-545c-4754-8ded-c473a7528b20
+		summarizeBy: sum
+		sourceColumn: Session Time (min)
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Session Hours'
+		dataType: double
+		lineageTag: 1a5ff74a-fc12-49ec-80c9-8acf2735435f
+		summarizeBy: sum
+		sourceColumn: Session Hours
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition LIMS_Training = m
+		mode: import
+		queryGroup: Gold
+		source =
+				let
+				  Source =   Source_LIMS,
+				  #"Navigation 1" = Source{[Item = "Test_User_report", Kind = "Sheet"]}[Data],
+				  #"Promoted headers" = Table.PromoteHeaders(#"Navigation 1", [PromoteAllScalars = true]),
+				  #"Changed column type" = Table.TransformColumnTypes(#"Promoted headers", {{"Username", type text}, {"First Name", type text}, {"Last Name", type text}, {"Course title", type text}, {"Additional language codes", type text}, {"Additional languages", type text}, {"CEUs Obtainable Through This Course?", type text}, {"Archived Course", type text}, {"Course Category", type text}, {"Course Category Code", type text}, {"Course code", type text}, {"Course Creation Date", type datetime}, {"Course duration", Int64.Type}, {"Course end date", type date}, {"Course has expired", type text}, {"Course Internal ID", Int64.Type}, {"Course Start Date", type date}, {"Course Status", type text}, {"Course Type", type text}, {"Course Unique ID", type text}, {"Credits (CEUs)", type number}, {"Language", type text}, {"Language code", type text}, {"Skills in course", type text}, {"WUA Course Type (Mandatory Field!)", type text}, {"Course Progress (%)", Int64.Type}, {"Number of Actions", Int64.Type}, {"Number of Sessions", Int64.Type}, {"Session Time (min)", Int64.Type}, {"Training Material Time (sec)", Int64.Type}}),
+				  #"Choose columns" = Table.SelectColumns(#"Changed column type", {"Username", "First Name", "Last Name", "Course title", "CEUs Obtainable Through This Course?", "Archived Course", "Course Category", "Course Category Code", "Course code", "Course Creation Date", "Course duration", "Course end date", "Course has expired", "Course Internal ID", "Course Start Date", "Course Status", "Course Type", "Course Unique ID", "Credits (CEUs)", "Skills in course", "WUA Course Type (Mandatory Field!)", "Course Progress (%)", "Number of Sessions", "Session Time (min)"}),
+				  #"Added custom" = Table.TransformColumnTypes(Table.AddColumn(#"Choose columns", "Session Hours", each try Number.From([#"Session Time (min)"]) / 60 otherwise null), {{"Session Hours", type number}}),
+				  #"Filtered rows 2" = Table.SelectRows(#"Added custom", each ([Username] <> "agonzalez-aller@abcwua.org" and [Username] <> "asantiago@abcwua.org" and [Username] <> "cmelendrez@abcwua.org" and [Username] <> "criggins@abcwua.org" and [Username] <> "jmontes@ABCWUA.ORG" and [Username] <> "mpaul@abcwua.org" and [Username] <> "msanchez@abcwua.org"))
+				
+				in
+				  #"Filtered rows 2"
+
+	annotation PBI_ResultType = Table
+

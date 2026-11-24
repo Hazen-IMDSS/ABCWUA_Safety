@@ -1,0 +1,133 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/report/3.3.0/schema.json",
+  "themeCollection": {
+    "baseTheme": {
+      "name": "CY24SU10",
+      "reportVersionAtImport": {
+        "visual": "1.8.101",
+        "report": "2.0.101",
+        "page": "1.3.101"
+      },
+      "type": "SharedResources"
+    },
+    "customTheme": {
+      "name": "Hazen5180523142922121.json",
+      "reportVersionAtImport": {
+        "visual": "1.8.101",
+        "report": "2.0.101",
+        "page": "1.3.101"
+      },
+      "type": "RegisteredResources"
+    }
+  },
+  "objects": {
+    "section": [
+      {
+        "properties": {
+          "verticalAlignment": {
+            "expr": {
+              "Literal": {
+                "Value": "'Top'"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "outspacePane": [
+      {
+        "properties": {
+          "expanded": {
+            "expr": {
+              "Literal": {
+                "Value": "false"
+              }
+            }
+          },
+          "visible": {
+            "expr": {
+              "Literal": {
+                "Value": "false"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "publicCustomVisuals": [
+    "advanceCardE03760C5AB684758B56AA29F9E6C257B"
+  ],
+  "resourcePackages": [
+    {
+      "name": "SharedResources",
+      "type": "SharedResources",
+      "items": [
+        {
+          "name": "CY24SU10",
+          "path": "BaseThemes/CY24SU10.json",
+          "type": "BaseTheme"
+        }
+      ]
+    },
+    {
+      "name": "RegisteredResources",
+      "type": "RegisteredResources",
+      "items": [
+        {
+          "name": "Hazen-logo_White_transparent07231068047855294.png",
+          "path": "Hazen-logo_White_transparent07231068047855294.png",
+          "type": "Image"
+        },
+        {
+          "name": "Hazen5180523142922121.json",
+          "path": "Hazen5180523142922121.json",
+          "type": "CustomTheme"
+        },
+        {
+          "name": "MicrosoftTeams-image8032354670103692.png",
+          "path": "MicrosoftTeams-image8032354670103692.png",
+          "type": "Image"
+        },
+        {
+          "name": "Picture85401513018897772.svg",
+          "path": "Picture85401513018897772.svg",
+          "type": "Image"
+        },
+        {
+          "name": "Water-Authority-seal_white8589701584604195.png",
+          "path": "Water-Authority-seal_white8589701584604195.png",
+          "type": "Image"
+        },
+        {
+          "name": "XIcon-removebg-preview11287532997781835.png",
+          "path": "XIcon-removebg-preview11287532997781835.png",
+          "type": "Image"
+        },
+        {
+          "name": "XIcon-removebg-preview4571708318139014.png",
+          "path": "XIcon-removebg-preview4571708318139014.png",
+          "type": "Image"
+        },
+        {
+          "name": "XIcon-removebg-preview6840019524174968.png",
+          "path": "XIcon-removebg-preview6840019524174968.png",
+          "type": "Image"
+        },
+        {
+          "name": "XIcon-removebg-preview7099725762452177.png",
+          "path": "XIcon-removebg-preview7099725762452177.png",
+          "type": "Image"
+        }
+      ]
+    }
+  ],
+  "settings": {
+    "useStylableVisualContainerHeader": true,
+    "exportDataMode": "AllowSummarized",
+    "defaultDrillFilterOtherVisuals": true,
+    "allowChangeFilterTypes": true,
+    "useEnhancedTooltips": true,
+    "useDefaultAggregateDisplayName": true
+  }
+}

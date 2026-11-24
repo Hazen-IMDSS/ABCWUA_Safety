@@ -1,0 +1,17 @@
+table TimeSelect_Quarter
+	lineageTag: fc3a6399-f232-45e8-82e0-6a42e4e0f48e
+
+	column QuarterYear
+		lineageTag: abb36ebf-88c4-4147-8701-7c7d7f23e065
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: Calendar[QuarterYear]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition TimeSelect_Quarter = calculated
+		mode: import
+		source = DISTINCT('Calendar'[QuarterYear])
+
+	annotation PBI_Id = a016dbd8e354450398eae75356761d16
+

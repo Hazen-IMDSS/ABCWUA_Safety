@@ -1,0 +1,56 @@
+table _Measures_Training
+	lineageTag: b423a84e-1fc3-457c-94c6-d0a708b6765b
+
+	measure CurrentFYFQ =
+			//Returns Current FYFQ minus 1.
+			VAR TodayFQ = LOOKUPVALUE('Calendar'[FQ],'Calendar'[Date],TODAY())
+			VAR TodayFY = LOOKUPVALUE('Calendar'[FY],'Calendar'[Date],TODAY())
+			RETURN "FY"&RIGHT(TodayFY,2)&" Q"&TodayFQ
+		lineageTag: c34bc484-e98a-4284-8c57-9fa60036cdbc
+
+	measure CurrentFY =
+			//Returns Current FYFQ minus 1.
+			VAR TodayFY = LOOKUPVALUE('Calendar'[FY],'Calendar'[Date],TODAY())
+			RETURN "FY"&RIGHT(TodayFY,2)
+		lineageTag: fa883fa0-067c-4eb6-9268-4c5a3c031368
+
+	measure SelectedComparisonFY = SELECTEDVALUE('Time_FYSelect'[FY])
+		lineageTag: 27caaf2d-1985-486f-a1d6-ccf95b3cdf2d
+
+	measure YearIsCurrentOrPast =
+			
+			VAR CurrQ = [CurrentFY]
+			VAR CompQ = [SelectedComparisonFY]
+			RETURN
+			IF( CALCULATE(MIN('Calendar'[Date]),'Calendar'[FY] = CompQ) <= CALCULATE(MIN('Calendar'[Date]),'Calendar'[FY] = CurrQ),1,0)
+		formatString: 0
+		lineageTag: 58cb8063-3087-4d9e-88ef-39725c89520a
+
+	measure 'Total Recordable Cases' =
+			
+			CALCULATE(
+			    SUM(AttendanceAndCases_History[RecordableCases]),
+			    TREATAS(
+			        VALUES(TimeSelect_Quarter[QuarterYear]),
+			        'Calendar'[QuarterYear]
+			    )
+			)
+		lineageTag: 1c170627-2cf7-4420-bb98-66b04d004484
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Column
+		formatString: 0
+		lineageTag: d0945122-d3ff-46eb-974a-c54e6564d70b
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Column]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition _Measures_Training = calculated
+		mode: import
+		source = Row("Column", BLANK())
+
+	annotation PBI_Id = 20f23b156c634acb89ef81421c74306c
+

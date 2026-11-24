@@ -1,0 +1,26 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "26551e816e6d4da99eae",
+  "displayName": "Insepctions",
+  "displayOption": "FitToPage",
+  "height": 720,
+  "width": 1280,
+  "pageBinding": {
+    "name": "f8dc9aedb41cde9ed628",
+    "type": "Default",
+    "parameters": []
+  },
+  "visibility": "HiddenInViewMode",
+  "visualInteractions": [
+    {
+      "source": "58adc935331870145d99",
+      "target": "cba9a37428e06cb21787",
+      "type": "DataFilter"
+    },
+    {
+      "source": "58adc935331870145d99",
+      "target": "005c55c8d6aee40ad14a",
+      "type": "NoFilter"
+    }
+  ]
+}

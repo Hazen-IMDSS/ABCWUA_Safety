@@ -1,0 +1,311 @@
+expression FY22_Hours =
+		let
+		  Source = Source_Historical,
+		  Navigation = Source{[Item = "Table156", Kind = "Table"]}[Data],
+		  #"Changed column type" = Table.TransformColumnTypes(Navigation, {{"GROUPS", type text}, {"Total", type number}}),
+		  #"Filtered rows" = Table.SelectRows(#"Changed column type", each [GROUPS] = "CO" or [GROUPS] = "CON, CI, PD" or [GROUPS] = "CS" or [GROUPS] = "ENG" or [GROUPS] = "SAF" or [GROUPS] = "WUC" or [GROUPS] = "GW" or [GROUPS] = "FLEET+Warehouse" or [GROUPS] = "FD" or [GROUPS] = "HR, 5FP" or [GROUPS] = "WQLAB SJCWTP" or [GROUPS] = "SWRPOM" or [GROUPS] = "WQlab (SWRP)" or [GROUPS] = "IT" or [GROUPS] = "SJCWTP"),
+		  #"Removed columns" = Table.RemoveColumns(#"Filtered rows", {"Total"}),
+		  #"Unpivoted other columns" = Table.UnpivotOtherColumns(#"Removed columns", {"GROUPS"}, "Attribute", "Value"),
+		  #"Filtered rows 1" = Table.SelectRows(#"Unpivoted other columns", each ([Attribute] <> "Column1")),
+		  #"Changed column type 1" = Table.TransformColumnTypes(#"Filtered rows 1", {{"Value", type number}}),
+		  #"Added custom" = Table.AddColumn(#"Changed column type 1", "FY", each "2022")
+		
+		in
+		  #"Added custom"
+	lineageTag: d34cb201-2fd5-4e4d-bbc8-7c716a2ea20a
+	queryGroup: Intermediate
+
+	annotation PBI_ResultType = Exception
+
+expression FY23_Hours =
+		let
+		  Source = Source_Historical,
+		  Navigation = Source{[Item = "Table15", Kind = "Table"]}[Data],
+		  #"Changed column type" = Table.TransformColumnTypes(Navigation, {{"GROUPS", type text}, {"Total", type number}}),
+		  #"Filtered rows" = Table.SelectRows(#"Changed column type", each [GROUPS] = "CO" or [GROUPS] = "CON, CI, PD" or [GROUPS] = "CS" or [GROUPS] = "ENG" or [GROUPS] = "SAF" or [GROUPS] = "WUC" or [GROUPS] = "GW" or [GROUPS] = "FLEET+Warehouse" or [GROUPS] = "FD" or [GROUPS] = "HR, 5FP" or [GROUPS] = "WQLAB SJCWTP" or [GROUPS] = "SWRPOM" or [GROUPS] = "WQlab (SWRP)" or [GROUPS] = "IT" or [GROUPS] = "SJCWTP"),
+		  #"Removed columns" = Table.RemoveColumns(#"Filtered rows", {"Total"}),
+		  #"Unpivoted other columns" = Table.UnpivotOtherColumns(#"Removed columns", {"GROUPS"}, "Attribute", "Value"),
+		  #"Changed column type 1" = Table.TransformColumnTypes(#"Unpivoted other columns", {{"Value", type number}}),
+		  #"Added custom" = Table.AddColumn(#"Changed column type 1", "FY", each "2023")
+		
+		in
+		  #"Added custom"
+	lineageTag: 332d37ef-618c-475c-9fa5-354edc0fcee1
+	queryGroup: Intermediate
+
+	annotation PBI_ResultType = Exception
+
+expression FY24_Hours =
+		let
+		  Source = Source_Historical,
+		  Navigation = Source{[Item = "Table1", Kind = "Table"]}[Data],
+		  #"Changed column type" = Table.TransformColumnTypes(Navigation, {{"GROUPS", type text}, {"Total", type number}}),
+		  #"Filtered rows" = Table.SelectRows(#"Changed column type", each [GROUPS] = "CO" or [GROUPS] = "CON, CI, PD" or [GROUPS] = "CS" or [GROUPS] = "ENG" or [GROUPS] = "SAF" or [GROUPS] = "WUC" or [GROUPS] = "GW" or [GROUPS] = "FLEET+Warehouse" or [GROUPS] = "FD" or [GROUPS] = "HR, 5FP" or [GROUPS] = "WQLAB SJCWTP" or [GROUPS] = "SWRPOM" or [GROUPS] = "WQlab (SWRP)" or [GROUPS] = "IT" or [GROUPS] = "SJCWTP"),
+		  #"Removed columns" = Table.RemoveColumns(#"Filtered rows", {"Total"}),
+		  #"Unpivoted other columns" = Table.UnpivotOtherColumns(#"Removed columns", {"GROUPS"}, "Attribute", "Value"),
+		  #"Changed column type 1" = Table.TransformColumnTypes(#"Unpivoted other columns", {{"Value", type number}}),
+		  #"Added custom" = Table.AddColumn(#"Changed column type 1", "FY", each "2024")
+		
+		in
+		  #"Added custom"
+	lineageTag: 724c769a-b30d-4be8-aab4-0645d64c1f0a
+	queryGroup: Intermediate
+
+	annotation PBI_ResultType = Exception
+
+expression FY25_Hours =
+		let
+		  Source = Source_Historical,
+		  Navigation = Source{[Item = "Table13", Kind = "Table"]}[Data],
+		  #"Changed column type" = Table.TransformColumnTypes(Navigation, {{"GROUPS", type text}, {"Total", type number}}),
+		  #"Filtered rows" = Table.SelectRows(#"Changed column type", each [GROUPS] = "CO" or [GROUPS] = "CON, CI, PD" or [GROUPS] = "CS" or [GROUPS] = "ENG" or [GROUPS] = "SAF" or [GROUPS] = "WUC" or [GROUPS] = "GW" or [GROUPS] = "FLEET+Warehouse" or [GROUPS] = "FD" or [GROUPS] = "HR, 5FP" or [GROUPS] = "WQLAB SJCWTP" or [GROUPS] = "SWRPOM" or [GROUPS] = "WQlab (SWRP)" or [GROUPS] = "IT" or [GROUPS] = "SJCWTP"),
+		  #"Removed columns" = Table.RemoveColumns(#"Filtered rows", {"Total"}),
+		  #"Unpivoted other columns" = Table.UnpivotOtherColumns(#"Removed columns", {"GROUPS"}, "Attribute", "Value"),
+		  #"Changed column type 1" = Table.TransformColumnTypes(#"Unpivoted other columns", {{"Value", type number}}),
+		  #"Added custom" = Table.AddColumn(#"Changed column type 1", "FY", each "2025")
+		
+		in
+		  #"Added custom"
+	lineageTag: 0754e240-5b71-4a99-afad-10e8b05597a9
+	queryGroup: Intermediate
+
+	annotation PBI_ResultType = Exception
+
+expression FY26_Hours =
+		let
+		  Source = Source_Historical,
+		  Navigation = Source{[Item = "Table1311", Kind = "Table"]}[Data],
+		  #"Changed column type" = Table.TransformColumnTypes(Navigation, {{"GROUPS", type text}, {"Total", type number}}),
+		  #"Filtered rows" = Table.SelectRows(#"Changed column type", each [GROUPS] = "CO" or [GROUPS] = "CON, CI, PD" or [GROUPS] = "CS" or [GROUPS] = "ENG" or [GROUPS] = "SAF" or [GROUPS] = "WUC" or [GROUPS] = "GW" or [GROUPS] = "FLEET+Warehouse" or [GROUPS] = "FD" or [GROUPS] = "HR, 5FP" or [GROUPS] = "WQLAB SJCWTP" or [GROUPS] = "SWRPOM" or [GROUPS] = "WQlab (SWRP)" or [GROUPS] = "IT" or [GROUPS] = "SJCWTP"),
+		  #"Removed columns" = Table.RemoveColumns(#"Filtered rows", {"Total"}),
+		  #"Unpivoted other columns" = Table.UnpivotOtherColumns(#"Removed columns", {"GROUPS"}, "Attribute", "Value"),
+		  #"Split column by character transition" = Table.SplitColumn(Table.TransformColumnTypes(#"Unpivoted other columns", {{"Value", type text}}), "Value", Splitter.SplitTextByCharacterTransition({"0".."9"}, (c) => not List.Contains({"0".."9"}, c)), {"Value", "Value.2", "Value.3"}),
+		  #"Changed column type 1" = Table.TransformColumnTypes(#"Split column by character transition", {{"Value", type number}}),
+		  #"Added custom" = Table.AddColumn(#"Changed column type 1", "FY", each "2026"),
+		  #"Removed columns 1" = Table.RemoveColumns(#"Added custom", {"Value.2", "Value.3"})
+		
+		in
+		  #"Removed columns 1"
+	lineageTag: 716f1862-6602-4b24-ba0b-8845832c0079
+	queryGroup: Intermediate
+
+	annotation PBI_ResultType = Exception
+
+expression FY22_Injuries =
+		let
+		  Source = Source_Historical,
+		  Navigation = Source{[Item = "Table156", Kind = "Table"]}[Data],
+		  #"Changed column type" = Table.TransformColumnTypes(Navigation, {{"GROUPS", type text}, {"Total", type number}}),
+		  #"Filtered rows" = Table.SelectRows(#"Changed column type", each ([GROUPS] = "Type Accidents")),
+		  #"Unpivoted other columns" = Table.UnpivotOtherColumns(#"Filtered rows", {"GROUPS"}, "Attribute", "Value"),
+		  #"Split column by delimiter" = Table.ExpandListColumn(Table.TransformColumns(Table.TransformColumnTypes(#"Unpivoted other columns", {{"Value", type text}}), {{"Value", Splitter.SplitTextByDelimiter("#(lf)"), let itemType = (type nullable text) meta [Serialized.Text = true] in type {itemType}}}), "Value"),
+		  #"Filtered rows 1" = Table.SelectRows(#"Split column by delimiter", each ([Value] <> "")),
+		  #"Split column by character transition" = Table.SplitColumn(#"Filtered rows 1", "Value", Splitter.SplitTextByCharacterTransition({"0".."9"}, (c) => not List.Contains({"0".."9"}, c)), {"GROUPS.1", "GROUPS.2"}),
+		  #"Replaced value" = Table.ReplaceValue(#"Split column by character transition", "-", "", Replacer.ReplaceText, {"GROUPS.2"}),
+		  #"Renamed columns" = Table.RenameColumns(#"Replaced value", {{"Attribute", "Month"}, {"GROUPS.1", "InjuryCount"}, {"GROUPS.2", "InjuryType"}}),
+		  #"Removed columns" = Table.RemoveColumns(#"Renamed columns", {"GROUPS"}),
+		  #"Added custom" = Table.AddColumn(#"Renamed columns", "FY", each "2022"),
+		  #"Removed columns 1" = Table.RemoveColumns(#"Added custom", {"GROUPS"}),
+		  #"Changed column type 1" = Table.TransformColumnTypes(#"Removed columns 1", {{"InjuryCount", Int64.Type}})
+		
+		in
+		  #"Changed column type 1"
+	lineageTag: 87483a51-729e-460f-a360-4c1ab02127d9
+	queryGroup: Intermediate
+
+	annotation PBI_ResultType = Exception
+
+expression FY23_Injuries =
+		let
+		  Source = Source_Historical,
+		  Navigation = Source{[Item = "Table15", Kind = "Table"]}[Data],
+		  #"Changed column type" = Table.TransformColumnTypes(Navigation, {{"GROUPS", type text}, {"Total", type number}}),
+		  #"Filtered rows" = Table.SelectRows(#"Changed column type", each ([GROUPS] = "Type Accidents")),
+		  #"Unpivoted other columns" = Table.UnpivotOtherColumns(#"Filtered rows", {"GROUPS"}, "Attribute", "Value"),
+		  #"Split column by delimiter" = Table.ExpandListColumn(Table.TransformColumns(Table.TransformColumnTypes(#"Unpivoted other columns", {{"Value", type text}}), {{"Value", Splitter.SplitTextByDelimiter("#(lf)"), let itemType = (type nullable text) meta [Serialized.Text = true] in type {itemType}}}), "Value"),
+		  #"Filtered rows 1" = Table.SelectRows(#"Split column by delimiter", each ([Value] <> "")),
+		  #"Split column by character transition" = Table.SplitColumn(#"Filtered rows 1", "Value", Splitter.SplitTextByCharacterTransition({"0".."9"}, (c) => not List.Contains({"0".."9"}, c)), {"GROUPS.1", "GROUPS.2"}),
+		  #"Replaced value" = Table.ReplaceValue(#"Split column by character transition", "-", "", Replacer.ReplaceText, {"GROUPS.2"}),
+		  #"Renamed columns" = Table.RenameColumns(#"Replaced value", {{"Attribute", "Month"}, {"GROUPS.1", "InjuryCount"}, {"GROUPS.2", "InjuryType"}}),
+		  #"Removed columns" = Table.RemoveColumns(#"Renamed columns", {"GROUPS"}),
+		  #"Added custom" = Table.AddColumn(#"Renamed columns", "FY", each "2023"),
+		  #"Removed columns 1" = Table.RemoveColumns(#"Added custom", {"GROUPS"}),
+		  #"Changed column type 1" = Table.TransformColumnTypes(#"Removed columns 1", {{"InjuryCount", Int64.Type}})
+		
+		in
+		  #"Changed column type 1"
+	lineageTag: f1b55a7e-11fe-4780-a220-ea4d4b5f5dd4
+	queryGroup: Intermediate
+
+	annotation PBI_ResultType = Exception
+
+expression FY24_Injuries =
+		let
+		  Source = Source_Historical,
+		  Navigation = Source{[Item = "Table1", Kind = "Table"]}[Data],
+		  #"Changed column type" = Table.TransformColumnTypes(Navigation, {{"GROUPS", type text}, {"Total", type number}}),
+		  #"Filtered rows" = Table.SelectRows(#"Changed column type", each ([GROUPS] = "Type Accidents")),
+		  #"Unpivoted other columns" = Table.UnpivotOtherColumns(#"Filtered rows", {"GROUPS"}, "Attribute", "Value"),
+		  #"Split column by delimiter" = Table.ExpandListColumn(Table.TransformColumns(Table.TransformColumnTypes(#"Unpivoted other columns", {{"Value", type text}}), {{"Value", Splitter.SplitTextByDelimiter("#(lf)"), let itemType = (type nullable text) meta [Serialized.Text = true] in type {itemType}}}), "Value"),
+		  #"Filtered rows 1" = Table.SelectRows(#"Split column by delimiter", each ([Value] <> "")),
+		  #"Split column by character transition" = Table.SplitColumn(#"Filtered rows 1", "Value", Splitter.SplitTextByCharacterTransition({"0".."9"}, (c) => not List.Contains({"0".."9"}, c)), {"GROUPS.1", "GROUPS.2"}),
+		  #"Replaced value" = Table.ReplaceValue(#"Split column by character transition", "-", "", Replacer.ReplaceText, {"GROUPS.2"}),
+		  #"Renamed columns" = Table.RenameColumns(#"Replaced value", {{"Attribute", "Month"}, {"GROUPS.1", "InjuryCount"}, {"GROUPS.2", "InjuryType"}}),
+		  #"Removed columns" = Table.RemoveColumns(#"Renamed columns", {"GROUPS"}),
+		  #"Added custom" = Table.AddColumn(#"Removed columns", "FY", each "2024")
+		
+		in
+		  #"Added custom"
+	lineageTag: 1e3974bf-9b2a-435b-83fe-ca8bdb374a84
+	queryGroup: Intermediate
+
+	annotation PBI_ResultType = Exception
+
+expression FY25_Injuries =
+		let
+		  Source = Source_Historical,
+		  Navigation = Source{[Item = "Table13", Kind = "Table"]}[Data],
+		  #"Changed column type" = Table.TransformColumnTypes(Navigation, {{"GROUPS", type text}, {"Total", type number}}),
+		  #"Filtered rows" = Table.SelectRows(#"Changed column type", each ([GROUPS] = "Type Accidents")),
+		  #"Unpivoted other columns" = Table.UnpivotOtherColumns(#"Filtered rows", {"GROUPS"}, "Attribute", "Value"),
+		  #"Split column by delimiter" = Table.ExpandListColumn(Table.TransformColumns(Table.TransformColumnTypes(#"Unpivoted other columns", {{"Value", type text}}), {{"Value", Splitter.SplitTextByDelimiter("#(lf)"), let itemType = (type nullable text) meta [Serialized.Text = true] in type {itemType}}}), "Value"),
+		  #"Filtered rows 1" = Table.SelectRows(#"Split column by delimiter", each ([Value] <> "")),
+		  #"Split column by character transition" = Table.SplitColumn(#"Filtered rows 1", "Value", Splitter.SplitTextByCharacterTransition({"0".."9"}, (c) => not List.Contains({"0".."9"}, c)), {"GROUPS.1", "GROUPS.2"}),
+		  #"Replaced value" = Table.ReplaceValue(#"Split column by character transition", "-", "", Replacer.ReplaceText, {"GROUPS.2"}),
+		  #"Renamed columns" = Table.RenameColumns(#"Replaced value", {{"Attribute", "Month"}, {"GROUPS.1", "InjuryCount"}, {"GROUPS.2", "InjuryType"}}),
+		  #"Removed columns" = Table.RemoveColumns(#"Renamed columns", {"GROUPS"}),
+		  #"Added custom" = Table.AddColumn(#"Removed columns", "FY", each "2025")
+		
+		in
+		  #"Added custom"
+	lineageTag: 5b733719-ab12-4e98-926a-8edaaeeab263
+	queryGroup: Intermediate
+
+	annotation PBI_ResultType = Exception
+
+expression FY26_Injuries =
+		let
+		  Source = Source_Historical,
+		  Navigation = Source{[Item = "Table1311", Kind = "Table"]}[Data],
+		  #"Changed column type" = Table.TransformColumnTypes(Navigation, {{"GROUPS", type text}, {"Total", type number}}),
+		  #"Filtered rows" = Table.SelectRows(#"Changed column type", each ([GROUPS] = "ACCIDENT TYPE")),
+		    #"Unpivoted other columns" = Table.UnpivotOtherColumns(#"Filtered rows", {"GROUPS"}, "Attribute", "Value"),
+		  #"Split column by delimiter" = Table.ExpandListColumn(Table.TransformColumns(Table.TransformColumnTypes(#"Unpivoted other columns", {{"Value", type text}}), {{"Value", Splitter.SplitTextByDelimiter("#(lf)"), let itemType = (type nullable text) meta [Serialized.Text = true] in type {itemType}}}), "Value"),
+		  #"Filtered rows 1" = Table.SelectRows(#"Split column by delimiter", each ([Value] <> "")),
+		  #"Split column by character transition" = Table.SplitColumn(#"Filtered rows 1", "Value", Splitter.SplitTextByCharacterTransition({"0".."9"}, (c) => not List.Contains({"0".."9"}, c)), {"GROUPS.1", "GROUPS.2"}),
+		  #"Replaced value" = Table.ReplaceValue(#"Split column by character transition", "-", "", Replacer.ReplaceText, {"GROUPS.2"}),
+		  #"Renamed columns" = Table.RenameColumns(#"Replaced value", {{"Attribute", "Month"}, {"GROUPS.1", "InjuryCount"}, {"GROUPS.2", "InjuryType"}}),
+		  #"Removed columns" = Table.RemoveColumns(#"Renamed columns", {"GROUPS"}),
+		  #"Added custom" = Table.AddColumn(#"Renamed columns", "FY", each "2026"),
+		  #"Removed columns 1" = Table.RemoveColumns(#"Added custom", {"GROUPS"})
+		
+		in
+		  #"Removed columns 1"
+	lineageTag: 595a2046-3a7c-4a94-8484-0e90c794dbf4
+	queryGroup: Intermediate
+
+	annotation PBI_ResultType = Exception
+
+expression FY22_AttendanceAndCases =
+		let
+		  Source = Source_Historical,
+		  Navigation = Source{[Item = "Table156", Kind = "Table"]}[Data],
+		  #"Changed column type" = Table.TransformColumnTypes(Navigation, {{"GROUPS", type text}, {"Total", type number}}),
+		  #"Filtered rows" = Table.SelectRows(#"Changed column type", each ([GROUPS] = "% Attendance per month" or [GROUPS] = "Recordable cases")),
+		  #"Removed columns" = Table.RemoveColumns(#"Filtered rows", {"Total"}),
+		  #"Unpivoted other columns" = Table.UnpivotOtherColumns(#"Removed columns", {"GROUPS"}, "Attribute", "Value"),
+		  #"Filtered rows 1" = Table.SelectRows(#"Unpivoted other columns", each ([Attribute] <> "Column1")),
+		  #"Changed column type 1" = Table.TransformColumnTypes(#"Filtered rows 1", {{"Value", type number}}),
+		  #"Added custom" = Table.AddColumn(#"Changed column type 1", "FY", each "2022"),
+		  #"Pivoted column" = Table.Pivot(Table.TransformColumnTypes(#"Added custom", {{"GROUPS", type text}}), List.Distinct(Table.TransformColumnTypes(#"Added custom", {{"GROUPS", type text}})[GROUPS]), "GROUPS", "Value")
+		
+		in
+		  #"Pivoted column"
+	lineageTag: 3b86b77d-bf2c-496b-932a-aa519740e0a7
+	queryGroup: Intermediate
+
+	annotation PBI_ResultType = Table
+
+expression FY23_AttendanceAndCases =
+		let
+		  Source = Source_Historical,
+		  Navigation = Source{[Item = "Table15", Kind = "Table"]}[Data],
+		  #"Changed column type" = Table.TransformColumnTypes(Navigation, {{"GROUPS", type text}, {"Total", type number}}),
+		  #"Filtered rows" = Table.SelectRows(#"Changed column type", each ([GROUPS] = "% Attendance per month" or [GROUPS] = "Recordable cases")),
+		  #"Removed columns" = Table.RemoveColumns(#"Filtered rows", {"Total"}),
+		  #"Unpivoted other columns" = Table.UnpivotOtherColumns(#"Removed columns", {"GROUPS"}, "Attribute", "Value"),
+		  #"Filtered rows 1" = Table.SelectRows(#"Unpivoted other columns", each ([Attribute] <> "Column1")),
+		  #"Changed column type 1" = Table.TransformColumnTypes(#"Filtered rows 1", {{"Value", type number}}),
+		  #"Added custom" = Table.AddColumn(#"Changed column type 1", "FY", each "2023"),
+		  #"Pivoted column" = Table.Pivot(Table.TransformColumnTypes(#"Added custom", {{"GROUPS", type text}}), List.Distinct(Table.TransformColumnTypes(#"Added custom", {{"GROUPS", type text}})[GROUPS]), "GROUPS", "Value")
+		
+		in
+		  #"Pivoted column"
+	lineageTag: 6b52de71-3328-4ae3-ac8d-bbc84c07bfe2
+	queryGroup: Intermediate
+
+	annotation PBI_ResultType = Table
+
+expression FY24_AttendanceAndCases =
+		let
+		  Source = Source_Historical,
+		  Navigation = Source{[Item = "Table1", Kind = "Table"]}[Data],
+		  #"Changed column type" = Table.TransformColumnTypes(Navigation, {{"GROUPS", type text}, {"Total", type number}}),
+		  #"Filtered rows" = Table.SelectRows(#"Changed column type", each ([GROUPS] = "% Attendance per month" or [GROUPS] = "Recordable cases ")),
+		  #"Removed columns" = Table.RemoveColumns(#"Filtered rows", {"Total"}),
+		  #"Unpivoted other columns" = Table.UnpivotOtherColumns(#"Removed columns", {"GROUPS"}, "Attribute", "Value"),
+		  #"Filtered rows 1" = Table.SelectRows(#"Unpivoted other columns", each ([Attribute] <> "Column1")),
+		  #"Changed column type 1" = Table.TransformColumnTypes(#"Filtered rows 1", {{"Value", type number}}),
+		  #"Added custom" = Table.AddColumn(#"Changed column type 1", "FY", each "2024"),
+		  #"Pivoted column" = Table.Pivot(Table.TransformColumnTypes(#"Added custom", {{"GROUPS", type text}}), List.Distinct(Table.TransformColumnTypes(#"Added custom", {{"GROUPS", type text}})[GROUPS]), "GROUPS", "Value"),
+		  #"Renamed columns" = Table.RenameColumns(#"Pivoted column", {{"Recordable cases ", "Recordable cases"}})
+		
+		in
+		  #"Renamed columns"
+	lineageTag: afa2bd5a-2cbf-490f-873b-fd2fad6b22eb
+	queryGroup: Intermediate
+
+	annotation PBI_ResultType = Table
+
+expression FY25_AttendanceAndCases =
+		let
+		  Source = Source_Historical,
+		  Navigation = Source{[Item = "Table13", Kind = "Table"]}[Data],
+		  #"Changed column type" = Table.TransformColumnTypes(Navigation, {{"GROUPS", type text}, {"Total", type number}}),
+		  #"Filtered rows" = Table.SelectRows(#"Changed column type", each ([GROUPS] = "% Attendance per month" or [GROUPS] = "Recordable Cases")),
+		  #"Removed columns" = Table.RemoveColumns(#"Filtered rows", {"Total"}),
+		  #"Unpivoted other columns" = Table.UnpivotOtherColumns(#"Removed columns", {"GROUPS"}, "Attribute", "Value"),
+		  #"Filtered rows 1" = Table.SelectRows(#"Unpivoted other columns", each ([Attribute] <> "Column1")),
+		  #"Changed column type 1" = Table.TransformColumnTypes(#"Filtered rows 1", {{"Value", type number}}),
+		  #"Added custom" = Table.AddColumn(#"Changed column type 1", "FY", each "2025"),
+		  #"Pivoted column" = Table.Pivot(Table.TransformColumnTypes(#"Added custom", {{"GROUPS", type text}}), List.Distinct(Table.TransformColumnTypes(#"Added custom", {{"GROUPS", type text}})[GROUPS]), "GROUPS", "Value"),
+		  #"Renamed columns" = Table.RenameColumns(#"Pivoted column", {{"Recordable Cases", "Recordable cases"}})
+		
+		in
+		  #"Renamed columns"
+	lineageTag: ed818095-bf2a-4148-ba39-43cfe994f653
+	queryGroup: Intermediate
+
+	annotation PBI_ResultType = Table
+
+expression FY26_AttendanceAndCases =
+		let
+		  Source = Source_Historical,
+		  Navigation = Source{[Item = "Table1311", Kind = "Table"]}[Data],
+		  #"Changed column type" = Table.TransformColumnTypes(Navigation, {{"GROUPS", type text}, {"Total", type number}}),
+		  #"Filtered rows" = Table.SelectRows(#"Changed column type", each ([GROUPS] = "% Attendance per month ***" or [GROUPS] = "RECORDABLE CASES")),
+		  #"Removed columns" = Table.RemoveColumns(#"Filtered rows", {"Total"}),
+		  #"Unpivoted other columns" = Table.UnpivotOtherColumns(#"Removed columns", {"GROUPS"}, "Attribute", "Value"),
+		  #"Filtered rows 1" = Table.SelectRows(#"Unpivoted other columns", each ([Attribute] <> "Column1")),
+		  #"Changed column type 1" = Table.TransformColumnTypes(#"Filtered rows 1", {{"Value", type number}}),
+		  #"Added custom" = Table.AddColumn(#"Changed column type 1", "FY", each "2026"),
+		  #"Pivoted column" = Table.Pivot(Table.TransformColumnTypes(#"Added custom", {{"GROUPS", type text}}), List.Distinct(Table.TransformColumnTypes(#"Added custom", {{"GROUPS", type text}})[GROUPS]), "GROUPS", "Value"),
+		  #"Renamed columns" = Table.RenameColumns(#"Pivoted column", {{"RECORDABLE CASES", "Recordable cases"}, {"% Attendance per month ***", "% Attendance per month"}})
+		
+		in
+		  #"Renamed columns"
+	lineageTag: 2a20bbdb-28b2-4fd2-b09f-d2e6a971c71c
+	queryGroup: Intermediate
+
+	annotation PBI_ResultType = Table
+

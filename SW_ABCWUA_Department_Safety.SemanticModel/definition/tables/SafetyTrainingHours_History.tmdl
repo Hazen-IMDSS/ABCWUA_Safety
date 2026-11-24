@@ -1,0 +1,97 @@
+table SafetyTrainingHours_History
+	lineageTag: 95be8899-841d-4a06-aee2-4707281793fa
+
+	measure '# of Safety Hours Taught' =
+			
+			IF(
+			    ISBLANK(SUM(SafetyTrainingHours_History[Value])),
+			    0,
+			    SUM(SafetyTrainingHours_History[Value])
+			)
+		lineageTag: 6af208fa-63e9-435f-a894-9b8567e39715
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column GROUPS
+		dataType: string
+		lineageTag: afa58b42-70ec-46ca-a87b-dc8388e64b8e
+		summarizeBy: none
+		sourceColumn: GROUPS
+
+		annotation SummarizationSetBy = Automatic
+
+	column Month
+		dataType: string
+		lineageTag: 162ff1a1-e361-4d0b-ba7b-10ea893f0c2e
+		summarizeBy: none
+		sourceColumn: Month
+
+		annotation SummarizationSetBy = Automatic
+
+	column Value
+		dataType: double
+		lineageTag: 7763dd01-d5be-4f67-83f8-88526acc269e
+		summarizeBy: sum
+		sourceColumn: Value
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column FY
+		dataType: int64
+		formatString: 0
+		lineageTag: a60315f9-75fb-4f0c-8cff-bcdd651e4b59
+		summarizeBy: sum
+		sourceColumn: FY
+
+		annotation SummarizationSetBy = Automatic
+
+	column MonthNumber
+		dataType: int64
+		formatString: 0
+		lineageTag: 2f6d3b68-f68b-41af-ba1c-102d8fddbb07
+		summarizeBy: sum
+		sourceColumn: MonthNumber
+
+		annotation SummarizationSetBy = Automatic
+
+	column CalendarYear
+		dataType: int64
+		formatString: 0
+		lineageTag: 1d52f6ff-5449-4588-a836-2f74989a4a73
+		summarizeBy: sum
+		sourceColumn: CalendarYear
+
+		annotation SummarizationSetBy = Automatic
+
+	column MonthStartDate
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 1d15d7e9-a4b1-4601-9745-d43b86792af3
+		summarizeBy: none
+		sourceColumn: MonthStartDate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	partition SafetyTrainingHours_History = m
+		mode: import
+		queryGroup: Gold
+		source =
+				let
+				    Source = Table.Combine({FY22_Hours,FY23_Hours,FY24_Hours, FY25_Hours,FY26_Hours}),
+				  #"Replaced value" = Table.ReplaceValue(Source, "Sept", "Sep", Replacer.ReplaceText, {"Attribute"}),
+				  #"Renamed columns" = Table.RenameColumns(#"Replaced value", {{"Attribute", "Month"}}),
+				  #"Added custom" = Table.AddColumn(#"Renamed columns", "MonthNumber", each Date.Month(Date.FromText([Month] & " 1"))),
+				  #"Changed column type" = Table.TransformColumnTypes(#"Added custom", {{"FY", Int64.Type}, {"MonthNumber", Int64.Type}}),
+				  Custom = Table.AddColumn(#"Changed column type", "CalendarYear", each if [MonthNumber] >= 7 then ([FY] - 1) else [FY]),
+				  #"Custom 1" = Table.TransformColumnTypes(Table.AddColumn(#"Custom", "MonthStartDate", each #date(Number.From([CalendarYear]), Number.From([MonthNumber]), 1)), {{"MonthStartDate", type date}}),
+				  #"Changed column type 1" = Table.TransformColumnTypes(#"Custom 1", {{"CalendarYear", Int64.Type}})
+				
+				in
+				    #"Changed column type 1"
+
+	annotation PBI_ResultType = Table
+

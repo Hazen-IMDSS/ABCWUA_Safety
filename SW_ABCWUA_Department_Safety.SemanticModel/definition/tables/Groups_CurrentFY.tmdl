@@ -1,0 +1,107 @@
+table Groups_CurrentFY
+	lineageTag: 816a4d7d-14b1-4c5a-a852-abefb5c566ac
+
+	column Attribute
+		dataType: string
+		lineageTag: 862ed6bf-753f-479c-95b9-68a20534f45c
+		summarizeBy: none
+		sourceColumn: Attribute
+
+		annotation SummarizationSetBy = Automatic
+
+	column MonthNumber
+		dataType: int64
+		formatString: 0
+		lineageTag: b188b389-580f-43ad-8d89-2434fa442e2f
+		summarizeBy: sum
+		sourceColumn: MonthNumber
+
+		annotation SummarizationSetBy = Automatic
+
+	column FY
+		dataType: int64
+		formatString: 0
+		lineageTag: 3a5a1008-3313-4929-84a6-0a9304c2ca77
+		summarizeBy: sum
+		sourceColumn: FY
+
+		annotation SummarizationSetBy = Automatic
+
+	column CalendarYear
+		dataType: int64
+		formatString: 0
+		lineageTag: 9059ce2b-08eb-4adc-ab22-9528a0cc644f
+		summarizeBy: sum
+		sourceColumn: CalendarYear
+
+		annotation SummarizationSetBy = Automatic
+
+	column MonthStartDate
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: af8f0183-c3db-4a53-a16b-4f34c35e5c45
+		summarizeBy: none
+		sourceColumn: MonthStartDate
+
+		variation Variation
+			isDefault
+			relationship: e3fea268-2634-4f46-b309-3f62772108b7
+			defaultHierarchy: LocalDateTable_57a7ae3a-3f87-4163-a519-1f82fab41746.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column GroupName_CurrentFy
+		dataType: string
+		lineageTag: 5874def9-1520-4cc3-a07c-3cec130f8dbe
+		summarizeBy: none
+		sourceColumn: GroupName_CurrentFy
+
+		annotation SummarizationSetBy = Automatic
+
+	column EmployeeCount
+		dataType: int64
+		formatString: 0
+		lineageTag: da7948c7-cb9e-4f7a-af3f-1b02032a298f
+		summarizeBy: sum
+		sourceColumn: EmployeeCount
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'GroupName_CurrentKey.1'
+		dataType: string
+		lineageTag: 048c3b3d-4f94-44ca-be5f-67bf731796f4
+		summarizeBy: none
+		sourceColumn: GroupName_CurrentKey.1
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Groups_CurrentFY = m
+		mode: import
+		queryGroup: Gold
+		source =
+				let
+				    Source = GroupAttendance_CurrentYear,
+				  #"Removed columns" = Table.RemoveColumns(Source, {"Month", "Value"}),
+				  #"Removed duplicates" = Table.Distinct(#"Removed columns", {"Attribute"}),
+				  #"Duplicated column" = Table.DuplicateColumn(#"Removed duplicates", "Attribute", "Attribute - Copy"),
+				  #"Split column by delimiter 1" = Table.SplitColumn(#"Duplicated column", "Attribute - Copy", Splitter.SplitTextByDelimiter("#(lf)"), {"Attribute - Copy.1", "Attribute - Copy.2"}),
+				  #"Renamed columns" = Table.RenameColumns(#"Split column by delimiter 1", {{"Attribute - Copy.1", "GroupName_CurrentFy"}, {"Attribute - Copy.2", "EmployeeCount"}}),
+				  #"Split column by character transition" = Table.SplitColumn(#"Renamed columns", "EmployeeCount", Splitter.SplitTextByCharacterTransition({"0".."9"}, (c) => not List.Contains({"0".."9"}, c)), {"EmployeeCount.1", "EmployeeCount.2"}),
+				  #"Changed column type" = Table.TransformColumnTypes(#"Split column by character transition", {{"GroupName_CurrentFy", type text}, {"EmployeeCount.1", Int64.Type}, {"EmployeeCount.2", type text}}),
+				  #"Removed columns 1" = Table.RemoveColumns(#"Changed column type", {"EmployeeCount.2"}),
+				  #"Renamed columns 1" = Table.RenameColumns(#"Removed columns 1", {{"EmployeeCount.1", "EmployeeCount"}}),
+				  #"Duplicated column 1" = Table.DuplicateColumn(#"Renamed columns 1", "GroupName_CurrentFy", "GroupName_CurrentFy - Copy"),
+				  #"Renamed columns 2" = Table.RenameColumns(#"Duplicated column 1", {{"GroupName_CurrentFy - Copy", "GroupName_History"}}),
+				  #"Removed columns 2" = Table.RemoveColumns(#"Renamed columns 2", {"GroupName_History"}),
+				  #"Duplicated column 2" = Table.DuplicateColumn(#"Removed columns 2", "GroupName_CurrentFy", "GroupName_CurrentKey"),
+				  #"Replaced value" = Table.ReplaceValue(#"Duplicated column 2", "Capital", "(Capital", Replacer.ReplaceText, {"GroupName_CurrentKey"}),
+				  #"Split column by delimiter 2" = Table.SplitColumn(#"Replaced value", "GroupName_CurrentKey", Splitter.SplitTextByDelimiter(" ("), {"GroupName_CurrentKey.1", "GroupName_CurrentKey.2"}),
+				  #"Removed columns 3" = Table.RemoveColumns(#"Split column by delimiter 2", {"GroupName_CurrentKey.2"})
+				
+				in
+				    #"Removed columns 3"
+
+	annotation PBI_ResultType = Table
+

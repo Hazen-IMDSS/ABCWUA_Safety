@@ -1,0 +1,154 @@
+table Hazards
+	lineageTag: d4107b64-7f5d-4c67-9a5d-aa3b7b4cdeb2
+
+	column Month
+		dataType: string
+		lineageTag: 8303cc25-8619-4387-b61f-5ffb361fdcc7
+		summarizeBy: none
+		sourceColumn: Month
+
+		annotation SummarizationSetBy = Automatic
+
+	column MonthNumber
+		dataType: int64
+		formatString: 0
+		lineageTag: e29604fc-42ef-4065-a716-78713acb2535
+		summarizeBy: sum
+		sourceColumn: MonthNumber
+
+		annotation SummarizationSetBy = Automatic
+
+	column FY
+		dataType: int64
+		formatString: 0
+		lineageTag: 06e21598-ff50-4564-9103-acd91aa84082
+		summarizeBy: sum
+		sourceColumn: FY
+
+		annotation SummarizationSetBy = Automatic
+
+	column CalendarYear
+		dataType: int64
+		formatString: 0
+		lineageTag: dff5c9e5-c593-4988-94be-fc810372b2d4
+		summarizeBy: sum
+		sourceColumn: CalendarYear
+
+		annotation SummarizationSetBy = Automatic
+
+	column MonthStartDate
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 74d10e8b-a460-41a7-9d55-1ff99d17f16b
+		summarizeBy: none
+		sourceColumn: MonthStartDate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column HazardRisk
+		dataType: string
+		lineageTag: b3f38047-0af4-4359-87ed-9879eb7664b6
+		summarizeBy: none
+		sourceColumn: HazardRisk
+
+		annotation SummarizationSetBy = Automatic
+
+	column Identified
+		dataType: double
+		lineageTag: 37e3c990-14d1-4e77-ada6-f24e64e35ddb
+		summarizeBy: sum
+		sourceColumn: Identified
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Resolved
+		dataType: double
+		lineageTag: be962b43-d2fa-48cf-91d7-9182f6d52f56
+		summarizeBy: sum
+		sourceColumn: Resolved
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column PercentResolved
+		dataType: double
+		lineageTag: 0c2e284e-0b09-4340-b9e0-4be4162adcf6
+		summarizeBy: sum
+		sourceColumn: PercentResolved
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Unresolved
+		dataType: int64
+		formatString: 0
+		lineageTag: 94acba2c-fe32-480c-a47b-4e34cd55b058
+		summarizeBy: sum
+		sourceColumn: Unresolved
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Hazards = m
+		mode: import
+		queryGroup: Gold
+		source =
+				let
+				  Source = Source_SafetyInspections,
+				  Navigation = Source{[Item = "Safety Field Inspections ", Kind = "Sheet"]}[Data],
+				  #"Promoted headers" = Table.PromoteHeaders(Navigation, [PromoteAllScalars = true]),
+				  #"Changed column type" = Table.TransformColumnTypes(#"Promoted headers", {{"FY 2026  MASTER SAFETY FIELD INSPECTIONS", type text}, {"Column11", type text}, {"Column13", type text}, {"Column14", Int64.Type}}),
+				  #"Promoted headers 1" = Table.PromoteHeaders(#"Changed column type", [PromoteAllScalars = true]),
+				  #"Changed column type 1" = Table.TransformColumnTypes(#"Promoted headers 1", {{"Column14", Int64.Type}}),
+				  #"Promoted headers 2" = Table.PromoteHeaders(#"Changed column type 1", [PromoteAllScalars = true]),
+				  #"Renamed columns" = Table.RenameColumns(#"Promoted headers 2", {{"Month", "Group"}}),
+				  #"Removed columns" = Table.RemoveColumns(#"Renamed columns", {"Column14"}),
+				  #"Unpivoted other columns" = Table.UnpivotOtherColumns(#"Removed columns", {"Group"}, "Attribute", "Value"),
+				  #"Changed column type 5" = Table.TransformColumnTypes(#"Unpivoted other columns", {{"Value", type text}}),
+				  #"Renamed columns 1" = Table.RenameColumns(#"Changed column type 5", {{"Value", "Inspection"}}),
+				  #"Renamed columns 2" = Table.RenameColumns(#"Renamed columns 1", {{"Attribute", "Month"}}),
+				  #"Added custom" = Table.AddColumn(#"Renamed columns 2", "MonthNumber", each Date.Month(Date.FromText([Month] & " 1"))),
+				  #"Added custom 1" = Table.AddColumn(#"Added custom", "FY", each 2026),
+				  #"Inserted conditional column" = Table.AddColumn(#"Added custom 1", "CalendarYear", each if [MonthNumber] >= 7 then ([FY] -1) else [FY]),
+				  #"Added custom 2" = Table.TransformColumnTypes(Table.AddColumn(#"Inserted conditional column", "MonthStartDate", each #date(Number.From([CalendarYear]), Number.From([MonthNumber]), 1)), {{"MonthStartDate", type date}}),
+				  #"Changed column type 4" = Table.TransformColumnTypes(#"Added custom 2", {{"CalendarYear", Int64.Type}, {"FY", Int64.Type}, {"MonthNumber", Int64.Type}}),
+				    #"Filtered Rows1" = Table.SelectRows(#"Changed column type 4", each ([Group] = "Number of High Hazards Resolved " or [Group] = "Number of L and M hazards corrected " or [Group] = "Total number of  HAZARDS  ( L,M,) reported  from Inspections Form" or [Group] = "Total number of HIGH HAZARDS  identified  from Inspections Form")),
+				    #"Changed column type 3" = Table.TransformColumnTypes(#"Filtered Rows1", {{"Inspection", Int64.Type}}),
+				    #"Replaced Value2" = Table.ReplaceValue(#"Changed column type 3","Total number of  HAZARDS  ( L,M,) reported  from Inspections Form","Total number of  HAZARDS  ( L,M,) identified from Inspections Form",Replacer.ReplaceText,{"Group"}),
+				    #"Renamed columns 4" = Table.RenameColumns(#"Replaced Value2", {{"Inspection", "HazardCount"}}),
+				    #"Replaced Value1" = Table.ReplaceValue(#"Renamed columns 4","Number of L and M hazards corrected","Number of L and M Hazards Resolved",Replacer.ReplaceText,{"Group"}),
+				    Custom1 = Table.AddColumn(#"Replaced Value1", "HazardRisk", each
+				    if Text.Contains([Group], "L,M") or Text.Contains([Group], "L and M")
+				    then "Low/Med"
+				    else "High", type text),
+				    #"Added Custom" = Table.AddColumn(Custom1, "HazardType", each if Text.Contains(
+				    Text.Lower(Text.Trim([Group])),
+				    "resolved"
+				)
+				then "Resolved"
+				else "Identified"),
+				  #"Removed columns 1" = Table.RemoveColumns(#"Added Custom", {"Group"}),
+				  #"Reordered columns" = Table.ReorderColumns(#"Removed columns 1", {"MonthStartDate", "HazardRisk", "HazardType", "HazardCount", "Month", "MonthNumber", "FY", "CalendarYear"}),
+				  Custom = Table.Pivot(#"Reordered columns", List.Distinct(#"Removed columns 1"[HazardType]), "HazardType", "HazardCount", List.Sum),
+				  #"Replaced value" = Table.ReplaceValue(Custom, null, 0, Replacer.ReplaceValue, {"Identified", "Resolved"}),
+				  #"Added custom 3" = Table.TransformColumnTypes(
+				    Table.AddColumn(
+				        #"Replaced value",
+				        "PercentResolved",
+				        each if [Identified] = null or [Identified] = 0 then null else [Resolved] / [Identified]
+				    ),
+				    {{"PercentResolved", Percentage.Type}}
+				),
+				  #"Added custom 4" = Table.TransformColumnTypes(Table.AddColumn(#"Added custom 3", "Unresolved", each [Identified] - [Resolved]), {{"Unresolved", Int64.Type}})
+				in
+				    #"Added custom 4"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

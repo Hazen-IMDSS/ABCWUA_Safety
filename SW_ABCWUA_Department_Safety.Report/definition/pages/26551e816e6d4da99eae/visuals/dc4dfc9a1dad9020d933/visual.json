@@ -1,0 +1,16 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "dc4dfc9a1dad9020d933",
+  "position": {
+    "x": 15,
+    "y": 109,
+    "z": 5000,
+    "height": 335,
+    "width": 163.75,
+    "tabOrder": 3000
+  },
+  "visualGroup": {
+    "displayName": "Summarization View",
+    "groupMode": "ScaleMode"
+  }
+}

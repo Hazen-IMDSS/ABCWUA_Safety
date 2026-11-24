@@ -1,0 +1,48 @@
+table Calendar_FiscalPeriod
+	lineageTag: 1b17e44a-461c-42f8-8f31-2f166a85eafe
+
+	column Calendar_FiscalPeriod
+		lineageTag: 2d7ae68b-ad18-4bb9-b9a6-1c487bd01dc5
+		summarizeBy: none
+		sourceColumn: [Value1]
+		sortByColumn: 'Calendar_FiscalPeriod Order'
+
+		relatedColumnDetails
+			groupByColumn: 'Calendar_FiscalPeriod Fields'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Calendar_FiscalPeriod Fields'
+		isHidden
+		lineageTag: 9a9c4771-6831-4bbd-8f2b-4bbc08d4c1ab
+		summarizeBy: none
+		sourceColumn: [Value2]
+		sortByColumn: 'Calendar_FiscalPeriod Order'
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 3,
+				  "kind": 2
+				}
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Calendar_FiscalPeriod Order'
+		isHidden
+		formatString: 0
+		lineageTag: f0d379a2-2e66-4d9f-9ba6-8bb3c181c3d2
+		summarizeBy: sum
+		sourceColumn: [Value3]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Calendar_FiscalPeriod = calculated
+		mode: import
+		source =
+				{
+				    ("Quarter", NAMEOF('Calendar'[QuarterYear]), 0),
+				    ("Month Year", NAMEOF('Calendar'[MonthYear]), 1)
+				}
+
+	annotation PBI_Id = f80105a095884bef9daa5de356cdeb6c
+

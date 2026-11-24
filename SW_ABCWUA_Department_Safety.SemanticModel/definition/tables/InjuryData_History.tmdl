@@ -1,0 +1,85 @@
+table InjuryData_History
+	lineageTag: 2468fefd-b562-44a9-8dba-d30d9948e5e9
+
+	column Month
+		dataType: string
+		lineageTag: f67bc4c1-5bf3-4d70-8b06-15b142269a93
+		summarizeBy: none
+		sourceColumn: Month
+
+		annotation SummarizationSetBy = Automatic
+
+	column InjuryCount
+		dataType: int64
+		formatString: 0
+		lineageTag: 9bf91ac1-4454-4d58-b7af-a07768a84f24
+		summarizeBy: sum
+		sourceColumn: InjuryCount
+
+		annotation SummarizationSetBy = Automatic
+
+	column InjuryType
+		dataType: string
+		lineageTag: b2231dc4-b552-467e-9e24-6275bb049b6e
+		summarizeBy: none
+		sourceColumn: InjuryType
+
+		annotation SummarizationSetBy = Automatic
+
+	column FY
+		dataType: int64
+		formatString: 0
+		lineageTag: 497252ea-da7b-4a75-954d-120d9171f742
+		summarizeBy: sum
+		sourceColumn: FY
+
+		annotation SummarizationSetBy = Automatic
+
+	column MonthNumber
+		dataType: int64
+		formatString: 0
+		lineageTag: 8d91bf65-22d7-4d2f-8fbc-1b31c3834627
+		summarizeBy: sum
+		sourceColumn: MonthNumber
+
+		annotation SummarizationSetBy = Automatic
+
+	column CalendarYear
+		dataType: int64
+		formatString: 0
+		lineageTag: 8b41e6f3-d650-4ad6-9e25-464c2c4348b4
+		summarizeBy: sum
+		sourceColumn: CalendarYear
+
+		annotation SummarizationSetBy = Automatic
+
+	column MonthStartDate
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 3cee5ffd-7ed0-49bc-afbd-967035fc7210
+		summarizeBy: none
+		sourceColumn: MonthStartDate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	partition InjuryData_History = m
+		mode: import
+		queryGroup: Gold
+		source =
+				let
+				    Source = Table.Combine({FY22_Injuries,FY23_Injuries,FY24_Injuries, FY25_Injuries,FY26_Injuries}),
+				  #"Replaced value" = Table.ReplaceValue(Source, "Sept", "Sep", Replacer.ReplaceText, {"Month"}),
+				  #"Changed column type" = Table.TransformColumnTypes(#"Replaced value", {{"InjuryCount", Int64.Type}, {"FY", type text}}),
+				  #"Added custom" = Table.AddColumn(#"Changed column type", "MonthNumber", each Date.Month(Date.FromText([Month] & " 1"))),
+				  #"Changed column type 1" = Table.TransformColumnTypes(#"Added custom", {{"MonthNumber", Int64.Type}, {"FY", Int64.Type}}),
+				  Custom = Table.AddColumn(#"Changed column type 1", "CalendarYear", each if [MonthNumber] >= 7 then ([FY] -1) else [FY]),
+				  #"Changed column type 2" = Table.TransformColumnTypes(Custom, {{"CalendarYear", Int64.Type}}),
+				  #"Custom 1" = Table.TransformColumnTypes(Table.AddColumn(#"Changed column type 2", "MonthStartDate", each #date(Number.From([CalendarYear]), Number.From([MonthNumber]), 1)), {{"MonthStartDate", type date}})
+				
+				in
+				    #"Custom 1"
+
+	annotation PBI_ResultType = Table
+

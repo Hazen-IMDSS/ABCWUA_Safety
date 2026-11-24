@@ -1,0 +1,55 @@
+table __Measures
+	lineageTag: e6aaa849-9198-4285-b05a-0b794679f074
+
+	measure TotalInjuryHours = SUM(InjuryData_History[InjuryCount])
+		formatString: 0
+		lineageTag: 8600ca3f-fe77-43f1-99d7-e5f9dce32cae
+
+	measure TRIR = Blank()
+		formatString: 0
+		lineageTag: 37002f4e-ea77-4488-9bb6-6e9f6fa3a46f
+
+	measure DART = BLANK()
+		formatString: 0
+		lineageTag: db2e8f44-21d6-4ebb-8121-20ac172249b5
+
+	measure '# of Recordable Cases' =
+			
+			CALCULATE(
+			    SUM(AttendanceAndCases_History[RecordableCases]),
+			    USERELATIONSHIP('Calendar'[Date], 'AttendanceAndCases_History'[MonthStartDate])
+			)
+		formatString: 0
+		lineageTag: 28e87875-f8a9-4e73-93d4-5714be697c3a
+
+	measure 'Attendance %' =
+			
+			CALCULATE(
+			    AVERAGE(AttendanceAndCases_History[Attendance_Percent]),
+			    USERELATIONSHIP('Calendar'[Date], 'AttendanceAndCases_History'[MonthStartDate])
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 6869a448-8e8a-4bd4-a997-b5921b4eb3b2
+
+	measure '% of Recordable Cases From Injuries' = SUM(AttendanceAndCases_History[RecordableCases]) / SUM(InjuryData_History[InjuryCount])
+		lineageTag: 25aa753b-cb11-4aaf-9eb0-b43d3c548595
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Column
+		formatString: 0
+		lineageTag: ae7abaae-868c-41a7-807b-956c9318b690
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Column]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition __Measures = calculated
+		mode: import
+		source = Row("Column", BLANK())
+
+	annotation PBI_Id = e7ce67f3c98e444b991db59bf35b8d9f
+
+	annotation 436ba87b-9c83-4389-a31b-ebd06a36be98 = {"Expression":""}
+

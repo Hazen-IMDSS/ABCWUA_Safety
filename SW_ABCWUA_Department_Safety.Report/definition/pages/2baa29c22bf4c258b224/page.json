@@ -1,0 +1,26 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "2baa29c22bf4c258b224",
+  "displayName": "Training",
+  "displayOption": "FitToPage",
+  "height": 720,
+  "width": 1280,
+  "pageBinding": {
+    "name": "a7f99a99541f10e1457c",
+    "type": "Default",
+    "parameters": []
+  },
+  "visibility": "HiddenInViewMode",
+  "visualInteractions": [
+    {
+      "source": "ce98e2e672edea8a25d8",
+      "target": "1c294abd9eab86e65369",
+      "type": "DataFilter"
+    },
+    {
+      "source": "ce98e2e672edea8a25d8",
+      "target": "55a3709a8cb005656663",
+      "type": "NoFilter"
+    }
+  ]
+}

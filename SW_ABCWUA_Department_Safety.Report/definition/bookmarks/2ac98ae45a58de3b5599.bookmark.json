@@ -1,0 +1,56 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmark/2.1.0/schema.json",
+  "displayName": "Leaks - Left Closed",
+  "name": "2ac98ae45a58de3b5599",
+  "options": {
+    "applyOnlyToTargetVisuals": true,
+    "targetVisualNames": [
+      "773a5f1798d736688c12",
+      "96d626153f3df46737c4",
+      "36484b710b350123af56",
+      "a0beec9a685f37dcde9c",
+      "54c9cbf40ddacc5bdc4c",
+      "313f01064b40709c177e",
+      "6cb510476e5c09997233",
+      "5a9200a2ed1f3a4413e3",
+      "c8257641f8764c0a95e5",
+      "3647745589d6c362eaee",
+      "c6c4b161a0ed34dab4c0",
+      "190e990e587325782ce8"
+    ],
+    "suppressData": true
+  },
+  "explorationState": {
+    "version": "1.3",
+    "activeSection": "9d2dffb4ccd0ad1d3083",
+    "sections": {
+      "9d2dffb4ccd0ad1d3083": {
+        "visualContainers": {}
+      }
+    },
+    "objects": {
+      "merge": {
+        "outspacePane": [
+          {
+            "properties": {
+              "expanded": {
+                "expr": {
+                  "Literal": {
+                    "Value": "false"
+                  }
+                }
+              },
+              "visible": {
+                "expr": {
+                  "Literal": {
+                    "Value": "false"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}

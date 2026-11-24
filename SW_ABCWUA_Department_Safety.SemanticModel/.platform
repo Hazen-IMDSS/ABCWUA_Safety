@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "SW_ABCWUA_Department_Safety"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "5e26462b-4e99-4eb8-9313-17d58e5c31f4"
+  }
+}

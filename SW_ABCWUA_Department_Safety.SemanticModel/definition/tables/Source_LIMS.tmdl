@@ -1,0 +1,51 @@
+table Source_LIMS
+	lineageTag: 7fd2206d-ae61-4624-8feb-4e5d804c5b36
+
+	column Name
+		dataType: string
+		lineageTag: dbe0403d-5a85-4964-aa0e-b3c34b20bc5f
+		summarizeBy: none
+		sourceColumn: Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Item
+		dataType: string
+		lineageTag: ffea3819-a5e1-4fa0-8051-85c3ab70dc4f
+		summarizeBy: none
+		sourceColumn: Item
+
+		annotation SummarizationSetBy = Automatic
+
+	column Kind
+		dataType: string
+		lineageTag: 3d49762e-37e1-436e-aa09-baced2951a8c
+		summarizeBy: none
+		sourceColumn: Kind
+
+		annotation SummarizationSetBy = Automatic
+
+	column Hidden
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 94f114d3-f527-4e37-bc71-6eece8f7210a
+		summarizeBy: none
+		sourceColumn: Hidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Source_LIMS = m
+		mode: import
+		queryGroup: Sources
+		source =
+				let
+				  Source = Excel.Workbook(
+				    Web.Contents("https://hazenandsawyer.sharepoint.com/sites/IMDigitalStrategiesSolutions/Shared%20Documents/General/Client/ABCWUA/Departmental%20KPIs/Departments/Safety/ABCWUA_LMS_User_report_v2.xlsx"),
+				    null,
+				    true
+				  )
+				in
+				  Source
+
+	annotation PBI_ResultType = Table
+

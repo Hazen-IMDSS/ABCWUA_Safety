@@ -1,0 +1,26 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "fbb4185d4a3cce4f6c92",
+  "displayName": "Incidents",
+  "displayOption": "FitToPage",
+  "height": 720,
+  "width": 1280,
+  "pageBinding": {
+    "name": "12739ea942642b2fa8a7",
+    "type": "Default",
+    "parameters": []
+  },
+  "visibility": "HiddenInViewMode",
+  "visualInteractions": [
+    {
+      "source": "a6578d3d9f8e3507c0e2",
+      "target": "781010e23da4fec0e2cd",
+      "type": "DataFilter"
+    },
+    {
+      "source": "a6578d3d9f8e3507c0e2",
+      "target": "00b519f8bb9518d5f73c",
+      "type": "NoFilter"
+    }
+  ]
+}

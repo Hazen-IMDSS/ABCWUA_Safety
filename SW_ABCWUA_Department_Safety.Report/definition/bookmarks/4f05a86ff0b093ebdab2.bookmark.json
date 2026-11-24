@@ -1,0 +1,56 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmark/2.1.0/schema.json",
+  "displayName": "Repairs - Left Open",
+  "name": "4f05a86ff0b093ebdab2",
+  "options": {
+    "applyOnlyToTargetVisuals": true,
+    "targetVisualNames": [
+      "81c555abedb6ad0e0930",
+      "a4893130193cf5990e65",
+      "47f2d337e40ddfdf27be",
+      "38cd7918530c53ee6c6d",
+      "71598a132e78f59626d7",
+      "03eb7ac2fa5dadf820d5",
+      "564018463273e65c17ac",
+      "def674d573e3beec512e",
+      "bd935fd8574a141f1568",
+      "2504b91e1cff634a2629",
+      "e718d8d0a278914296ee",
+      "680ef1f3d0c0567ef171"
+    ],
+    "suppressData": true
+  },
+  "explorationState": {
+    "version": "1.3",
+    "activeSection": "76d9e9206afa17979112",
+    "sections": {
+      "76d9e9206afa17979112": {
+        "visualContainers": {}
+      }
+    },
+    "objects": {
+      "merge": {
+        "outspacePane": [
+          {
+            "properties": {
+              "expanded": {
+                "expr": {
+                  "Literal": {
+                    "Value": "false"
+                  }
+                }
+              },
+              "visible": {
+                "expr": {
+                  "Literal": {
+                    "Value": "false"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}
