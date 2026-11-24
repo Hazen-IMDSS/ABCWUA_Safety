@@ -68,6 +68,8 @@ ref table Groups_Dim
 ref table InspectionDetails_CurrentYear
 ref table Hazards
 ref table _Measures_Incidents
+ref table _Measures_Inspections
+ref table HazardView
 
 ref cultureInfo en-US
 

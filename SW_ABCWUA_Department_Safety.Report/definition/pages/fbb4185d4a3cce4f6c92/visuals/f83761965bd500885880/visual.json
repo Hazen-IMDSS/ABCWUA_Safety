@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "f83761965bd500885880",
   "position": {
-    "x": 557.01454775458569,
-    "y": 359.46869070208732,
-    "z": 8000,
-    "height": 331.94180898165718,
-    "width": 717.31815306767874,
-    "tabOrder": 8000
+    "x": 658,
+    "y": 414,
+    "z": 500,
+    "height": 294,
+    "width": 610,
+    "tabOrder": 1600
   },
   "visual": {
     "visualType": "columnChart",
@@ -53,64 +53,36 @@
           "projections": [
             {
               "field": {
-                "Aggregation": {
+                "Measure": {
                   "Expression": {
-                    "Column": {
-                      "Expression": {
-                        "SourceRef": {
-                          "Entity": "Hazards"
-                        }
-                      },
-                      "Property": "Resolved"
+                    "SourceRef": {
+                      "Entity": "_Measures_Incidents"
                     }
                   },
-                  "Function": 0
+                  "Property": "Hazards Resolved (View)"
                 }
               },
-              "queryRef": "Sum(Hazards.Resolved)",
+              "queryRef": "_Measures_Incidents.Hazards Resolved (View)",
               "nativeQueryRef": "Resolved",
               "displayName": "Resolved"
             },
             {
               "field": {
-                "Aggregation": {
+                "Measure": {
                   "Expression": {
-                    "Column": {
-                      "Expression": {
-                        "SourceRef": {
-                          "Entity": "Hazards"
-                        }
-                      },
-                      "Property": "Unresolved"
+                    "SourceRef": {
+                      "Entity": "_Measures_Incidents"
                     }
                   },
-                  "Function": 0
+                  "Property": "Hazards Unresolved (View)"
                 }
               },
-              "queryRef": "Sum(Hazards.Unresolved)",
+              "queryRef": "_Measures_Incidents.Hazards Unresolved (View)",
               "nativeQueryRef": "Unresolved",
               "displayName": "Unresolved"
             }
           ]
         }
-      },
-      "sortDefinition": {
-        "sort": [
-          {
-            "field": {
-              "Column": {
-                "Expression": {
-                  "SourceRef": {
-                    "Entity": "Calendar"
-                  }
-                },
-                "Property": "MonthYear"
-              }
-            },
-            "direction": "Ascending"
-          }
-        ],
-        "isDefaultSort": true
       }
     },
     "objects": {
@@ -323,7 +295,7 @@
             }
           },
           "selector": {
-            "metadata": "Sum(Hazards.Unresolved)"
+            "metadata": "_Measures_Incidents.Hazards Unresolved (View)"
           }
         }
       ],
@@ -580,7 +552,7 @@
             }
           },
           "selector": {
-            "metadata": "Sum(Hazards.Resolved)"
+            "metadata": "_Measures_Incidents.Hazards Resolved (View)"
           }
         },
         {
@@ -598,7 +570,7 @@
             }
           },
           "selector": {
-            "metadata": "Sum(Hazards.Unresolved)"
+            "metadata": "_Measures_Incidents.Hazards Unresolved (View)"
           }
         }
       ],
@@ -645,6 +617,13 @@
       "title": [
         {
           "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
             "heading": {
               "expr": {
                 "Literal": {
@@ -655,7 +634,7 @@
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "10D"
+                  "Value": "11D"
                 }
               }
             },
@@ -669,14 +648,30 @@
             "alignment": {
               "expr": {
                 "Literal": {
-                  "Value": "'center'"
+                  "Value": "'left'"
+                }
+              }
+            },
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#1F2A3C'"
+                    }
+                  }
                 }
               }
             },
             "text": {
               "expr": {
-                "Literal": {
-                  "Value": "'YTD Resolved and Unresolved Monthly Hazards'"
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures_Incidents"
+                    }
+                  },
+                  "Property": "Hazard Chart Title"
                 }
               }
             }
@@ -696,13 +691,13 @@
           }
         }
       ],
-      "border": [
+      "background": [
         {
           "properties": {
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
+                  "Value": "true"
                 }
               }
             },
@@ -710,9 +705,39 @@
               "solid": {
                 "color": {
                   "expr": {
-                    "ThemeDataColor": {
-                      "ColorId": 0,
-                      "Percent": -0.2
+                    "Literal": {
+                      "Value": "'#FFFFFF'"
+                    }
+                  }
+                }
+              }
+            },
+            "transparency": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "border": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#D9DEE6'"
                     }
                   }
                 }
@@ -721,7 +746,7 @@
             "radius": {
               "expr": {
                 "Literal": {
-                  "Value": "5D"
+                  "Value": "8D"
                 }
               }
             }
@@ -774,7 +799,7 @@
   "filterConfig": {
     "filters": [
       {
-        "name": "a6754c16178635dd4d29",
+        "name": "9bf3f1c4e00545d18f2a",
         "field": {
           "Measure": {
             "Expression": {
@@ -782,7 +807,7 @@
                 "Entity": "_Measures_Calendar"
               }
             },
-            "Property": "ShowDataInPeriod"
+            "Property": "InSelectedPeriod"
           }
         },
         "type": "Advanced",
@@ -790,7 +815,7 @@
           "Version": 2,
           "From": [
             {
-              "Name": "_",
+              "Name": "m",
               "Entity": "_Measures_Calendar",
               "Type": 0
             }
@@ -804,10 +829,10 @@
                     "Measure": {
                       "Expression": {
                         "SourceRef": {
-                          "Source": "_"
+                          "Source": "m"
                         }
                       },
-                      "Property": "ShowDataInPeriod"
+                      "Property": "InSelectedPeriod"
                     }
                   },
                   "Right": {

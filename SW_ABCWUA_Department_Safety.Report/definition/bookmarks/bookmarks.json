@@ -72,23 +72,7 @@
       "name": "c91b85c6bade068f0751"
     },
     {
-      "name": "3ab5275d556be588d4ae",
-      "displayName": "Training - Period",
-      "children": [
-        "2e08aadc121067145c00",
-        "3a89515cdc1239f932ed"
-      ]
-    },
-    {
       "name": "63ca81f829a998bd2ae9"
-    },
-    {
-      "name": "d921e46dcffc5f5009ae",
-      "displayName": "Incidents - Period",
-      "children": [
-        "6ccf56d6e14a1ff55a96",
-        "23b8332436b209a618bb"
-      ]
     },
     {
       "name": "268b66570d56751ef6fd",
@@ -96,14 +80,6 @@
       "children": [
         "7e2f449dc1a7408ac1d3",
         "4688487aefebd18da81c"
-      ]
-    },
-    {
-      "name": "6c4f6f2f7adedbba795e",
-      "displayName": "Inspections - Periods",
-      "children": [
-        "4557fd22eb109aa42bec",
-        "e5949bcda95a7fd0c45b"
       ]
     },
     {

@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "9d5d209f1d78d9f5e8aa",
   "position": {
-    "x": 188.33333333333334,
-    "y": 388.33333333333337,
-    "z": 8000,
-    "height": 318.33333333333337,
-    "width": 1071.6666666666667,
-    "tabOrder": 6000
+    "x": 228,
+    "y": 420,
+    "z": 500,
+    "height": 288,
+    "width": 1040,
+    "tabOrder": 1400
   },
   "visual": {
     "visualType": "columnChart",
@@ -94,41 +94,6 @@
             }
           ]
         }
-      },
-      "sortDefinition": {
-        "sort": [
-          {
-            "field": {
-              "Column": {
-                "Expression": {
-                  "SourceRef": {
-                    "Entity": "Calendar"
-                  }
-                },
-                "Property": "QuarterYear"
-              }
-            },
-            "direction": "Ascending"
-          },
-          {
-            "field": {
-              "Aggregation": {
-                "Expression": {
-                  "Column": {
-                    "Expression": {
-                      "SourceRef": {
-                        "Entity": "SafetyTrainingHours_History"
-                      }
-                    },
-                    "Property": "Value"
-                  }
-                },
-                "Function": 0
-              }
-            },
-            "direction": "Ascending"
-          }
-        ]
       }
     },
     "objects": {
@@ -350,6 +315,13 @@
       "title": [
         {
           "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
             "heading": {
               "expr": {
                 "Literal": {
@@ -360,7 +332,7 @@
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "10D"
+                  "Value": "11D"
                 }
               }
             },
@@ -374,14 +346,25 @@
             "alignment": {
               "expr": {
                 "Literal": {
-                  "Value": "'center'"
+                  "Value": "'left'"
+                }
+              }
+            },
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#1F2A3C'"
+                    }
+                  }
                 }
               }
             },
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Safety Training Hours By Group'"
+                  "Value": "'Safety Training Hours by Group'"
                 }
               }
             }
@@ -401,13 +384,13 @@
           }
         }
       ],
-      "border": [
+      "background": [
         {
           "properties": {
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
+                  "Value": "true"
                 }
               }
             },
@@ -415,9 +398,39 @@
               "solid": {
                 "color": {
                   "expr": {
-                    "ThemeDataColor": {
-                      "ColorId": 0,
-                      "Percent": -0.2
+                    "Literal": {
+                      "Value": "'#FFFFFF'"
+                    }
+                  }
+                }
+              }
+            },
+            "transparency": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "border": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#D9DEE6'"
                     }
                   }
                 }
@@ -426,7 +439,7 @@
             "radius": {
               "expr": {
                 "Literal": {
-                  "Value": "5D"
+                  "Value": "8D"
                 }
               }
             }
@@ -452,23 +465,7 @@
   "filterConfig": {
     "filters": [
       {
-        "name": "d147f6049fb6641c7ed3",
-        "ordinal": 0,
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "SafetyTrainingHours_History"
-              }
-            },
-            "Property": "GROUPS"
-          }
-        },
-        "type": "Categorical"
-      },
-      {
-        "name": "1a71e2b9071055bb1242",
-        "ordinal": 1,
+        "name": "ff8e52a117af40858cc3",
         "field": {
           "Measure": {
             "Expression": {
@@ -476,7 +473,7 @@
                 "Entity": "_Measures_Calendar"
               }
             },
-            "Property": "ShowDataInPeriod"
+            "Property": "InSelectedPeriod"
           }
         },
         "type": "Advanced",
@@ -484,12 +481,7 @@
           "Version": 2,
           "From": [
             {
-              "Name": "_",
-              "Entity": "_Measures_Training",
-              "Type": 0
-            },
-            {
-              "Name": "_1",
+              "Name": "m",
               "Entity": "_Measures_Calendar",
               "Type": 0
             }
@@ -503,10 +495,10 @@
                     "Measure": {
                       "Expression": {
                         "SourceRef": {
-                          "Source": "_1"
+                          "Source": "m"
                         }
                       },
-                      "Property": "ShowDataInPeriod"
+                      "Property": "InSelectedPeriod"
                     }
                   },
                   "Right": {
@@ -520,43 +512,7 @@
           ]
         },
         "howCreated": "User"
-      },
-      {
-        "name": "0ecba21a5ead316ad683",
-        "ordinal": 2,
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "Calendar"
-              }
-            },
-            "Property": "QuarterYear"
-          }
-        },
-        "type": "Categorical"
-      },
-      {
-        "name": "a958b6684f1581144090",
-        "ordinal": 3,
-        "field": {
-          "Aggregation": {
-            "Expression": {
-              "Column": {
-                "Expression": {
-                  "SourceRef": {
-                    "Entity": "SafetyTrainingHours_History"
-                  }
-                },
-                "Property": "Value"
-              }
-            },
-            "Function": 0
-          }
-        },
-        "type": "Advanced"
       }
-    ],
-    "filterSortOrder": "Custom"
+    ]
   }
 }

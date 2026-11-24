@@ -1,53 +1,263 @@
 table _Measures_Incidents
 	lineageTag: 97289d38-6fd8-482f-bcfe-873899a7a622
 
+	measure 'Hazard Resolved Goal' =
+			0.8
+		formatString: 0%
+		displayFolder: Hazards
+		lineageTag: 83277cbf-8150-4c08-9f09-e02a00d1dd92
+
 	measure 'Total Hazards Identified' =
-			
-			COALESCE(
+			VAR Start = [PeriodStart]
+			RETURN
 			    CALCULATE(
-			        SUM(Hazards[HazardCount]),
-			        Hazards[HazardType] = "Identified"
-			    ),
-			    0
-			)
-		formatString: 0
+			        SUM(Hazards[Identified]),
+			        REMOVEFILTERS('Calendar'),
+			        'Calendar'[Date] >= Start,
+			        'Calendar'[Date] <= TODAY()
+			    )
+		formatString: #,0
+		displayFolder: Hazards
 		lineageTag: 03e0e46a-bc08-4b3b-9cd1-8bff63d00954
 
-	measure 'High Hazards Identified' =
-			
-			COALESCE(
+	measure 'Total Hazards Resolved' =
+			VAR Start = [PeriodStart]
+			RETURN
 			    CALCULATE(
-			        SUM(Hazards[HazardCount]),
-			        Hazards[HazardType] = "Identified",
-			        Hazards[HazardRisk] = "High"
-			    ),
-			    0
-			)
-		formatString: 0
+			        SUM(Hazards[Resolved]),
+			        REMOVEFILTERS('Calendar'),
+			        'Calendar'[Date] >= Start,
+			        'Calendar'[Date] <= TODAY()
+			    )
+		formatString: #,0
+		displayFolder: Hazards
+		lineageTag: 1c6be241-b8f3-4169-b9f6-1c6a45e8c0c1
+
+	measure 'Total Hazards Resolved %' =
+			DIVIDE([Total Hazards Resolved], [Total Hazards Identified])
+		formatString: 0.0%
+		displayFolder: Hazards
+		lineageTag: 1c815c88-147f-4875-9497-a14b97781053
+
+	measure 'Total Hazards Resolved Detail' =
+			IF([Total Hazards Identified] = 0, "no hazards identified", [Total Hazards Resolved] & " of " & [Total Hazards Identified] & " resolved | goal " & FORMAT([Hazard Resolved Goal], "0%"))
+		displayFolder: Hazards
+		lineageTag: 17e653c0-e40d-4d83-ae9f-fa1257ae8083
+
+	measure 'Total Hazards Resolved Color' =
+			VAR p = [Total Hazards Resolved %]
+			RETURN
+			    IF(ISBLANK(p), "#6B7280", IF(p < [Hazard Resolved Goal], "#C62828", "#2E7D32"))
+		displayFolder: Hazards
+		lineageTag: 749ab6aa-c89f-4048-9c70-abebdf309a89
+
+	measure 'High Hazards Identified' =
+			VAR Start = [PeriodStart]
+			RETURN
+			    CALCULATE(
+			        CALCULATE(SUM(Hazards[Identified]), Hazards[HazardRisk] = "High"),
+			        REMOVEFILTERS('Calendar'),
+			        'Calendar'[Date] >= Start,
+			        'Calendar'[Date] <= TODAY()
+			    )
+		formatString: #,0
+		displayFolder: Hazards
 		lineageTag: 3f69be80-83b6-4192-8fef-aed8d8d902e2
 
 	measure 'High Hazards Resolved' =
-			
-			COALESCE(
+			VAR Start = [PeriodStart]
+			RETURN
 			    CALCULATE(
-			        SUM(Hazards[HazardCount]),
-			        Hazards[HazardType] = "Resolved",
-			        Hazards[HazardRisk] = "High"
-			    ),
-			    0
-			)
-		formatString: 0
+			        CALCULATE(SUM(Hazards[Resolved]), Hazards[HazardRisk] = "High"),
+			        REMOVEFILTERS('Calendar'),
+			        'Calendar'[Date] >= Start,
+			        'Calendar'[Date] <= TODAY()
+			    )
+		formatString: #,0
+		displayFolder: Hazards
 		lineageTag: c4bd5b7c-8c66-4e1d-81af-b84c4f381dbd
 
 	measure 'High Hazards Resolved %' =
-			
-			DIVIDE(
-			    [High Hazards Resolved],
-			    [High Hazards Identified],
-			    "N/A"
-			)
-		formatString: 0.00%;-0.00%;0.00%
+			DIVIDE([High Hazards Resolved], [High Hazards Identified])
+		formatString: 0.0%
+		displayFolder: Hazards
 		lineageTag: aee7b473-3dc8-4055-9c1d-a84e67575bf8
+
+	measure 'High Hazards Resolved Detail' =
+			IF([High Hazards Identified] = 0, "no hazards identified", [High Hazards Resolved] & " of " & [High Hazards Identified] & " resolved | goal " & FORMAT([Hazard Resolved Goal], "0%"))
+		displayFolder: Hazards
+		lineageTag: 1cade22e-0647-4d98-8323-c01676c5c048
+
+	measure 'High Hazards Resolved Color' =
+			VAR p = [High Hazards Resolved %]
+			RETURN
+			    IF(ISBLANK(p), "#6B7280", IF(p < [Hazard Resolved Goal], "#C62828", "#2E7D32"))
+		displayFolder: Hazards
+		lineageTag: 39d99a41-8923-484d-868c-baedeeb2067a
+
+	measure 'Low/Med Hazards Identified' =
+			VAR Start = [PeriodStart]
+			RETURN
+			    CALCULATE(
+			        CALCULATE(SUM(Hazards[Identified]), Hazards[HazardRisk] = "Low/Med"),
+			        REMOVEFILTERS('Calendar'),
+			        'Calendar'[Date] >= Start,
+			        'Calendar'[Date] <= TODAY()
+			    )
+		formatString: #,0
+		displayFolder: Hazards
+		lineageTag: e700bd11-33ed-42ba-b0b5-c96e69dd89c6
+
+	measure 'Low/Med Hazards Resolved' =
+			VAR Start = [PeriodStart]
+			RETURN
+			    CALCULATE(
+			        CALCULATE(SUM(Hazards[Resolved]), Hazards[HazardRisk] = "Low/Med"),
+			        REMOVEFILTERS('Calendar'),
+			        'Calendar'[Date] >= Start,
+			        'Calendar'[Date] <= TODAY()
+			    )
+		formatString: #,0
+		displayFolder: Hazards
+		lineageTag: 8cdcc7c2-3e33-47b3-bacf-d318bc7501f4
+
+	measure 'Low/Med Hazards Resolved %' =
+			DIVIDE([Low/Med Hazards Resolved], [Low/Med Hazards Identified])
+		formatString: 0.0%
+		displayFolder: Hazards
+		lineageTag: 7b3ac714-1527-4092-bff3-d0ecdf53d8b6
+
+	measure 'Low/Med Hazards Resolved Detail' =
+			IF([Low/Med Hazards Identified] = 0, "no hazards identified", [Low/Med Hazards Resolved] & " of " & [Low/Med Hazards Identified] & " resolved | goal " & FORMAT([Hazard Resolved Goal], "0%"))
+		displayFolder: Hazards
+		lineageTag: d1c7229e-d7f1-46b3-a95d-413b0dbdf40f
+
+	measure 'Low/Med Hazards Resolved Color' =
+			VAR p = [Low/Med Hazards Resolved %]
+			RETURN
+			    IF(ISBLANK(p), "#6B7280", IF(p < [Hazard Resolved Goal], "#C62828", "#2E7D32"))
+		displayFolder: Hazards
+		lineageTag: 4276b825-9118-4625-9c6c-87ce17d735f3
+
+	measure 'Hazard View Selected' =
+			SELECTEDVALUE(HazardView[View], "All")
+		displayFolder: Hazards
+		lineageTag: dd2ce508-cbe7-419f-95b9-0548d2f6a94a
+
+	measure 'Hazards Resolved (View)' =
+			SWITCH(
+			    [Hazard View Selected],
+			    "High", CALCULATE(SUM(Hazards[Resolved]), Hazards[HazardRisk] = "High"),
+			    "Low/Med", CALCULATE(SUM(Hazards[Resolved]), Hazards[HazardRisk] = "Low/Med"),
+			    SUM(Hazards[Resolved])
+			)
+		formatString: 0
+		displayFolder: Hazards
+		lineageTag: ff75eb99-b454-4307-8f3a-b1353036e6ae
+
+	measure 'Hazards Unresolved (View)' =
+			SWITCH(
+			    [Hazard View Selected],
+			    "High", CALCULATE(SUM(Hazards[Unresolved]), Hazards[HazardRisk] = "High"),
+			    "Low/Med", CALCULATE(SUM(Hazards[Unresolved]), Hazards[HazardRisk] = "Low/Med"),
+			    SUM(Hazards[Unresolved])
+			)
+		formatString: 0
+		displayFolder: Hazards
+		lineageTag: 66991bfc-61ec-418f-a404-2859cc584517
+
+	measure 'Hazard Chart Title' =
+			"Resolved vs. Unresolved Hazards by " & IF([PeriodMode] = "Quarter", "Quarter", "Month") & " - " &
+			SWITCH([Hazard View Selected], "High", "High Hazards", "Low/Med", "Low / Medium Hazards", "All Hazards")
+		displayFolder: Hazards
+		lineageTag: dade9409-557b-4610-ab2d-305ce2d09be0
+
+	measure 'Injuries (Period)' =
+			VAR Start = [PeriodStart]
+			RETURN
+			    CALCULATE(
+			        SUM(InjuryData_History[InjuryCount]),
+			        REMOVEFILTERS('Calendar'),
+			        'Calendar'[Date] >= Start,
+			        'Calendar'[Date] <= TODAY()
+			    )
+		formatString: #,0
+		displayFolder: Injuries
+		lineageTag: d1685a99-d2b6-46b1-9f7a-4e9087047dd8
+
+	measure 'Injuries Detail' =
+			VAR Start = [PeriodStart]
+			VAR Months =
+			    CALCULATE(
+			        DISTINCTCOUNT(InjuryData_History[MonthStartDate]),
+			        REMOVEFILTERS('Calendar'),
+			        'Calendar'[Date] >= Start,
+			        'Calendar'[Date] <= TODAY()
+			    )
+			RETURN
+			    "avg " & FORMAT(DIVIDE([Injuries (Period)], Months), "0.0") & " per month"
+		displayFolder: Injuries
+		lineageTag: f2af2690-1dd1-4ef2-bdbb-a549f3f95f75
+
+	measure 'Recordable Cases (Period)' =
+			VAR Start = [PeriodStart]
+			RETURN
+			    CALCULATE(
+			        SUM(AttendanceAndCases_History[RecordableCases]),
+			        REMOVEFILTERS('Calendar'),
+			        'Calendar'[Date] >= Start,
+			        'Calendar'[Date] <= TODAY()
+			    )
+		formatString: #,0
+		displayFolder: Injuries
+		lineageTag: 841d7edf-1fd8-475c-aaba-526eafb26294
+
+	measure 'Recordable % of Injuries' =
+			DIVIDE([Recordable Cases (Period)], [Injuries (Period)])
+		formatString: 0.0%
+		displayFolder: Injuries
+		lineageTag: b16e9868-c219-4580-ad5e-9b8e92b95f96
+
+	measure 'Recordable Cases Detail' =
+			FORMAT([Recordable % of Injuries], "0%") & " of injuries"
+		displayFolder: Injuries
+		lineageTag: 1b4bd54e-ce21-4982-9790-d9a669242e86
+
+	measure 'Top Injury Type (Period)' =
+			VAR Start = [PeriodStart]
+			RETURN
+			    CALCULATE(
+			        VAR Tbl =
+			            ADDCOLUMNS(
+			                VALUES(InjuryTypes_Dim[InjuryGroup]),
+			                "Cnt", CALCULATE(SUM(InjuryData_History[InjuryCount]))
+			            )
+			        VAR TopRow = TOPN(1, Tbl, [Cnt], DESC)
+			        RETURN
+			            MAXX(TopRow, InjuryTypes_Dim[InjuryGroup]),
+			        REMOVEFILTERS('Calendar'),
+			        'Calendar'[Date] >= Start,
+			        'Calendar'[Date] <= TODAY()
+			    )
+		displayFolder: Injuries
+		lineageTag: dde06685-5e43-48f8-ac58-b8683b1b1aea
+
+	measure 'Top Injury Type Detail' =
+			VAR Start = [PeriodStart]
+			VAR TopCnt =
+			    CALCULATE(
+			        MAXX(
+			            VALUES(InjuryTypes_Dim[InjuryGroup]),
+			            CALCULATE(SUM(InjuryData_History[InjuryCount]))
+			        ),
+			        REMOVEFILTERS('Calendar'),
+			        'Calendar'[Date] >= Start,
+			        'Calendar'[Date] <= TODAY()
+			    )
+			RETURN
+			    TopCnt & " injuries | " & FORMAT(DIVIDE(TopCnt, [Injuries (Period)]), "0%") & " of total"
+		displayFolder: Injuries
+		lineageTag: 2cdb6b1e-d93e-44f4-a066-47b32c5f0f5e
 
 	column Column
 		formatString: 0

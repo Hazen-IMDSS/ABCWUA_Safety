@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "bd882ef82119b73d9f2d",
   "position": {
-    "x": 188.75,
-    "y": 108.75,
-    "z": 1000,
-    "height": 251.25,
-    "width": 1071.25,
-    "tabOrder": 5000
+    "x": 228,
+    "y": 164,
+    "z": 500,
+    "height": 246,
+    "width": 1040,
+    "tabOrder": 1300
   },
   "visual": {
     "visualType": "lineChart",
@@ -67,28 +67,6 @@
             }
           ]
         }
-      },
-      "sortDefinition": {
-        "sort": [
-          {
-            "field": {
-              "Aggregation": {
-                "Expression": {
-                  "Column": {
-                    "Expression": {
-                      "SourceRef": {
-                        "Entity": "AttendanceAndCases_History"
-                      }
-                    },
-                    "Property": "RecordableCases"
-                  }
-                },
-                "Function": 0
-              }
-            },
-            "direction": "Descending"
-          }
-        ]
       }
     },
     "objects": {
@@ -150,17 +128,10 @@
       "legend": [
         {
           "properties": {
-            "position": {
+            "show": {
               "expr": {
                 "Literal": {
-                  "Value": "'TopCenter'"
-                }
-              }
-            },
-            "fontSize": {
-              "expr": {
-                "Literal": {
-                  "Value": "9D"
+                  "Value": "false"
                 }
               }
             }
@@ -311,6 +282,13 @@
       "title": [
         {
           "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
             "heading": {
               "expr": {
                 "Literal": {
@@ -321,7 +299,7 @@
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "10D"
+                  "Value": "11D"
                 }
               }
             },
@@ -335,14 +313,25 @@
             "alignment": {
               "expr": {
                 "Literal": {
-                  "Value": "'center'"
+                  "Value": "'left'"
+                }
+              }
+            },
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#1F2A3C'"
+                    }
+                  }
                 }
               }
             },
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Training Attendance Percentage Over Time'"
+                  "Value": "'Training Attendance % Over Time (red line = 80% goal)'"
                 }
               }
             }
@@ -362,13 +351,13 @@
           }
         }
       ],
-      "border": [
+      "background": [
         {
           "properties": {
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
+                  "Value": "true"
                 }
               }
             },
@@ -376,9 +365,39 @@
               "solid": {
                 "color": {
                   "expr": {
-                    "ThemeDataColor": {
-                      "ColorId": 0,
-                      "Percent": -0.2
+                    "Literal": {
+                      "Value": "'#FFFFFF'"
+                    }
+                  }
+                }
+              }
+            },
+            "transparency": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "border": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#D9DEE6'"
                     }
                   }
                 }
@@ -387,7 +406,7 @@
             "radius": {
               "expr": {
                 "Literal": {
-                  "Value": "5D"
+                  "Value": "8D"
                 }
               }
             }
@@ -413,23 +432,7 @@
   "filterConfig": {
     "filters": [
       {
-        "name": "4171506439ade64a2538",
-        "ordinal": 0,
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "__Measures"
-              }
-            },
-            "Property": "Attendance %"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "57d0e905248afaed4e73",
-        "ordinal": 1,
+        "name": "f83ec31435494fcb8a24",
         "field": {
           "Measure": {
             "Expression": {
@@ -437,7 +440,7 @@
                 "Entity": "_Measures_Calendar"
               }
             },
-            "Property": "ShowDataInPeriod"
+            "Property": "InSelectedPeriod"
           }
         },
         "type": "Advanced",
@@ -445,12 +448,7 @@
           "Version": 2,
           "From": [
             {
-              "Name": "_",
-              "Entity": "_Measures_Training",
-              "Type": 0
-            },
-            {
-              "Name": "_1",
+              "Name": "m",
               "Entity": "_Measures_Calendar",
               "Type": 0
             }
@@ -464,10 +462,10 @@
                     "Measure": {
                       "Expression": {
                         "SourceRef": {
-                          "Source": "_1"
+                          "Source": "m"
                         }
                       },
-                      "Property": "ShowDataInPeriod"
+                      "Property": "InSelectedPeriod"
                     }
                   },
                   "Right": {
@@ -481,24 +479,7 @@
           ]
         },
         "howCreated": "User"
-      },
-      {
-        "name": "f7137cf3145f1452a918",
-        "ordinal": 2,
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "Calendar"
-              }
-            },
-            "Property": "MonthYear"
-          }
-        },
-        "type": "Categorical",
-        "howCreated": "User"
       }
-    ],
-    "filterSortOrder": "Custom"
+    ]
   }
 }

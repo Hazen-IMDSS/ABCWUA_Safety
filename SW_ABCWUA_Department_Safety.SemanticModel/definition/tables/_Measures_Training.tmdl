@@ -39,6 +39,193 @@ table _Measures_Training
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
+	measure 'Attendance Goal' =
+			0.8
+		formatString: 0%
+		displayFolder: Training
+		lineageTag: e7414a24-62be-4a7c-be9d-2f8a405ef198
+
+	measure 'Avg Attendance % (Period)' =
+			VAR Start = [PeriodStart]
+			RETURN
+			    CALCULATE(
+			        [Attendance %],
+			        REMOVEFILTERS('Calendar'),
+			        'Calendar'[Date] >= Start,
+			        'Calendar'[Date] <= TODAY()
+			    )
+		formatString: 0.0%
+		displayFolder: Training
+		lineageTag: a4596751-9534-4d3d-8895-630a57088ba4
+
+	measure 'Attendance Status Color' =
+			VAR a = [Avg Attendance % (Period)]
+			RETURN
+			    IF(ISBLANK(a), "#6B7280", IF(a < [Attendance Goal], "#C62828", "#2E7D32"))
+		displayFolder: Training
+		lineageTag: 04690626-67e7-4341-a6c0-d1b473acabf4
+
+	measure 'Attendance Goal Text' =
+			"Goal: " & FORMAT([Attendance Goal], "0%") & " or higher"
+		displayFolder: Training
+		lineageTag: 241dbd43-3084-4c59-acbe-f61e54b1d640
+
+	measure 'Periods Reported' =
+			VAR Start = [PeriodStart]
+			VAR IsQtr = [PeriodMode] = "Quarter"
+			RETURN
+			    CALCULATE(
+			        IF(
+			            IsQtr,
+			            COUNTROWS(FILTER(ADDCOLUMNS(VALUES('Calendar'[QuarterYear]), "Att", [Attendance %]), NOT ISBLANK([Att]))),
+			            COUNTROWS(FILTER(ADDCOLUMNS(VALUES('Calendar'[MonthYear]), "Att", [Attendance %]), NOT ISBLANK([Att])))
+			        ),
+			        REMOVEFILTERS('Calendar'),
+			        'Calendar'[Date] >= Start,
+			        'Calendar'[Date] <= TODAY()
+			    ) + 0
+		formatString: 0
+		displayFolder: Training
+		lineageTag: 634883c1-9151-4e7a-b949-c2f82b7fecb2
+
+	measure 'Periods Under Goal' =
+			VAR Start = [PeriodStart]
+			VAR IsQtr = [PeriodMode] = "Quarter"
+			VAR Goal = [Attendance Goal]
+			RETURN
+			    CALCULATE(
+			        IF(
+			            IsQtr,
+			            COUNTROWS(FILTER(ADDCOLUMNS(VALUES('Calendar'[QuarterYear]), "Att", [Attendance %]), NOT ISBLANK([Att]) && [Att] < Goal)),
+			            COUNTROWS(FILTER(ADDCOLUMNS(VALUES('Calendar'[MonthYear]), "Att", [Attendance %]), NOT ISBLANK([Att]) && [Att] < Goal))
+			        ),
+			        REMOVEFILTERS('Calendar'),
+			        'Calendar'[Date] >= Start,
+			        'Calendar'[Date] <= TODAY()
+			    ) + 0
+		formatString: 0
+		displayFolder: Training
+		lineageTag: 2df3059c-e01b-4be9-b38f-e54b501c2bac
+
+	measure 'Periods Under Goal Title' =
+			IF([PeriodMode] = "Quarter", "QUARTERS BELOW GOAL", "MONTHS BELOW GOAL")
+		displayFolder: Training
+		lineageTag: 9b583160-48b7-47f2-be56-16f3b78d6424
+
+	measure 'Periods Under Goal Detail' =
+			"out of " & [Periods Reported] & " " & [Period Unit] & " reported"
+		displayFolder: Training
+		lineageTag: 557ca381-936a-4f68-9f38-a6bbe8380325
+
+	measure 'Periods Under Goal Color' =
+			IF([Periods Reported] = 0, "#6B7280", IF([Periods Under Goal] > 0, "#C62828", "#2E7D32"))
+		displayFolder: Training
+		lineageTag: 5c7d8b3d-9a62-4df8-a96a-3d2873944fd6
+
+	measure 'Training Hours (Period)' =
+			VAR Start = [PeriodStart]
+			RETURN
+			    CALCULATE(
+			        SUM(SafetyTrainingHours_History[Value]),
+			        REMOVEFILTERS('Calendar'),
+			        'Calendar'[Date] >= Start,
+			        'Calendar'[Date] <= TODAY()
+			    )
+		formatString: #,0
+		displayFolder: Training
+		lineageTag: 386fe62c-6e3a-4f92-b40a-29ec0a9d21b8
+
+	measure 'Training Hours Detail' =
+			VAR Start = [PeriodStart]
+			VAR Months =
+			    CALCULATE(
+			        DISTINCTCOUNT(SafetyTrainingHours_History[MonthStartDate]),
+			        REMOVEFILTERS('Calendar'),
+			        'Calendar'[Date] >= Start,
+			        'Calendar'[Date] <= TODAY()
+			    )
+			RETURN
+			    "avg " & FORMAT(DIVIDE([Training Hours (Period)], Months), "#,0") & " hrs per month"
+		displayFolder: Training
+		lineageTag: 1b7a2a82-05e1-40ea-9ee5-793f00cd8984
+
+	measure 'Avg Hours per Group (Period)' =
+			VAR Start = [PeriodStart]
+			RETURN
+			    CALCULATE(
+			        AVERAGEX(
+			            VALUES(SafetyTrainingHours_History[GROUPS]),
+			            CALCULATE(SUM(SafetyTrainingHours_History[Value]))
+			        ),
+			        REMOVEFILTERS('Calendar'),
+			        'Calendar'[Date] >= Start,
+			        'Calendar'[Date] <= TODAY()
+			    )
+		formatString: #,0.0
+		displayFolder: Training
+		lineageTag: 5d9c8b2c-4ee8-46f6-814c-9c1f6ac5c53f
+
+	measure 'Group Count (Period)' =
+			VAR Start = [PeriodStart]
+			RETURN
+			    CALCULATE(
+			        DISTINCTCOUNT(SafetyTrainingHours_History[GROUPS]),
+			        REMOVEFILTERS('Calendar'),
+			        'Calendar'[Date] >= Start,
+			        'Calendar'[Date] <= TODAY()
+			    )
+		formatString: 0
+		displayFolder: Training
+		lineageTag: 89752a9b-11b3-4d13-abb3-3c2220fe5f23
+
+	measure 'Avg Hours per Group Detail' =
+			"across " & [Group Count (Period)] & " groups"
+		displayFolder: Training
+		lineageTag: 3cf1df17-6a0d-4dca-9258-72f4509a2ab3
+
+	measure 'Top Group (Period)' =
+			VAR Start = [PeriodStart]
+			RETURN
+			    CALCULATE(
+			        VAR Tbl =
+			            ADDCOLUMNS(
+			                VALUES(SafetyTrainingHours_History[GROUPS]),
+			                "Hrs", CALCULATE(SUM(SafetyTrainingHours_History[Value]))
+			            )
+			        VAR TopRow = TOPN(1, Tbl, [Hrs], DESC)
+			        RETURN
+			            MAXX(TopRow, SafetyTrainingHours_History[GROUPS]),
+			        REMOVEFILTERS('Calendar'),
+			        'Calendar'[Date] >= Start,
+			        'Calendar'[Date] <= TODAY()
+			    )
+		displayFolder: Training
+		lineageTag: 7d4a5fe3-d7d8-461d-8482-e4deb2a0aef5
+
+	measure 'Top Group Hours (Period)' =
+			VAR Start = [PeriodStart]
+			RETURN
+			    CALCULATE(
+			        VAR Tbl =
+			            ADDCOLUMNS(
+			                VALUES(SafetyTrainingHours_History[GROUPS]),
+			                "Hrs", CALCULATE(SUM(SafetyTrainingHours_History[Value]))
+			            )
+			        RETURN
+			            MAXX(Tbl, [Hrs]),
+			        REMOVEFILTERS('Calendar'),
+			        'Calendar'[Date] >= Start,
+			        'Calendar'[Date] <= TODAY()
+			    )
+		formatString: #,0
+		displayFolder: Training
+		lineageTag: b67be31b-649a-4680-84be-e7b68e7ae5f0
+
+	measure 'Top Group Detail' =
+			FORMAT([Top Group Hours (Period)], "#,0") & " hrs | " & FORMAT(DIVIDE([Top Group Hours (Period)], [Training Hours (Period)]), "0%") & " of total"
+		displayFolder: Training
+		lineageTag: bde2c352-e207-4366-b017-3ea5c7534657
+
 	column Column
 		formatString: 0
 		lineageTag: d0945122-d3ff-46eb-974a-c54e6564d70b

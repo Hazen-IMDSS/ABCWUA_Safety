@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "116edefc2815d2e727d4",
   "position": {
-    "x": 178.11511701454776,
-    "y": 100.3921568627451,
-    "z": 1000,
-    "height": 242.88425047438332,
-    "width": 1081.6445287792537,
-    "tabOrder": 5000
+    "x": 228,
+    "y": 164,
+    "z": 500,
+    "height": 240,
+    "width": 1040,
+    "tabOrder": 1400
   },
   "visual": {
     "visualType": "lineStackedColumnComboChart",
@@ -450,6 +450,13 @@
       "title": [
         {
           "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
             "heading": {
               "expr": {
                 "Literal": {
@@ -460,7 +467,7 @@
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "10D"
+                  "Value": "11D"
                 }
               }
             },
@@ -474,14 +481,25 @@
             "alignment": {
               "expr": {
                 "Literal": {
-                  "Value": "'center'"
+                  "Value": "'left'"
+                }
+              }
+            },
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#1F2A3C'"
+                    }
+                  }
                 }
               }
             },
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Number of Injuries and Recordable Cases Over Time'"
+                  "Value": "'Injuries and Recordable Cases Over Time'"
                 }
               }
             }
@@ -501,13 +519,13 @@
           }
         }
       ],
-      "border": [
+      "background": [
         {
           "properties": {
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
+                  "Value": "true"
                 }
               }
             },
@@ -515,9 +533,39 @@
               "solid": {
                 "color": {
                   "expr": {
-                    "ThemeDataColor": {
-                      "ColorId": 0,
-                      "Percent": -0.2
+                    "Literal": {
+                      "Value": "'#FFFFFF'"
+                    }
+                  }
+                }
+              }
+            },
+            "transparency": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "border": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#D9DEE6'"
                     }
                   }
                 }
@@ -526,7 +574,7 @@
             "radius": {
               "expr": {
                 "Literal": {
-                  "Value": "5D"
+                  "Value": "8D"
                 }
               }
             }
@@ -579,7 +627,7 @@
   "filterConfig": {
     "filters": [
       {
-        "name": "a6754c16178635dd4d29",
+        "name": "7ca32f2f8d484be2888a",
         "field": {
           "Measure": {
             "Expression": {
@@ -587,7 +635,7 @@
                 "Entity": "_Measures_Calendar"
               }
             },
-            "Property": "ShowDataInPeriod"
+            "Property": "InSelectedPeriod"
           }
         },
         "type": "Advanced",
@@ -595,7 +643,7 @@
           "Version": 2,
           "From": [
             {
-              "Name": "_",
+              "Name": "m",
               "Entity": "_Measures_Calendar",
               "Type": 0
             }
@@ -609,10 +657,10 @@
                     "Measure": {
                       "Expression": {
                         "SourceRef": {
-                          "Source": "_"
+                          "Source": "m"
                         }
                       },
-                      "Property": "ShowDataInPeriod"
+                      "Property": "InSelectedPeriod"
                     }
                   },
                   "Right": {

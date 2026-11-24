@@ -191,6 +191,54 @@ table _Measures_Calendar
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
+	measure PeriodMode =
+			IF(
+			    SELECTEDVALUE(Calendar_FiscalPeriod[Calendar_FiscalPeriod Fields], "'Calendar'[MonthYear]") = "'Calendar'[QuarterYear]",
+			    "Quarter",
+			    "Month"
+			)
+		displayFolder: Period Selection
+		lineageTag: 1c201180-b484-4cbe-8a35-d89bc5e4c256
+
+	measure 'Period Unit' =
+			IF([PeriodMode] = "Quarter", "quarters", "months")
+		displayFolder: Period Selection
+		lineageTag: f2f7283c-13a6-4ea3-b6b6-c3b0b6c4384a
+
+	measure PeriodStart =
+			//First day of the selected "Show Data From" month. In Quarter mode it snaps back to the start of that fiscal quarter.
+			VAR SelMonth = SELECTEDVALUE(TimeSelect_MonthYear[MonthYear])
+			VAR SelStart = IF(ISBLANK(SelMonth), DATE(2009, 1, 1), DATE(YEAR(SelMonth), MONTH(SelMonth), 1))
+			VAR QtrStart =
+			    CALCULATE(
+			        MIN('Calendar'[BeginningofQuarter]),
+			        REMOVEFILTERS('Calendar'),
+			        'Calendar'[Date] = SelStart
+			    )
+			RETURN
+			    IF([PeriodMode] = "Quarter", QtrStart, SelStart)
+		formatString: General Date
+		displayFolder: Period Selection
+		lineageTag: f55bbb2c-c2a4-4f9b-9c73-4fcdcd65e215
+
+	measure InSelectedPeriod =
+			//Use as a visual-level filter (= 1) on any chart whose axis is a Calendar period.
+			VAR FirstDate = MIN('Calendar'[Date])
+			RETURN
+			    IF(FirstDate >= [PeriodStart] && FirstDate <= TODAY(), 1, 0)
+		formatString: 0
+		displayFolder: Period Selection
+		lineageTag: c60b66e3-eea0-4427-997a-9b5847c9bea7
+
+	measure FromMonthOption =
+			//Use as a slicer-level filter (= 1) on TimeSelect_MonthYear: only months with data (FY22 onward) up to today.
+			VAR m = SELECTEDVALUE(TimeSelect_MonthYear[MonthYear])
+			RETURN
+			    IF(m >= DATE(2021, 7, 31) && m <= EOMONTH(TODAY(), 0), 1, 0)
+		formatString: 0
+		displayFolder: Period Selection
+		lineageTag: ff6db504-62d3-4945-9fdb-b339d5294f27
+
 	column Column
 		isHidden
 		formatString: 0

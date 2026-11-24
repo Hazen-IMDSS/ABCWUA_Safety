@@ -1,0 +1,26 @@
+table HazardView
+	lineageTag: 401314e4-e8e4-460a-9cde-d87da3e469e6
+
+	column View
+		lineageTag: a4c6e8f7-72a2-4c9b-af05-6a359e393501
+		summarizeBy: none
+		sourceColumn: [View]
+		sortByColumn: 'View Order'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'View Order'
+		isHidden
+		formatString: 0
+		lineageTag: 72850eb2-5102-4f8e-96a0-155c0348f4fa
+		summarizeBy: sum
+		sourceColumn: [View Order]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition HazardView = calculated
+		mode: import
+		source = DATATABLE("View", STRING, "View Order", INTEGER, {{"All", 0}, {"High", 1}, {"Low/Med", 2}})
+
+	annotation PBI_Id = 54e79086b5cc4ba2977bc0cd2b4f6a49
+

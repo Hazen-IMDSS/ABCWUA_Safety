@@ -11,16 +11,30 @@
     "parameters": []
   },
   "visibility": "HiddenInViewMode",
-  "visualInteractions": [
-    {
-      "source": "ce98e2e672edea8a25d8",
-      "target": "1c294abd9eab86e65369",
-      "type": "DataFilter"
-    },
-    {
-      "source": "ce98e2e672edea8a25d8",
-      "target": "55a3709a8cb005656663",
-      "type": "NoFilter"
-    }
-  ]
+  "objects": {
+    "background": [
+      {
+        "properties": {
+          "color": {
+            "solid": {
+              "color": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'#EEF1F5'"
+                  }
+                }
+              }
+            }
+          },
+          "transparency": {
+            "expr": {
+              "Literal": {
+                "Value": "0D"
+              }
+            }
+          }
+        }
+      }
+    ]
+  }
 }
