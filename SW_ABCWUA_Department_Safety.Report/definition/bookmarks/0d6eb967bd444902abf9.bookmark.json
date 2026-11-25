@@ -1,0 +1,59 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmark/2.1.0/schema.json",
+  "displayName": "Incidents - Filters Open",
+  "name": "0d6eb967bd444902abf9",
+  "options": {
+    "applyOnlyToTargetVisuals": true,
+    "targetVisualNames": [
+      "fe2b9697b2d7483ab4ea",
+      "ddbdd8edee42432f9759",
+      "6e5d0550ecc04dfba438",
+      "3670ad6881b846a9962a",
+      "4008f903ea944e0cad3f"
+    ],
+    "suppressData": true
+  },
+  "explorationState": {
+    "version": "1.0",
+    "activeSection": "fbb4185d4a3cce4f6c92",
+    "sections": {
+      "fbb4185d4a3cce4f6c92": {
+        "visualContainers": {
+          "fe2b9697b2d7483ab4ea": {
+            "singleVisual": {
+              "visualType": "textbox",
+              "objects": {}
+            }
+          },
+          "ddbdd8edee42432f9759": {
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {}
+            }
+          },
+          "6e5d0550ecc04dfba438": {
+            "singleVisual": {
+              "visualType": "actionButton",
+              "objects": {}
+            }
+          },
+          "3670ad6881b846a9962a": {
+            "singleVisual": {
+              "visualType": "actionButton",
+              "objects": {}
+            }
+          },
+          "4008f903ea944e0cad3f": {
+            "singleVisual": {
+              "visualType": "actionButton",
+              "objects": {},
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

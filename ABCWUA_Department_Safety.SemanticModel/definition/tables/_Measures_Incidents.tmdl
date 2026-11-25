@@ -1,0 +1,409 @@
+table _Measures_Incidents
+	lineageTag: 97289d38-6fd8-482f-bcfe-873899a7a622
+
+	measure 'Total Hazards Identified' =
+			VAR RangeStart = [PeriodStart]
+			RETURN
+			    CALCULATE(
+			        SUM(Hazards[Identified]),
+			        REMOVEFILTERS('Calendar'),
+			        'Calendar'[Date] >= RangeStart,
+			        'Calendar'[Date] <= TODAY()
+			    )
+		formatString: #,0
+		displayFolder: Hazards
+		lineageTag: 03e0e46a-bc08-4b3b-9cd1-8bff63d00954
+
+	measure 'High Hazards Identified' =
+			VAR RangeStart = [PeriodStart]
+			RETURN
+			    CALCULATE(
+			        CALCULATE(SUM(Hazards[Identified]), Hazards[HazardRisk] = "High"),
+			        REMOVEFILTERS('Calendar'),
+			        'Calendar'[Date] >= RangeStart,
+			        'Calendar'[Date] <= TODAY()
+			    )
+		formatString: #,0
+		displayFolder: Hazards
+		lineageTag: 3f69be80-83b6-4192-8fef-aed8d8d902e2
+
+	measure 'High Hazards Resolved' =
+			VAR RangeStart = [PeriodStart]
+			RETURN
+			    CALCULATE(
+			        CALCULATE(SUM(Hazards[Resolved]), Hazards[HazardRisk] = "High"),
+			        REMOVEFILTERS('Calendar'),
+			        'Calendar'[Date] >= RangeStart,
+			        'Calendar'[Date] <= TODAY()
+			    )
+		formatString: #,0
+		displayFolder: Hazards
+		lineageTag: c4bd5b7c-8c66-4e1d-81af-b84c4f381dbd
+
+	measure 'High Hazards Resolved %' = DIVIDE([High Hazards Resolved], [High Hazards Identified])
+		formatString: 0.0%
+		displayFolder: Hazards
+		lineageTag: aee7b473-3dc8-4055-9c1d-a84e67575bf8
+
+	measure 'Hazard Resolved Goal' = 0.8
+		formatString: 0%
+		displayFolder: Hazards
+		lineageTag: 83277cbf-8150-4c08-9f09-e02a00d1dd92
+
+	measure 'Total Hazards Resolved' =
+			VAR RangeStart = [PeriodStart]
+			RETURN
+			    CALCULATE(
+			        SUM(Hazards[Resolved]),
+			        REMOVEFILTERS('Calendar'),
+			        'Calendar'[Date] >= RangeStart,
+			        'Calendar'[Date] <= TODAY()
+			    )
+		formatString: #,0
+		displayFolder: Hazards
+		lineageTag: 1c6be241-b8f3-4169-b9f6-1c6a45e8c0c1
+
+	measure 'Total Hazards Resolved %' = DIVIDE([Total Hazards Resolved], [Total Hazards Identified])
+		formatString: 0.0%
+		displayFolder: Hazards
+		lineageTag: 1c815c88-147f-4875-9497-a14b97781053
+
+	measure 'Total Hazards Resolved Detail' = IF([Total Hazards Identified] = 0, "no hazards identified", [Total Hazards Resolved] & " of " & [Total Hazards Identified] & " resolved | goal " & FORMAT([Hazard Resolved Goal], "0%"))
+		displayFolder: Hazards
+		lineageTag: 17e653c0-e40d-4d83-ae9f-fa1257ae8083
+
+	measure 'Total Hazards Resolved Color' =
+			VAR p = [Total Hazards Resolved %]
+			RETURN
+			    IF(ISBLANK(p), "#6B7280", IF(p < [Hazard Resolved Goal], "#C62828", "#2E7D32"))
+		displayFolder: Hazards
+		lineageTag: 749ab6aa-c89f-4048-9c70-abebdf309a89
+
+	measure 'High Hazards Resolved Detail' = IF([High Hazards Identified] = 0, "no hazards identified", [High Hazards Resolved] & " of " & [High Hazards Identified] & " resolved | goal " & FORMAT([Hazard Resolved Goal], "0%"))
+		displayFolder: Hazards
+		lineageTag: 1cade22e-0647-4d98-8323-c01676c5c048
+
+	measure 'High Hazards Resolved Color' =
+			VAR p = [High Hazards Resolved %]
+			RETURN
+			    IF(ISBLANK(p), "#6B7280", IF(p < [Hazard Resolved Goal], "#C62828", "#2E7D32"))
+		displayFolder: Hazards
+		lineageTag: 39d99a41-8923-484d-868c-baedeeb2067a
+
+	measure 'Low/Med Hazards Identified' =
+			VAR RangeStart = [PeriodStart]
+			RETURN
+			    CALCULATE(
+			        CALCULATE(SUM(Hazards[Identified]), Hazards[HazardRisk] = "Low/Med"),
+			        REMOVEFILTERS('Calendar'),
+			        'Calendar'[Date] >= RangeStart,
+			        'Calendar'[Date] <= TODAY()
+			    )
+		formatString: #,0
+		displayFolder: Hazards
+		lineageTag: e700bd11-33ed-42ba-b0b5-c96e69dd89c6
+
+	measure 'Low/Med Hazards Resolved' =
+			VAR RangeStart = [PeriodStart]
+			RETURN
+			    CALCULATE(
+			        CALCULATE(SUM(Hazards[Resolved]), Hazards[HazardRisk] = "Low/Med"),
+			        REMOVEFILTERS('Calendar'),
+			        'Calendar'[Date] >= RangeStart,
+			        'Calendar'[Date] <= TODAY()
+			    )
+		formatString: #,0
+		displayFolder: Hazards
+		lineageTag: 8cdcc7c2-3e33-47b3-bacf-d318bc7501f4
+
+	measure 'Low/Med Hazards Resolved %' = DIVIDE([Low/Med Hazards Resolved], [Low/Med Hazards Identified])
+		formatString: 0.0%
+		displayFolder: Hazards
+		lineageTag: 7b3ac714-1527-4092-bff3-d0ecdf53d8b6
+
+	measure 'Low/Med Hazards Resolved Detail' = IF([Low/Med Hazards Identified] = 0, "no hazards identified", [Low/Med Hazards Resolved] & " of " & [Low/Med Hazards Identified] & " resolved | goal " & FORMAT([Hazard Resolved Goal], "0%"))
+		displayFolder: Hazards
+		lineageTag: d1c7229e-d7f1-46b3-a95d-413b0dbdf40f
+
+	measure 'Low/Med Hazards Resolved Color' =
+			VAR p = [Low/Med Hazards Resolved %]
+			RETURN
+			    IF(ISBLANK(p), "#6B7280", IF(p < [Hazard Resolved Goal], "#C62828", "#2E7D32"))
+		displayFolder: Hazards
+		lineageTag: 4276b825-9118-4625-9c6c-87ce17d735f3
+
+	measure 'Hazard View Selected' = SELECTEDVALUE(HazardView[View], "All")
+		displayFolder: Hazards
+		lineageTag: dd2ce508-cbe7-419f-95b9-0548d2f6a94a
+
+	measure 'Hazards Resolved (View)' =
+			SWITCH(
+			    [Hazard View Selected],
+			    "High", CALCULATE(SUM(Hazards[Resolved]), Hazards[HazardRisk] = "High"),
+			    "Low/Med", CALCULATE(SUM(Hazards[Resolved]), Hazards[HazardRisk] = "Low/Med"),
+			    SUM(Hazards[Resolved])
+			)
+		formatString: 0
+		displayFolder: Hazards
+		lineageTag: ff75eb99-b454-4307-8f3a-b1353036e6ae
+
+	measure 'Hazards Unresolved (View)' =
+			SWITCH(
+			    [Hazard View Selected],
+			    "High", CALCULATE(SUM(Hazards[Unresolved]), Hazards[HazardRisk] = "High"),
+			    "Low/Med", CALCULATE(SUM(Hazards[Unresolved]), Hazards[HazardRisk] = "Low/Med"),
+			    SUM(Hazards[Unresolved])
+			)
+		formatString: 0
+		displayFolder: Hazards
+		lineageTag: 66991bfc-61ec-418f-a404-2859cc584517
+
+	measure 'Hazard Chart Title' = "Resolved vs. Unresolved Hazards by " & IF([PeriodMode] = "Quarter", "Quarter", "Month")
+		displayFolder: Hazards
+		lineageTag: dade9409-557b-4610-ab2d-305ce2d09be0
+
+	measure 'Injuries (Period)' =
+			VAR RangeStart = [PeriodStart]
+			RETURN
+			    CALCULATE(
+			        SUM(InjuryData_History[InjuryCount]),
+			        REMOVEFILTERS('Calendar'),
+			        'Calendar'[Date] >= RangeStart,
+			        'Calendar'[Date] <= TODAY()
+			    )
+		formatString: #,0
+		displayFolder: Injuries
+		lineageTag: d1685a99-d2b6-46b1-9f7a-4e9087047dd8
+
+	measure 'Injuries Detail' =
+			VAR RangeStart = [PeriodStart]
+			VAR Months =
+			    CALCULATE(
+			        DISTINCTCOUNT(InjuryData_History[MonthStartDate]),
+			        REMOVEFILTERS('Calendar'),
+			        'Calendar'[Date] >= RangeStart,
+			        'Calendar'[Date] <= TODAY()
+			    )
+			RETURN
+			    "avg " & FORMAT(DIVIDE([Injuries (Period)], Months), "0.0") & " per month"
+		displayFolder: Injuries
+		lineageTag: f2af2690-1dd1-4ef2-bdbb-a549f3f95f75
+
+	measure 'Recordable Cases (Period)' =
+			VAR RangeStart = [PeriodStart]
+			RETURN
+			    CALCULATE(
+			        SUM(AttendanceAndCases_History[RecordableCases]),
+			        REMOVEFILTERS('Calendar'),
+			        'Calendar'[Date] >= RangeStart,
+			        'Calendar'[Date] <= TODAY()
+			    )
+		formatString: #,0
+		displayFolder: Injuries
+		lineageTag: 841d7edf-1fd8-475c-aaba-526eafb26294
+
+	measure 'Recordable % of Injuries' = DIVIDE([Recordable Cases (Period)], [Injuries (Period)])
+		formatString: 0.0%
+		displayFolder: Injuries
+		lineageTag: b16e9868-c219-4580-ad5e-9b8e92b95f96
+
+	measure 'Recordable Cases Detail' = FORMAT([Recordable % of Injuries], "0%") & " of injuries"
+		displayFolder: Injuries
+		lineageTag: 1b4bd54e-ce21-4982-9790-d9a669242e86
+
+	measure 'Top Injury Type (Period)' =
+			VAR RangeStart = [PeriodStart]
+			RETURN
+			    CALCULATE(
+			        VAR Tbl =
+			            ADDCOLUMNS(
+			                VALUES(InjuryTypes_Dim[InjuryGroup]),
+			                "Cnt", CALCULATE(SUM(InjuryData_History[InjuryCount]))
+			            )
+			        VAR TopRow = TOPN(1, Tbl, [Cnt], DESC)
+			        RETURN
+			            MAXX(TopRow, InjuryTypes_Dim[InjuryGroup]),
+			        REMOVEFILTERS('Calendar'),
+			        'Calendar'[Date] >= RangeStart,
+			        'Calendar'[Date] <= TODAY()
+			    )
+		displayFolder: Injuries
+		lineageTag: dde06685-5e43-48f8-ac58-b8683b1b1aea
+
+	measure 'Top Injury Type Detail' =
+			VAR RangeStart = [PeriodStart]
+			VAR TopCnt =
+			    CALCULATE(
+			        MAXX(
+			            VALUES(InjuryTypes_Dim[InjuryGroup]),
+			            CALCULATE(SUM(InjuryData_History[InjuryCount]))
+			        ),
+			        REMOVEFILTERS('Calendar'),
+			        'Calendar'[Date] >= RangeStart,
+			        'Calendar'[Date] <= TODAY()
+			    )
+			RETURN
+			    TopCnt & " injuries | " & FORMAT(DIVIDE(TopCnt, [Injuries (Period)]), "0%") & " of total"
+		displayFolder: Injuries
+		lineageTag: 2cdb6b1e-d93e-44f4-a066-47b32c5f0f5e
+
+	measure 'Injuries (Chart)' = IF([InSelectedPeriod] = 1, SUM(InjuryData_History[InjuryCount]))
+		formatString: 0
+		displayFolder: Chart Series
+		lineageTag: 1b264b76-ad38-4c05-afce-206a2793a946
+
+	measure 'Recordable Cases (Chart)' = IF([InSelectedPeriod] = 1, SUM(AttendanceAndCases_History[RecordableCases]))
+		formatString: 0
+		displayFolder: Chart Series
+		lineageTag: a036a69f-fee3-4aca-908d-66693d1575df
+
+	measure 'Hazards Resolved (Chart)' = IF([InSelectedPeriod] = 1, [Hazards Resolved (View)])
+		formatString: 0
+		displayFolder: Chart Series
+		lineageTag: df34c899-92de-4777-913a-42998e5de986
+
+	measure 'Hazards Unresolved (Chart)' = IF([InSelectedPeriod] = 1, [Hazards Unresolved (View)])
+		formatString: 0
+		displayFolder: Chart Series
+		lineageTag: bdabd375-4662-413b-8feb-7f544008278c
+
+	measure 'Data Through (Incidents)' = "Data through " & FORMAT(MAXX(FILTER(ALL(InjuryData_History), InjuryData_History[InjuryCount] > 0), InjuryData_History[MonthStartDate]), "mmmm yyyy")
+		displayFolder: Data Freshness
+		lineageTag: 6c3531a9-9099-47fe-b12f-5fa4118ac8d5
+
+	measure 'FYTD Anchor' = MAXX(FILTER(ALL(InjuryData_History), InjuryData_History[InjuryCount] > 0), InjuryData_History[MonthStartDate])
+		formatString: General Date
+		displayFolder: Trends
+		lineageTag: 87977015-edc1-440f-a0fc-256ab63180ed
+
+	measure 'FYTD Start' =
+			VAR vA = [FYTD Anchor]
+			RETURN
+			    DATE(IF(MONTH(vA) >= 7, YEAR(vA), YEAR(vA) - 1), 7, 1)
+		formatString: General Date
+		displayFolder: Trends
+		lineageTag: a099897c-2542-4a2d-b3be-fd1fe417fd58
+
+	measure 'Injuries FYTD' =
+			VAR vS = [FYTD Start]
+			VAR vA = [FYTD Anchor]
+			RETURN
+			    CALCULATE(
+			        SUM(InjuryData_History[InjuryCount]),
+			        REMOVEFILTERS('Calendar'),
+			        'Calendar'[Date] >= vS,
+			        'Calendar'[Date] <= vA
+			    )
+		formatString: #,0
+		displayFolder: Trends
+		lineageTag: 6ea06cb6-4406-468c-913d-4a80edd9d50a
+
+	measure 'Injuries FYTD Prior' =
+			VAR vS = EDATE([FYTD Start], -12)
+			VAR vA = EDATE([FYTD Anchor], -12)
+			RETURN
+			    CALCULATE(
+			        SUM(InjuryData_History[InjuryCount]),
+			        REMOVEFILTERS('Calendar'),
+			        'Calendar'[Date] >= vS,
+			        'Calendar'[Date] <= vA
+			    )
+		formatString: #,0
+		displayFolder: Trends
+		lineageTag: 27742e41-fc96-4df1-b933-7795eadc2624
+
+	measure 'Recordable FYTD' =
+			VAR vS = [FYTD Start]
+			VAR vA = [FYTD Anchor]
+			RETURN
+			    CALCULATE(
+			        SUM(AttendanceAndCases_History[RecordableCases]),
+			        REMOVEFILTERS('Calendar'),
+			        'Calendar'[Date] >= vS,
+			        'Calendar'[Date] <= vA
+			    )
+		formatString: #,0
+		displayFolder: Trends
+		lineageTag: a8a13d8a-a2eb-4d45-add4-1e16e5c37cd4
+
+	measure 'Recordable FYTD Prior' =
+			VAR vS = EDATE([FYTD Start], -12)
+			VAR vA = EDATE([FYTD Anchor], -12)
+			RETURN
+			    CALCULATE(
+			        SUM(AttendanceAndCases_History[RecordableCases]),
+			        REMOVEFILTERS('Calendar'),
+			        'Calendar'[Date] >= vS,
+			        'Calendar'[Date] <= vA
+			    )
+		formatString: #,0
+		displayFolder: Trends
+		lineageTag: f261b363-f039-43e7-82c8-fba2506559f4
+
+	measure 'Recordable % FYTD' = DIVIDE([Recordable FYTD], [Injuries FYTD])
+		formatString: 0.0%
+		displayFolder: Trends
+		lineageTag: 0a0dd758-0371-4bc5-935e-482e19c917fe
+
+	measure 'Avg Injuries per Month FYTD' = DIVIDE([Injuries FYTD], DATEDIFF([FYTD Start], [FYTD Anchor], MONTH) + 1)
+		formatString: 0.0
+		displayFolder: Trends
+		lineageTag: aff3e925-97aa-4fad-8c3e-9252db5356aa
+
+	measure 'Injuries FYTD Title' = "INJURIES, FY" & RIGHT(YEAR([FYTD Start]) + 1, 2) & " TO DATE"
+		displayFolder: Trends
+		lineageTag: b9050edd-2cae-4362-aa57-303ef8b112ac
+
+	measure 'Recordable FYTD Title' = "RECORDABLE CASES, FY" & RIGHT(YEAR([FYTD Start]) + 1, 2) & " TO DATE"
+		displayFolder: Trends
+		lineageTag: 790378c9-984c-4738-9fdd-ad4c0fdd4e41
+
+	measure 'Injuries FYTD Detail' = "vs " & [Injuries FYTD Prior] & " same period last FY"
+		displayFolder: Trends
+		lineageTag: dd057528-15de-44b7-9404-4d7e6b9449bf
+
+	measure 'Recordable FYTD Detail' = "vs " & [Recordable FYTD Prior] & " same period last FY"
+		displayFolder: Trends
+		lineageTag: 4fffc6ee-fec3-4300-98fe-6fb6c387833b
+
+	measure 'Cumulative Injuries' =
+			VAR vM = MAX('Calendar'[FYMonthNumber])
+			VAR vThis = SUM(InjuryData_History[InjuryCount])
+			RETURN
+			    IF(
+			        NOT ISBLANK(vThis),
+			        CALCULATE(SUM(InjuryData_History[InjuryCount]), REMOVEFILTERS('Calendar'[MonthName]), 'Calendar'[FYMonthNumber] <= vM)
+			    )
+		formatString: 0
+		displayFolder: Trends
+		lineageTag: 9ce4e1e0-f5cc-41bd-b037-84ab68f9bcc0
+
+	measure 'Cumulative Recordable Cases' =
+			VAR vM = MAX('Calendar'[FYMonthNumber])
+			VAR vThis = SUM(AttendanceAndCases_History[RecordableCases])
+			RETURN
+			    IF(
+			        NOT ISBLANK(vThis),
+			        CALCULATE(SUM(AttendanceAndCases_History[RecordableCases]), REMOVEFILTERS('Calendar'[MonthName]), 'Calendar'[FYMonthNumber] <= vM)
+			    )
+		formatString: 0
+		displayFolder: Trends
+		lineageTag: 3f20ae93-b0a4-4d63-8b5e-e24b152cbfe5
+
+	column Column
+		formatString: 0
+		lineageTag: ad8956fb-a322-47af-84f4-e1cc1259a974
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Column]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition _Measures_Incidents = calculated
+		mode: import
+		source = Row("Column", BLANK())
+
+	annotation PBI_Id = bcd74338f95b48cdada4ec0269d3adfd
+
+	annotation 436ba87b-9c83-4389-a31b-ebd06a36be98 = {"Expression":""}
+

@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "116edefc2815d2e727d4",
   "position": {
-    "x": 228,
-    "y": 164,
+    "x": 200,
+    "y": 204,
     "z": 500,
-    "height": 240,
-    "width": 1040,
-    "tabOrder": 1400
+    "height": 220,
+    "width": 1068,
+    "tabOrder": 2100
   },
   "visual": {
     "visualType": "lineStackedColumnComboChart",
@@ -54,24 +54,18 @@
           "projections": [
             {
               "field": {
-                "Aggregation": {
+                "Measure": {
                   "Expression": {
-                    "Column": {
-                      "Expression": {
-                        "SourceRef": {
-                          "Entity": "InjuryData_History"
-                        }
-                      },
-                      "Property": "InjuryCount"
+                    "SourceRef": {
+                      "Entity": "_Measures_Incidents"
                     }
                   },
-                  "Function": 0
+                  "Property": "Injuries (Chart)"
                 }
               },
-              "queryRef": "Sum(InjuryData_History.InjuryCount)",
-              "nativeQueryRef": "Injuries1",
-              "displayName": "Injuries",
-              "format": "0"
+              "queryRef": "_Measures_Incidents.Injuries (Chart)",
+              "nativeQueryRef": "Injuries",
+              "displayName": "Injuries"
             }
           ]
         },
@@ -79,24 +73,18 @@
           "projections": [
             {
               "field": {
-                "Aggregation": {
+                "Measure": {
                   "Expression": {
-                    "Column": {
-                      "Expression": {
-                        "SourceRef": {
-                          "Entity": "AttendanceAndCases_History"
-                        }
-                      },
-                      "Property": "RecordableCases"
+                    "SourceRef": {
+                      "Entity": "_Measures_Incidents"
                     }
                   },
-                  "Function": 0
+                  "Property": "Recordable Cases (Chart)"
                 }
               },
-              "queryRef": "Sum(AttendanceAndCases_History.RecordableCases)",
+              "queryRef": "_Measures_Incidents.Recordable Cases (Chart)",
               "nativeQueryRef": "Recordable Cases",
-              "displayName": "Recordable Cases",
-              "format": "0"
+              "displayName": "Recordable Cases"
             }
           ]
         }
@@ -319,7 +307,7 @@
             }
           },
           "selector": {
-            "metadata": "Sum(InjuryData_History.InjuryCount)"
+            "metadata": "_Measures_Incidents.Injuries (Chart)"
           }
         },
         {
@@ -337,7 +325,7 @@
             }
           },
           "selector": {
-            "metadata": "Sum(AttendanceAndCases_History.RecordableCases)"
+            "metadata": "_Measures_Incidents.Recordable Cases (Chart)"
           }
         }
       ],
@@ -490,7 +478,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#1F2A3C'"
+                      "Value": "'#1F1F1F'"
                     }
                   }
                 }
@@ -565,7 +553,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#D9DEE6'"
+                      "Value": "'#D4D4D4'"
                     }
                   }
                 }
@@ -623,58 +611,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "7ca32f2f8d484be2888a",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "_Measures_Calendar"
-              }
-            },
-            "Property": "InSelectedPeriod"
-          }
-        },
-        "type": "Advanced",
-        "filter": {
-          "Version": 2,
-          "From": [
-            {
-              "Name": "m",
-              "Entity": "_Measures_Calendar",
-              "Type": 0
-            }
-          ],
-          "Where": [
-            {
-              "Condition": {
-                "Comparison": {
-                  "ComparisonKind": 0,
-                  "Left": {
-                    "Measure": {
-                      "Expression": {
-                        "SourceRef": {
-                          "Source": "m"
-                        }
-                      },
-                      "Property": "InSelectedPeriod"
-                    }
-                  },
-                  "Right": {
-                    "Literal": {
-                      "Value": "1L"
-                    }
-                  }
-                }
-              }
-            }
-          ]
-        },
-        "howCreated": "User"
-      }
-    ]
   }
 }

@@ -1,0 +1,90 @@
+table AttendanceAndCases_History
+	lineageTag: d050537d-718f-44a2-b051-c30a8ffba295
+
+	column Month
+		dataType: string
+		lineageTag: f7a187e2-db00-432f-b183-8b67c0cd81c2
+		summarizeBy: none
+		sourceColumn: Month
+
+		annotation SummarizationSetBy = Automatic
+
+	column FY
+		dataType: int64
+		formatString: 0
+		lineageTag: 835f3840-f68e-4a39-b061-9958a417215a
+		summarizeBy: sum
+		sourceColumn: FY
+
+		annotation SummarizationSetBy = Automatic
+
+	column Attendance_Percent
+		dataType: double
+		lineageTag: 5e357540-4f7b-4839-b415-6ef0c1ccfbe6
+		summarizeBy: sum
+		sourceColumn: Attendance_Percent
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column RecordableCases
+		dataType: double
+		lineageTag: 5ad319a9-df03-4ac7-8103-04e425478837
+		summarizeBy: sum
+		sourceColumn: RecordableCases
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column MonthNumber
+		dataType: int64
+		formatString: 0
+		lineageTag: 6a9919fa-37ab-4fac-9fd3-7f08649377b1
+		summarizeBy: sum
+		sourceColumn: MonthNumber
+
+		annotation SummarizationSetBy = Automatic
+
+	column CalendarYear
+		dataType: int64
+		formatString: 0
+		lineageTag: ed9fee90-abb7-49ed-8b79-e1ccb7e4f9b2
+		summarizeBy: sum
+		sourceColumn: CalendarYear
+
+		annotation SummarizationSetBy = Automatic
+
+	column MonthStartDate
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: d9fbf845-acb3-4cf8-ab08-4c2cdcd32044
+		summarizeBy: none
+		sourceColumn: MonthStartDate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	partition AttendanceAndCases_History = m
+		mode: import
+		queryGroup: Gold
+		source =
+				let
+				    Source = Hist_AttendanceCases,
+				  #"Renamed columns" = Table.RenameColumns(Source, {{"% Attendance per month", "Attendance_Percent"}, {"Recordable cases", "RecordableCases"}}),
+				  #"Renamed columns 1" = Table.RenameColumns(#"Renamed columns", {{"Attribute", "Month"}}),
+				  #"Replaced value" = Table.ReplaceValue(#"Renamed columns 1", "Sept", "Sep", Replacer.ReplaceText, {"Month"}),
+				  #"Added custom" = Table.AddColumn(#"Replaced value", "MonthNumber", each Date.Month(Date.FromText([Month] & " 1"))),
+				  #"Changed column type" = Table.TransformColumnTypes(#"Added custom", {{"FY", Int64.Type}, {"MonthNumber", Int64.Type}}),
+				  Custom = Table.AddColumn(#"Changed column type", "CalendarYear", each if [MonthNumber] >= 7 then ([FY] -1) else [FY]),
+				  #"Custom 1" = Table.TransformColumnTypes(Table.AddColumn(#"Custom", "MonthStartDate", each #date(Number.From([CalendarYear]), Number.From([MonthNumber]), 1)), {{"MonthStartDate", type date}}),
+				  #"Changed column type 1" = Table.TransformColumnTypes(#"Custom 1", {{"CalendarYear", Int64.Type}})
+				in
+				    #"Changed column type 1"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

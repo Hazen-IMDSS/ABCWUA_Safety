@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "f83761965bd500885880",
   "position": {
-    "x": 658,
-    "y": 414,
+    "x": 650,
+    "y": 434,
     "z": 500,
-    "height": 294,
-    "width": 610,
-    "tabOrder": 1600
+    "height": 274,
+    "width": 618,
+    "tabOrder": 2300
   },
   "visual": {
     "visualType": "columnChart",
@@ -28,6 +28,7 @@
               },
               "queryRef": "Calendar.MonthYear",
               "nativeQueryRef": "Month Year",
+              "active": true,
               "displayName": "Month Year"
             }
           ],
@@ -59,10 +60,10 @@
                       "Entity": "_Measures_Incidents"
                     }
                   },
-                  "Property": "Hazards Resolved (View)"
+                  "Property": "Hazards Resolved (Chart)"
                 }
               },
-              "queryRef": "_Measures_Incidents.Hazards Resolved (View)",
+              "queryRef": "_Measures_Incidents.Hazards Resolved (Chart)",
               "nativeQueryRef": "Resolved",
               "displayName": "Resolved"
             },
@@ -74,15 +75,32 @@
                       "Entity": "_Measures_Incidents"
                     }
                   },
-                  "Property": "Hazards Unresolved (View)"
+                  "Property": "Hazards Unresolved (Chart)"
                 }
               },
-              "queryRef": "_Measures_Incidents.Hazards Unresolved (View)",
+              "queryRef": "_Measures_Incidents.Hazards Unresolved (Chart)",
               "nativeQueryRef": "Unresolved",
               "displayName": "Unresolved"
             }
           ]
         }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Calendar"
+                  }
+                },
+                "Property": "MonthYear"
+              }
+            },
+            "direction": "Ascending"
+          }
+        ]
       }
     },
     "objects": {
@@ -295,7 +313,7 @@
             }
           },
           "selector": {
-            "metadata": "_Measures_Incidents.Hazards Unresolved (View)"
+            "metadata": "_Measures_Incidents.Hazards Unresolved (Chart)"
           }
         }
       ],
@@ -552,7 +570,7 @@
             }
           },
           "selector": {
-            "metadata": "_Measures_Incidents.Hazards Resolved (View)"
+            "metadata": "_Measures_Incidents.Hazards Resolved (Chart)"
           }
         },
         {
@@ -570,7 +588,7 @@
             }
           },
           "selector": {
-            "metadata": "_Measures_Incidents.Hazards Unresolved (View)"
+            "metadata": "_Measures_Incidents.Hazards Unresolved (Chart)"
           }
         }
       ],
@@ -657,7 +675,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#1F2A3C'"
+                      "Value": "'#1F1F1F'"
                     }
                   }
                 }
@@ -737,7 +755,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#D9DEE6'"
+                      "Value": "'#D4D4D4'"
                     }
                   }
                 }
@@ -795,58 +813,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "9bf3f1c4e00545d18f2a",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "_Measures_Calendar"
-              }
-            },
-            "Property": "InSelectedPeriod"
-          }
-        },
-        "type": "Advanced",
-        "filter": {
-          "Version": 2,
-          "From": [
-            {
-              "Name": "m",
-              "Entity": "_Measures_Calendar",
-              "Type": 0
-            }
-          ],
-          "Where": [
-            {
-              "Condition": {
-                "Comparison": {
-                  "ComparisonKind": 0,
-                  "Left": {
-                    "Measure": {
-                      "Expression": {
-                        "SourceRef": {
-                          "Source": "m"
-                        }
-                      },
-                      "Property": "InSelectedPeriod"
-                    }
-                  },
-                  "Right": {
-                    "Literal": {
-                      "Value": "1L"
-                    }
-                  }
-                }
-              }
-            }
-          ]
-        },
-        "howCreated": "User"
-      }
-    ]
   }
 }

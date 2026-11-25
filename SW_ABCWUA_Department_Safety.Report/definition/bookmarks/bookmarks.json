@@ -93,6 +93,57 @@
     },
     {
       "name": "f217211d0053921b3267"
+    },
+    {
+      "name": "0de8af7792e94f34a00c",
+      "displayName": "Training - Summarize By",
+      "children": [
+        "8c84b897b31048cf9a12",
+        "383d3c1472f042789150"
+      ]
+    },
+    {
+      "name": "808cb33b3a974f278522",
+      "displayName": "Training - Filter Pane",
+      "children": [
+        "2195d05c50d644629eb8",
+        "daa07583149849548f46",
+        "96c27134d6a6438aa046"
+      ]
+    },
+    {
+      "name": "910f6a8509cb4450a1a9",
+      "displayName": "Incidents - Summarize By",
+      "children": [
+        "2b502b40b40f469bae83",
+        "5caee3a6799f43e18560"
+      ]
+    },
+    {
+      "name": "3b02d7abe8e74be29d54",
+      "displayName": "Incidents - Filter Pane",
+      "children": [
+        "0d6eb967bd444902abf9",
+        "f3390b2b216e44d88c6f",
+        "d7c9c55755194f2eb8eb"
+      ]
+    },
+    {
+      "name": "b356633120934a42ab75",
+      "displayName": "Inspections - Summarize By",
+      "children": [
+        "98dd0729a2174559b935",
+        "8e37c69f3d5d48589715"
+      ]
+    },
+    {
+      "name": "0cff168e66114e24a942",
+      "displayName": "Inspections - Filter Pane",
+      "children": [
+        "7b4873b6ec1c41b895be",
+        "139e36f0289042ea969c",
+        "62aecbac1c1d4ee49e2c"
+      ]
     }
   ]
 }

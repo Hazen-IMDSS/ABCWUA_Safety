@@ -2,12 +2,12 @@ table _Measures_Inspections
 	lineageTag: 2905b58c-8aca-4a0e-b6d9-275e56bedcf6
 
 	measure 'Inspections (Period)' =
-			VAR Start = [PeriodStart]
+			VAR RangeStart = [PeriodStart]
 			RETURN
 			    CALCULATE(
 			        COUNT(InspectionDetails_CurrentYear[Inspection]),
 			        REMOVEFILTERS('Calendar'),
-			        'Calendar'[Date] >= Start,
+			        'Calendar'[Date] >= RangeStart,
 			        'Calendar'[Date] <= TODAY()
 			    )
 		formatString: #,0
@@ -15,36 +15,34 @@ table _Measures_Inspections
 		lineageTag: b467b405-56a4-41aa-b784-350ecd4943ea
 
 	measure 'Inspection Months Reported' =
-			VAR Start = [PeriodStart]
+			VAR RangeStart = [PeriodStart]
 			RETURN
 			    CALCULATE(
 			        DISTINCTCOUNT(InspectionDetails_CurrentYear[MonthStartDate]),
 			        REMOVEFILTERS('Calendar'),
-			        'Calendar'[Date] >= Start,
+			        'Calendar'[Date] >= RangeStart,
 			        'Calendar'[Date] <= TODAY()
 			    )
 		formatString: 0
 		displayFolder: Inspections
 		lineageTag: 2d304e24-5a38-47e4-ae9d-2a0639c814c8
 
-	measure 'Avg Inspections per Month' =
-			DIVIDE([Inspections (Period)], [Inspection Months Reported])
+	measure 'Avg Inspections per Month' = DIVIDE([Inspections (Period)], [Inspection Months Reported])
 		formatString: #,0.0
 		displayFolder: Inspections
 		lineageTag: 9a51a589-e651-4055-ba27-7adaae9bbfdb
 
-	measure 'Inspections Detail' =
-			"across " & [Inspection Months Reported] & " months with inspections"
+	measure 'Inspections Detail' = "across " & [Inspection Months Reported] & " months with inspections"
 		displayFolder: Inspections
 		lineageTag: 8e7ea1fb-fbd3-4f39-a789-92d9177669a6
 
 	measure 'Groups Inspected' =
-			VAR Start = [PeriodStart]
+			VAR RangeStart = [PeriodStart]
 			RETURN
 			    CALCULATE(
 			        DISTINCTCOUNT(InspectionDetails_CurrentYear[Group]),
 			        REMOVEFILTERS('Calendar'),
-			        'Calendar'[Date] >= Start,
+			        'Calendar'[Date] >= RangeStart,
 			        'Calendar'[Date] <= TODAY()
 			    )
 		formatString: 0
@@ -52,7 +50,7 @@ table _Measures_Inspections
 		lineageTag: b9c35e30-2247-4bbc-8cdb-d4f33f149366
 
 	measure 'Top Inspected Group (Period)' =
-			VAR Start = [PeriodStart]
+			VAR RangeStart = [PeriodStart]
 			RETURN
 			    CALCULATE(
 			        VAR Tbl =
@@ -64,14 +62,14 @@ table _Measures_Inspections
 			        RETURN
 			            MAXX(TopRow, InspectionDetails_CurrentYear[Group]),
 			        REMOVEFILTERS('Calendar'),
-			        'Calendar'[Date] >= Start,
+			        'Calendar'[Date] >= RangeStart,
 			        'Calendar'[Date] <= TODAY()
 			    )
 		displayFolder: Inspections
 		lineageTag: 636a549d-09ab-4c20-b52d-5d95dc74f851
 
 	measure 'Groups Inspected Detail' =
-			VAR Start = [PeriodStart]
+			VAR RangeStart = [PeriodStart]
 			VAR TopCnt =
 			    CALCULATE(
 			        MAXX(
@@ -79,7 +77,7 @@ table _Measures_Inspections
 			            CALCULATE(COUNT(InspectionDetails_CurrentYear[Inspection]))
 			        ),
 			        REMOVEFILTERS('Calendar'),
-			        'Calendar'[Date] >= Start,
+			        'Calendar'[Date] >= RangeStart,
 			        'Calendar'[Date] <= TODAY()
 			    )
 			RETURN
@@ -87,16 +85,24 @@ table _Measures_Inspections
 		displayFolder: Inspections
 		lineageTag: 1e6576b1-ceea-492f-92bb-f4329f614517
 
-	measure 'Hazards per Inspection' =
-			DIVIDE([Total Hazards Identified], [Inspections (Period)])
+	measure 'Hazards per Inspection' = DIVIDE([Total Hazards Identified], [Inspections (Period)])
 		formatString: 0.00
 		displayFolder: Inspections
 		lineageTag: 65be812d-a629-41e4-a553-61b0987b3043
 
-	measure 'Hazards per Inspection Detail' =
-			[Total Hazards Identified] & " hazards identified"
+	measure 'Hazards per Inspection Detail' = [Total Hazards Identified] & " hazards identified"
 		displayFolder: Inspections
 		lineageTag: b823aafb-4254-4437-943f-23bb03b4264e
+
+	measure 'Inspections (Chart)' = IF([InSelectedPeriod] = 1, COUNT(InspectionDetails_CurrentYear[Inspection]))
+		formatString: 0
+		displayFolder: Chart Series
+		lineageTag: 92753b02-c378-4be8-b239-01ebb790ee4c
+
+	measure 'Hazards Identified (Chart)' = IF([InSelectedPeriod] = 1, SUM(Hazards[Identified]))
+		formatString: 0
+		displayFolder: Chart Series
+		lineageTag: 820ac921-0c55-4b05-aff9-a5cbdf906a7b
 
 	column Column
 		formatString: 0

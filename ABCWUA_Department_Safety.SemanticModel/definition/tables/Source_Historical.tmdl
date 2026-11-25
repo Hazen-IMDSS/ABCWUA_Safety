@@ -1,0 +1,47 @@
+table Source_Historical
+	lineageTag: 9592b4ce-364b-4de7-81bd-1d2004a27256
+
+	column Name
+		dataType: string
+		lineageTag: 1ee4ffbb-289b-4abd-9dbe-0d96bee8956f
+		summarizeBy: none
+		sourceColumn: Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Item
+		dataType: string
+		lineageTag: d31264ac-c85f-4aac-a1c6-88c451c4a4df
+		summarizeBy: none
+		sourceColumn: Item
+
+		annotation SummarizationSetBy = Automatic
+
+	column Kind
+		dataType: string
+		lineageTag: 5071987f-61eb-43b2-b1a9-37190dfcb320
+		summarizeBy: none
+		sourceColumn: Kind
+
+		annotation SummarizationSetBy = Automatic
+
+	column Hidden
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 5a63fd50-5379-4a77-b51a-41bf56a35859
+		summarizeBy: none
+		sourceColumn: Hidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Source_Historical = m
+		mode: import
+		queryGroup: Sources
+		source =
+				let
+				  Source = Excel.Workbook(Web.Contents(URL_SafetyInspections_History), null, true)
+				in
+				  Source
+
+	annotation PBI_ResultType = Table
+

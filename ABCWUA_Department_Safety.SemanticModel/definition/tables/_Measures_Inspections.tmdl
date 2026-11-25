@@ -1,0 +1,125 @@
+table _Measures_Inspections
+	lineageTag: 2905b58c-8aca-4a0e-b6d9-275e56bedcf6
+
+	measure 'Inspections (Period)' =
+			VAR RangeStart = [PeriodStart]
+			RETURN
+			    CALCULATE(
+			        COUNT(InspectionDetails_CurrentYear[Inspection]),
+			        REMOVEFILTERS('Calendar'),
+			        'Calendar'[Date] >= RangeStart,
+			        'Calendar'[Date] <= TODAY()
+			    )
+		formatString: #,0
+		displayFolder: Inspections
+		lineageTag: b467b405-56a4-41aa-b784-350ecd4943ea
+
+	measure 'Inspection Months Reported' =
+			VAR RangeStart = [PeriodStart]
+			RETURN
+			    CALCULATE(
+			        DISTINCTCOUNT(InspectionDetails_CurrentYear[MonthStartDate]),
+			        REMOVEFILTERS('Calendar'),
+			        'Calendar'[Date] >= RangeStart,
+			        'Calendar'[Date] <= TODAY()
+			    )
+		formatString: 0
+		displayFolder: Inspections
+		lineageTag: 2d304e24-5a38-47e4-ae9d-2a0639c814c8
+
+	measure 'Avg Inspections per Month' = DIVIDE([Inspections (Period)], [Inspection Months Reported])
+		formatString: #,0.0
+		displayFolder: Inspections
+		lineageTag: 9a51a589-e651-4055-ba27-7adaae9bbfdb
+
+	measure 'Inspections Detail' = "across " & [Inspection Months Reported] & " months with inspections"
+		displayFolder: Inspections
+		lineageTag: 8e7ea1fb-fbd3-4f39-a789-92d9177669a6
+
+	measure 'Groups Inspected' =
+			VAR RangeStart = [PeriodStart]
+			RETURN
+			    CALCULATE(
+			        DISTINCTCOUNT(InspectionDetails_CurrentYear[Group]),
+			        REMOVEFILTERS('Calendar'),
+			        'Calendar'[Date] >= RangeStart,
+			        'Calendar'[Date] <= TODAY()
+			    )
+		formatString: 0
+		displayFolder: Inspections
+		lineageTag: b9c35e30-2247-4bbc-8cdb-d4f33f149366
+
+	measure 'Top Inspected Group (Period)' =
+			VAR RangeStart = [PeriodStart]
+			RETURN
+			    CALCULATE(
+			        VAR Tbl =
+			            ADDCOLUMNS(
+			                VALUES(InspectionDetails_CurrentYear[Group]),
+			                "Cnt", CALCULATE(COUNT(InspectionDetails_CurrentYear[Inspection]))
+			            )
+			        VAR TopRow = TOPN(1, Tbl, [Cnt], DESC)
+			        RETURN
+			            MAXX(TopRow, InspectionDetails_CurrentYear[Group]),
+			        REMOVEFILTERS('Calendar'),
+			        'Calendar'[Date] >= RangeStart,
+			        'Calendar'[Date] <= TODAY()
+			    )
+		displayFolder: Inspections
+		lineageTag: 636a549d-09ab-4c20-b52d-5d95dc74f851
+
+	measure 'Groups Inspected Detail' =
+			VAR RangeStart = [PeriodStart]
+			VAR TopCnt =
+			    CALCULATE(
+			        MAXX(
+			            VALUES(InspectionDetails_CurrentYear[Group]),
+			            CALCULATE(COUNT(InspectionDetails_CurrentYear[Inspection]))
+			        ),
+			        REMOVEFILTERS('Calendar'),
+			        'Calendar'[Date] >= RangeStart,
+			        'Calendar'[Date] <= TODAY()
+			    )
+			RETURN
+			    "most: " & [Top Inspected Group (Period)] & " (" & TopCnt & ")"
+		displayFolder: Inspections
+		lineageTag: 1e6576b1-ceea-492f-92bb-f4329f614517
+
+	measure 'Hazards per Inspection' = DIVIDE([Total Hazards Identified], [Inspections (Period)])
+		formatString: 0.00
+		displayFolder: Inspections
+		lineageTag: 65be812d-a629-41e4-a553-61b0987b3043
+
+	measure 'Hazards per Inspection Detail' = [Total Hazards Identified] & " hazards identified"
+		displayFolder: Inspections
+		lineageTag: b823aafb-4254-4437-943f-23bb03b4264e
+
+	measure 'Inspections (Chart)' = IF([InSelectedPeriod] = 1, COUNT(InspectionDetails_CurrentYear[Inspection]))
+		formatString: 0
+		displayFolder: Chart Series
+		lineageTag: 92753b02-c378-4be8-b239-01ebb790ee4c
+
+	measure 'Hazards Identified (Chart)' = IF([InSelectedPeriod] = 1, SUM(Hazards[Identified]))
+		formatString: 0
+		displayFolder: Chart Series
+		lineageTag: 820ac921-0c55-4b05-aff9-a5cbdf906a7b
+
+	measure 'Data Through (Inspections)' = "Data through " & FORMAT(MAXX(ALL(InspectionDetails_CurrentYear), InspectionDetails_CurrentYear[MonthStartDate]), "mmmm yyyy")
+		displayFolder: Data Freshness
+		lineageTag: 66c386bd-9112-4639-bcbf-f1c9a172f4bd
+
+	column Column
+		formatString: 0
+		lineageTag: 9cb9dfc0-26bb-460e-b215-340c716dcaf3
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Column]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition _Measures_Inspections = calculated
+		mode: import
+		source = Row("Column", BLANK())
+
+	annotation PBI_Id = 3298f7e144294025835c8fdec976be9f
+

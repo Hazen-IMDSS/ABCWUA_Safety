@@ -1,0 +1,435 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 12253.200314515967,
+        "y": 67698.889831302367
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 12581.041336809758,
+            "y": 68056.819677228516
+          },
+          "nodeIndex": "Calendar",
+          "nodeLineageTag": "2415320b-ba28-458a-b009-9f26f0ff337d",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 22
+        },
+        {
+          "location": {
+            "x": 13149.04133680976,
+            "y": 68080.819677228516
+          },
+          "nodeIndex": "Calendar_Period",
+          "nodeLineageTag": "a262d3c1-aa01-4db2-8a08-ff0682f9c9d6",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 1
+        },
+        {
+          "location": {
+            "x": 11950.782788419103,
+            "y": 67033.403956622147
+          },
+          "nodeIndex": "TimeSelect_Quarter",
+          "nodeLineageTag": "fc3a6399-f232-45e8-82e0-6a42e4e0f48e",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 24
+        },
+        {
+          "location": {
+            "x": 12258.686540350138,
+            "y": 67010.638478592591
+          },
+          "nodeIndex": "TimeSelect_MonthYear",
+          "nodeLineageTag": "f67a8f09-b522-4128-9916-166540f4635f",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 23
+        },
+        {
+          "location": {
+            "x": 12518.782788419103,
+            "y": 67033.403956622147
+          },
+          "nodeIndex": "Calendar_Period_Summary",
+          "nodeLineageTag": "7d21e608-4708-41a8-a0bd-05b3f7983edd",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 3
+        },
+        {
+          "location": {
+            "x": 11487.763829461337,
+            "y": 67335.70604836542
+          },
+          "nodeIndex": "MonthNames",
+          "nodeLineageTag": "ec23d3dd-b7ed-4f6b-b482-f9693f11573c",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 4
+        },
+        {
+          "location": {
+            "x": 12865.04133680976,
+            "y": 68056.819677228516
+          },
+          "nodeIndex": "_Measures_Calendar",
+          "nodeLineageTag": "292d042b-bdba-489b-bc80-fd1963904907",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 6
+        },
+        {
+          "location": {
+            "x": 14408.057813825937,
+            "y": 66612.4964024711
+          },
+          "nodeIndex": "AttendanceAndCases_History",
+          "nodeLineageTag": "54dd05f7-c5bf-486b-ad44-736b0770d8c9",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 10
+        },
+        {
+          "location": {
+            "x": 13038.057813825937,
+            "y": 66574.4964024711
+          },
+          "nodeIndex": "GroupAttendance_CurrentYear",
+          "nodeLineageTag": "32613317-0936-462a-854a-5848cfed87b0",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 11
+        },
+        {
+          "location": {
+            "x": 14692.057813825937,
+            "y": 66588.4964024711
+          },
+          "nodeIndex": "Groups_Dim",
+          "nodeLineageTag": "e0a4d9b9-d4cd-412d-a54c-4e6bda0e85c3",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 12
+        },
+        {
+          "location": {
+            "x": 14976.057813825937,
+            "y": 66612.4964024711
+          },
+          "nodeIndex": "InjuryData_History",
+          "nodeLineageTag": "780c6e58-a181-41f9-81e9-f797104d425f",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 13
+        },
+        {
+          "location": {
+            "x": 15260.057813825937,
+            "y": 66636.4964024711
+          },
+          "nodeIndex": "InjuryTypes_Dim",
+          "nodeLineageTag": "54ad9aec-2fe1-4f65-bed5-963b358cb196",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 14
+        },
+        {
+          "location": {
+            "x": 15828.057813825937,
+            "y": 66612.4964024711
+          },
+          "nodeIndex": "SafetyTrainingHours_History",
+          "nodeLineageTag": "8f1b7c2a-c67d-4ca3-8c77-3bdd7a867ca9",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 21
+        },
+        {
+          "location": {
+            "x": 10215.48914194747,
+            "y": 65412.5621136709
+          },
+          "nodeIndex": "OverviewSelect_Period",
+          "nodeLineageTag": "02cad6c4-c805-4a53-af30-bdb1e9c728da",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 11487.763829461337,
+            "y": 62324.215517523968
+          },
+          "nodeIndex": "_Measures_Training",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 11487.763829461337,
+            "y": 59598.106461562136
+          },
+          "nodeIndex": "Time_FYSelect",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 13433.04133680976,
+            "y": 68177.819677228516
+          },
+          "nodeIndex": "TimeSelect_Month",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 11487.763829461337,
+            "y": 53108.402298810128
+          },
+          "nodeIndex": "Calendar_FiscalPeriod",
+          "nodeLineageTag": "1b17e44a-461c-42f8-8f31-2f166a85eafe",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 11487.763829461337,
+            "y": 55674.100113710483
+          },
+          "nodeIndex": "__Measures",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 11487.763829461337,
+            "y": 44548.153117886264
+          },
+          "nodeIndex": "LIMS_Training",
+          "nodeLineageTag": "d7202f9c-c15f-4250-9b4b-014c993007c9",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 186.41792073573868,
+            "y": 41186.206500023181
+          },
+          "nodeIndex": "Groups_CurrentFY",
+          "nodeLineageTag": "816a4d7d-14b1-4c5a-a852-abefb5c566ac",
+          "size": {
+            "height": 272,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 50,
+            "y": 40353.391046540157
+          },
+          "nodeIndex": "InspectionDetails_CurrentYear",
+          "nodeLineageTag": "0926a1a9-e0ae-4ca2-8298-5a1912e01efc",
+          "size": {
+            "height": 248,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 465.4533992873769,
+            "y": 40452.601441582541
+          },
+          "nodeIndex": "RecordableCases",
+          "nodeLineageTag": "8f1de269-1eb1-4d23-9cbe-dc2e0aa26e7a",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 293.76468010717383,
+            "y": 40832.632719089408
+          },
+          "nodeIndex": "SafetyFieldAssessments_CurrentYear",
+          "nodeLineageTag": "32667b5a-b34b-4855-b5c5-6b76d0ec9a5d",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 4789.19515758287,
+            "y": 40867.798773281669
+          },
+          "nodeIndex": "Source_Historical",
+          "nodeLineageTag": "9592b4ce-364b-4de7-81bd-1d2004a27256",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 5073.19515758287,
+            "y": 40867.798773281669
+          },
+          "nodeIndex": "Source_LIMS",
+          "nodeLineageTag": "7fd2206d-ae61-4624-8feb-4e5d804c5b36",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 5357.19515758287,
+            "y": 40867.798773281669
+          },
+          "nodeIndex": "Source_SafetyInspections",
+          "nodeLineageTag": "e41bfb36-0eee-4c9f-88c6-fb8efda9fb33",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 179.39470251236514,
+            "y": 40653.227954835893
+          },
+          "nodeIndex": "TotalTrainingHours",
+          "nodeLineageTag": "d58ea357-212e-4216-b4d8-307986db09c0",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 16062.057813825937,
+            "y": 35150.585996816866
+          },
+          "nodeIndex": "Hazards",
+          "nodeLineageTag": "d4107b64-7f5d-4c67-9a5d-aa3b7b4cdeb2",
+          "size": {
+            "height": 248,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 16580.057813825937,
+            "y": 28230.478839144776
+          },
+          "nodeIndex": "_Measures_Incidents",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "All tables",
+      "zoomValue": 78.357757658120661,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    },
+    {
+      "ordinal": 1,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 530,
+            "y": 157
+          },
+          "nodeIndex": "Calendar",
+          "nodeLineageTag": "2415320b-ba28-458a-b009-9f26f0ff337d",
+          "size": {
+            "height": 296,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "Layout 1",
+      "zoomValue": 100,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "All tables",
+  "defaultDiagram": "All tables"
+}

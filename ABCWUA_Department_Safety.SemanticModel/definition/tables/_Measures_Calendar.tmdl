@@ -1,0 +1,262 @@
+table _Measures_Calendar
+	lineageTag: 292d042b-bdba-489b-bc80-fd1963904907
+
+	measure DDFilter_FY =
+			
+			IF(CALCULATE(MIN('Calendar'[Date]),'Calendar'[FiscalYear] = SELECTEDVALUE('Calendar'[FiscalYear])) <= TODAY(), 1, 0)
+		formatString: 0
+		lineageTag: 41c2ef20-2825-4535-8ed7-82097361c6a8
+
+	measure DDFilter_MonthYear =
+			
+			VAR MinMonthDate = CALCULATE(MIN('Calendar'[Date]),'Calendar'[MonthYear] = SELECTEDVALUE('TimeSelect_MonthYear'[MonthYear]))
+			RETURN
+			IF(MinMonthDate <= TODAY(), 1, 0)
+		formatString: 0
+		lineageTag: 32ca3cd6-e7d6-4c9e-90ec-478d13c21782
+
+	measure DDFilter_QuarterYear =
+			
+			VAR MinQuarterDate = CALCULATE(MIN('Calendar'[Date]),'Calendar'[QuarterYear] = SELECTEDVALUE('TimeSelect_Quarter'[QuarterYear]))
+			RETURN
+			IF(MinQuarterDate <= TODAY(), 1, 0)
+		formatString: 0
+		lineageTag: f604c082-658c-45c2-9264-03f4b33c9c07
+
+	measure ShowItem_MontQuarterViews =
+			
+			VAR SelectedPeriod = SELECTEDVALUE(Calendar_Period[Period Fields])
+			
+			VAR SelectedMonth = SELECTEDVALUE('TimeSelect_MonthYear'[MonthYear])
+			VAR SelectedQuarter = SELECTEDVALUE('TimeSelect_Quarter'[QuarterYear])
+			
+			VAR SelectedMonthStart = CALCULATE(MIN('Calendar'[Date]),'Calendar'[MonthYear] = SelectedMonth)
+			VAR SelectedQuarterStart = CALCULATE(MIN('Calendar'[Date]),'Calendar'[QuarterYear] = SelectedQuarter)
+			
+			VAR VisualMonth = SELECTEDVALUE('Calendar'[BeginningofMonth])
+			VAR VisualQuarter = SELECTEDVALUE('Calendar'[BeginningofQuarter])
+			
+			RETURN
+			    SWITCH(SelectedPeriod,
+			            NAMEOF('Calendar'[MonthYear]), IF(VisualMonth >= SelectedMonthStart && VisualMonth <= TODAY(), 1, 0),
+			            NAMEOF('Calendar'[QuarterYear]), IF(VisualQuarter >= SelectedQuarterStart && VisualQuarter <= TODAY(), 1, 0))
+		formatString: 0
+		lineageTag: b128e870-1d62-488a-a2bb-feeaeb7d33a1
+
+	measure ShowFromDate =
+			
+			VAR SelectedPeriod = SELECTEDVALUE(Calendar_Period[Period Fields])
+			
+			VAR SelectedMonth = SELECTEDVALUE('TimeSelect_MonthYear'[MonthYear])
+			VAR SelectedQuarter = SELECTEDVALUE('TimeSelect_Quarter'[QuarterYear])
+			
+			VAR SelectedMonthStart = CALCULATE(MIN('Calendar'[Date]),'Calendar'[MonthYear] = SelectedMonth)
+			VAR SelectedQuarterStart = CALCULATE(MIN('Calendar'[Date]),'Calendar'[QuarterYear] = SelectedQuarter)
+			
+			RETURN
+			IF(SelectedPeriod = NAMEOF('Calendar'[MonthYear]),SelectedMonthStart, SelectedQuarterStart)
+		formatString: General Date
+		lineageTag: e9bcfa20-c55d-4e9d-9102-9bf8eb3672f2
+
+	measure Today = TODAY()
+		formatString: General Date
+		lineageTag: 3a6ca6ea-a9fe-46cc-92af-cc77f5a0bc12
+
+	measure ShowItem_MonthQuarterViews_IntSummary = ```
+			
+			VAR SelectedPeriod = SELECTEDVALUE(Calendar_Period_Summary[Calendar_Period_Summary Fields])
+			
+			VAR SelectedMonth = SELECTEDVALUE('TimeSelect_MonthYear'[MonthYear])
+			VAR SelectedQuarter = SELECTEDVALUE('TimeSelect_Quarter'[QuarterYear])
+			
+			VAR SelectedMonthStart =
+			    CALCULATE(
+			        MIN('Calendar'[Date]),
+			        ALL('Calendar'),
+			        'Calendar'[MonthYear] = SelectedMonth
+			    )
+			
+			VAR SelectedQuarterStart =
+			    CALCULATE(
+			        MIN('Calendar'[Date]),
+			        ALL('Calendar'),
+			        'Calendar'[QuarterYear] = SelectedQuarter
+			    )
+			
+			VAR CurrentDate = MIN('Calendar'[Date])  // This works because it's evaluated per data point
+			
+			RETURN
+			    SWITCH(
+			        SelectedPeriod,
+			        NAMEOF('Calendar'[MonthName]), IF(CurrentDate >= SelectedMonthStart, 1, 0),
+			        NAMEOF('Calendar'[Quarter]), IF(CurrentDate >= SelectedQuarterStart, 1, 0)
+			    )
+			
+			
+			
+			```
+		formatString: 0
+		lineageTag: b1a15b15-8bf9-442a-b414-601d908a9c74
+
+	measure SelectedMonth = SELECTEDVALUE('TimeSelect_MonthYear'[MonthYear])
+		formatString: General Date
+		lineageTag: b444d43b-f5d2-42b4-b444-854937b4767b
+
+	measure ShowItem_Months = ```
+			
+			VAR SelectedMonth = SELECTEDVALUE('TimeSelect_MonthYear'[MonthYear])
+			
+			VAR SelectedMonthStart =
+			    CALCULATE(
+			        MIN('Calendar'[Date]),
+			        ALL('Calendar'),
+			        'Calendar'[MonthYear] = SelectedMonth
+			    )
+			VAR CurrentDate = MIN('Calendar'[Date])  
+			
+			RETURN
+			IF(CurrentDate >= SelectedMonthStart, 1, 0)
+			
+			```
+		formatString: 0
+		lineageTag: d6818e35-71de-4926-b90a-c24936daa62b
+
+	measure MinMonth = SELECTEDVALUE(TimeSelect_MonthYear[MonthYear])
+		formatString: General Date
+		lineageTag: 8ba800b5-833b-4d60-80bb-0bbcdb00a3eb
+
+	measure ShowItem_MonthsDonut = ```
+			
+			VAR SelectedMonth = SELECTEDVALUE('TimeSelect_MonthYear'[MonthYear])
+			VAR SelectedMonthStart =
+			    CALCULATE(
+			        MIN('Calendar'[Date]),
+			        ALL('Calendar'),
+			        'Calendar'[MonthYear] = SelectedMonth
+			    )
+			RETURN
+			IF(
+			    CALCULATE(
+			        MIN('Calendar'[Date]),
+			        FILTER(ALL('Calendar'), 'Calendar'[Date] >= SelectedMonthStart)
+			    ) <> BLANK(),
+			    1,
+			    0
+			)
+			
+			```
+		formatString: 0
+		lineageTag: 970e4530-7430-459c-937f-aeaffac2c604
+
+	measure ShowDataInPeriod = ```
+			
+			VAR ShowDataFromFYFQ = SELECTEDVALUE('TimeSelect_Quarter'[QuarterYear])
+			VAR ShowDataFromDate = 
+			    CALCULATE(
+			        MIN('Calendar'[Date]),
+			        ALL('Calendar'),
+			        'Calendar'[QuarterYear] = ShowDataFromFYFQ
+			    )
+			VAR VisualDate = MAX('Calendar'[BeginningofQuarter])
+			
+			VAR ShowDataFromMonth = SELECTEDVALUE('TimeSelect_MonthYear'[MonthYear])
+			VAR ShowDataFromMonthDate = 
+			    CALCULATE(
+			        MIN('Calendar'[Date]),
+			        ALL('Calendar'),
+			        'Calendar'[MonthYear] = ShowDataFromMonth
+			    )
+			VAR VisualMonth = MAX('Calendar'[BeginningofMonth])
+			
+			RETURN 
+			    IF(
+			        SELECTEDVALUE('Calendar_FiscalPeriod'[Calendar_FiscalPeriod Fields]) = "'Calendar'[QuarterYear]",
+			        IF(
+			            NOT(ISBLANK(VisualDate)) && NOT(ISBLANK(ShowDataFromDate)) &&
+			            VisualDate >= ShowDataFromDate && VisualDate <= TODAY(),
+			            1, 0
+			        ),
+			        IF(
+			            NOT(ISBLANK(VisualMonth)) && NOT(ISBLANK(ShowDataFromMonthDate)) &&
+			            VisualMonth >= ShowDataFromMonthDate && VisualMonth <= TODAY(),
+			            1, 0
+			        )
+			    )
+			```
+		formatString: 0
+		lineageTag: a7044b1d-fbfa-42c5-ba2e-2e97f83b292b
+
+	measure GoalResolved = CALCULATE( SUM(Hazards[Identified])) * 0.8
+		lineageTag: 17f86044-66d9-4297-bc03-5b558850ae4b
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure PeriodMode =
+			IF(
+			    SELECTEDVALUE(Calendar_FiscalPeriod[Calendar_FiscalPeriod Fields], "'Calendar'[MonthYear]") = "'Calendar'[QuarterYear]",
+			    "Quarter",
+			    "Month"
+			)
+		displayFolder: Period Selection
+		lineageTag: 1c201180-b484-4cbe-8a35-d89bc5e4c256
+
+	measure 'Period Unit' = IF([PeriodMode] = "Quarter", "quarters", "months")
+		displayFolder: Period Selection
+		lineageTag: f2f7283c-13a6-4ea3-b6b6-c3b0b6c4384a
+
+	measure PeriodStart =
+			VAR SelMonth = SELECTEDVALUE(TimeSelect_MonthYear[MonthYear])
+			VAR SelQtr = SELECTEDVALUE(TimeSelect_Quarter[QuarterYear])
+			VAR MonthStart = IF(ISBLANK(SelMonth), DATE(2009, 1, 1), DATE(YEAR(SelMonth), MONTH(SelMonth), 1))
+			VAR QtrStart =
+			    IF(
+			        ISBLANK(SelQtr),
+			        DATE(2009, 1, 1),
+			        CALCULATE(
+			            MIN('Calendar'[Date]),
+			            REMOVEFILTERS('Calendar'),
+			            'Calendar'[QuarterYear] = SelQtr
+			        )
+			    )
+			RETURN
+			    IF([PeriodMode] = "Quarter", QtrStart, MonthStart)
+		formatString: General Date
+		displayFolder: Period Selection
+		lineageTag: f55bbb2c-c2a4-4f9b-9c73-4fcdcd65e215
+
+	measure InSelectedPeriod =
+			VAR MinDate = MIN('Calendar'[Date])
+			RETURN
+			    IF(MinDate >= [PeriodStart] && MinDate <= TODAY(), 1, 0)
+		formatString: 0
+		displayFolder: Period Selection
+		lineageTag: c60b66e3-eea0-4427-997a-9b5847c9bea7
+
+	measure FromMonthOption =
+			VAR m = SELECTEDVALUE(TimeSelect_MonthYear[MonthYear])
+			RETURN
+			    IF(m >= DATE(2021, 7, 31) && m <= EOMONTH(TODAY(), 0), 1, 0)
+		formatString: 0
+		displayFolder: Period Selection
+		lineageTag: ff6db504-62d3-4945-9fdb-b339d5294f27
+
+	column Column
+		isHidden
+		formatString: 0
+		lineageTag: e5fd56e3-e285-4b68-8d16-57bb0d085157
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Column]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition _Measures_Calendar = calculated
+		mode: import
+		source = ```
+				
+				
+				
+				```
+
+	annotation PBI_Id = 804c9c5bc379421eb5e2fc26b54f29bc
+

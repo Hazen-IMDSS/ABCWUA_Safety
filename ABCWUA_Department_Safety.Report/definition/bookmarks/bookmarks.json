@@ -1,0 +1,157 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmarksMetadata/1.0.0/schema.json",
+  "items": [
+    {
+      "name": "7d919ffdadd612b3ffec",
+      "displayName": "Pages",
+      "children": [
+        "a36724855ce17c5ef426",
+        "0d0d723fd9c57bbc0c37",
+        "8da73a468d0cd1a1ea4e",
+        "c1ec6f56363b4c3ebd53"
+      ]
+    },
+    {
+      "name": "7a2ec62e499071408f44",
+      "displayName": "Inspections",
+      "children": [
+        "86b9d6e87855b228de95",
+        "c017a33b8ed5040dbf84"
+      ]
+    },
+    {
+      "name": "4b8bf7d2a0d5918a876d",
+      "displayName": "Repairs",
+      "children": [
+        "4f05a86ff0b093ebdab2",
+        "9130e95ecb76afb21eb0"
+      ]
+    },
+    {
+      "name": "ee5a2e0060f07e5b4517",
+      "displayName": "Leaks",
+      "children": [
+        "7ee24c89d3d67763085d",
+        "2ac98ae45a58de3b5599"
+      ]
+    },
+    {
+      "name": "cb52f100226474bbd7a5",
+      "displayName": "Barricades",
+      "children": [
+        "0ffc76024adf433125f8",
+        "67c871cd9eaacd93e00c"
+      ]
+    },
+    {
+      "name": "9c5013c6977961556e37",
+      "displayName": "Outages",
+      "children": [
+        "e067dd001d0e0c13ca69",
+        "96cd86f75aa02bc2f677"
+      ]
+    },
+    {
+      "name": "d8ab2113a8bc88f3a933",
+      "displayName": "Meters",
+      "children": [
+        "4ff769a63fc00f734d1e",
+        "396daafcc00c04b2ca80"
+      ]
+    },
+    {
+      "name": "140cfe1fe12278a18385"
+    },
+    {
+      "name": "9b284ab9f82c75ac457f"
+    },
+    {
+      "name": "00b4e32e9087b6efe305"
+    },
+    {
+      "name": "c91b85c6bade068f0751"
+    },
+    {
+      "name": "63ca81f829a998bd2ae9"
+    },
+    {
+      "name": "268b66570d56751ef6fd",
+      "displayName": "Incidents - Pages",
+      "children": [
+        "7e2f449dc1a7408ac1d3",
+        "4688487aefebd18da81c"
+      ]
+    },
+    {
+      "name": "cfa9655dfb05cfe2d0a0"
+    },
+    {
+      "name": "fd3a9d591de1cc308dcd"
+    },
+    {
+      "name": "3c6d2dcbb55bdfe713ec"
+    },
+    {
+      "name": "f217211d0053921b3267"
+    },
+    {
+      "name": "0de8af7792e94f34a00c",
+      "displayName": "Training - Summarize By",
+      "children": [
+        "8c84b897b31048cf9a12",
+        "383d3c1472f042789150"
+      ]
+    },
+    {
+      "name": "808cb33b3a974f278522",
+      "displayName": "Training - Filter Pane",
+      "children": [
+        "2195d05c50d644629eb8",
+        "daa07583149849548f46",
+        "96c27134d6a6438aa046"
+      ]
+    },
+    {
+      "name": "910f6a8509cb4450a1a9",
+      "displayName": "Incidents - Summarize By",
+      "children": [
+        "2b502b40b40f469bae83",
+        "5caee3a6799f43e18560"
+      ]
+    },
+    {
+      "name": "3b02d7abe8e74be29d54",
+      "displayName": "Incidents - Filter Pane",
+      "children": [
+        "0d6eb967bd444902abf9",
+        "f3390b2b216e44d88c6f"
+      ]
+    },
+    {
+      "name": "b356633120934a42ab75",
+      "displayName": "Inspections - Summarize By",
+      "children": [
+        "98dd0729a2174559b935",
+        "8e37c69f3d5d48589715"
+      ]
+    },
+    {
+      "name": "0cff168e66114e24a942",
+      "displayName": "Inspections - Filter Pane",
+      "children": [
+        "7b4873b6ec1c41b895be",
+        "139e36f0289042ea969c",
+        "62aecbac1c1d4ee49e2c"
+      ]
+    },
+    {
+      "name": "4e055151dd5a4b638090",
+      "displayName": "Incidents - Hazard View",
+      "children": [
+        "88723a1378f2400186e7",
+        "89c735df46264e21a94d",
+        "e226bf5eed80450aaade"
+      ]
+    }
+  ]
+}

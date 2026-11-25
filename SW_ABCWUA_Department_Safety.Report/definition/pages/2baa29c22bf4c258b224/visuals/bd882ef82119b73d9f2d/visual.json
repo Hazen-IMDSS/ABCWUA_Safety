@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "bd882ef82119b73d9f2d",
   "position": {
-    "x": 228,
-    "y": 164,
+    "x": 200,
+    "y": 204,
     "z": 500,
-    "height": 246,
-    "width": 1040,
-    "tabOrder": 1300
+    "height": 220,
+    "width": 1068,
+    "tabOrder": 2000
   },
   "visual": {
     "visualType": "lineChart",
@@ -23,13 +23,13 @@
                       "Entity": "Calendar"
                     }
                   },
-                  "Property": "QuarterYear"
+                  "Property": "MonthYear"
                 }
               },
-              "queryRef": "Calendar.QuarterYear",
-              "nativeQueryRef": "Quarter",
+              "queryRef": "Calendar.MonthYear",
+              "nativeQueryRef": "Month Year",
               "active": true,
-              "displayName": "Quarter"
+              "displayName": "Month Year"
             }
           ],
           "fieldParameters": [
@@ -45,7 +45,8 @@
                 }
               },
               "index": 0,
-              "length": 1
+              "length": 1,
+              "sortDirection": "Ascending"
             }
           ]
         },
@@ -56,17 +57,35 @@
                 "Measure": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "__Measures"
+                      "Entity": "_Measures_Training"
                     }
                   },
-                  "Property": "Attendance %"
+                  "Property": "Attendance % (Chart)"
                 }
               },
-              "queryRef": "__Measures.Attendance %",
-              "nativeQueryRef": "Attendance %"
+              "queryRef": "_Measures_Training.Attendance % (Chart)",
+              "nativeQueryRef": "Attendance %",
+              "displayName": "Attendance %"
             }
           ]
         }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Calendar"
+                  }
+                },
+                "Property": "MonthYear"
+              }
+            },
+            "direction": "Ascending"
+          }
+        ]
       }
     },
     "objects": {
@@ -322,7 +341,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#1F2A3C'"
+                      "Value": "'#1F1F1F'"
                     }
                   }
                 }
@@ -397,7 +416,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#D9DEE6'"
+                      "Value": "'#D4D4D4'"
                     }
                   }
                 }
@@ -428,58 +447,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "f83ec31435494fcb8a24",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "_Measures_Calendar"
-              }
-            },
-            "Property": "InSelectedPeriod"
-          }
-        },
-        "type": "Advanced",
-        "filter": {
-          "Version": 2,
-          "From": [
-            {
-              "Name": "m",
-              "Entity": "_Measures_Calendar",
-              "Type": 0
-            }
-          ],
-          "Where": [
-            {
-              "Condition": {
-                "Comparison": {
-                  "ComparisonKind": 0,
-                  "Left": {
-                    "Measure": {
-                      "Expression": {
-                        "SourceRef": {
-                          "Source": "m"
-                        }
-                      },
-                      "Property": "InSelectedPeriod"
-                    }
-                  },
-                  "Right": {
-                    "Literal": {
-                      "Value": "1L"
-                    }
-                  }
-                }
-              }
-            }
-          ]
-        },
-        "howCreated": "User"
-      }
-    ]
   }
 }

@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "9d5d209f1d78d9f5e8aa",
   "position": {
-    "x": 228,
-    "y": 420,
+    "x": 200,
+    "y": 434,
     "z": 500,
-    "height": 288,
-    "width": 1040,
-    "tabOrder": 1400
+    "height": 274,
+    "width": 1068,
+    "tabOrder": 2100
   },
   "visual": {
     "visualType": "columnChart",
@@ -23,13 +23,13 @@
                       "Entity": "Calendar"
                     }
                   },
-                  "Property": "QuarterYear"
+                  "Property": "MonthYear"
                 }
               },
-              "queryRef": "Calendar.QuarterYear",
-              "nativeQueryRef": "Quarter",
+              "queryRef": "Calendar.MonthYear",
+              "nativeQueryRef": "Month Year",
               "active": true,
-              "displayName": "Quarter"
+              "displayName": "Month Year"
             }
           ],
           "fieldParameters": [
@@ -73,27 +73,38 @@
           "projections": [
             {
               "field": {
-                "Aggregation": {
+                "Measure": {
                   "Expression": {
-                    "Column": {
-                      "Expression": {
-                        "SourceRef": {
-                          "Entity": "SafetyTrainingHours_History"
-                        }
-                      },
-                      "Property": "Value"
+                    "SourceRef": {
+                      "Entity": "_Measures_Training"
                     }
                   },
-                  "Function": 0
+                  "Property": "Training Hours (Chart)"
                 }
               },
-              "queryRef": "Sum(SafetyTrainingHours_History.Value)",
-              "nativeQueryRef": "Hours",
-              "displayName": "Hours",
-              "format": "0"
+              "queryRef": "_Measures_Training.Training Hours (Chart)",
+              "nativeQueryRef": "Training Hours",
+              "displayName": "Training Hours"
             }
           ]
         }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Calendar"
+                  }
+                },
+                "Property": "MonthYear"
+              }
+            },
+            "direction": "Ascending"
+          }
+        ]
       }
     },
     "objects": {
@@ -355,7 +366,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#1F2A3C'"
+                      "Value": "'#1F1F1F'"
                     }
                   }
                 }
@@ -430,7 +441,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#D9DEE6'"
+                      "Value": "'#D4D4D4'"
                     }
                   }
                 }
@@ -461,58 +472,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "ff8e52a117af40858cc3",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "_Measures_Calendar"
-              }
-            },
-            "Property": "InSelectedPeriod"
-          }
-        },
-        "type": "Advanced",
-        "filter": {
-          "Version": 2,
-          "From": [
-            {
-              "Name": "m",
-              "Entity": "_Measures_Calendar",
-              "Type": 0
-            }
-          ],
-          "Where": [
-            {
-              "Condition": {
-                "Comparison": {
-                  "ComparisonKind": 0,
-                  "Left": {
-                    "Measure": {
-                      "Expression": {
-                        "SourceRef": {
-                          "Source": "m"
-                        }
-                      },
-                      "Property": "InSelectedPeriod"
-                    }
-                  },
-                  "Right": {
-                    "Literal": {
-                      "Value": "1L"
-                    }
-                  }
-                }
-              }
-            }
-          ]
-        },
-        "howCreated": "User"
-      }
-    ]
   }
 }

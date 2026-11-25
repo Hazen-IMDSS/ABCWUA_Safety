@@ -19,7 +19,7 @@ table TimeSelect_MonthYear
 
 	partition TimeSelect_MonthYear = calculated
 		mode: import
-		source = DISTINCT('Calendar'[MonthYear])
+		source = FILTER(DISTINCT('Calendar'[MonthYear]), [MonthYear] >= DATE(2021, 7, 31) && [MonthYear] <= EOMONTH(TODAY(), 0))
 
 	annotation PBI_Id = b0a1017cdea840f2a627446b47d5923c
 

@@ -82,68 +82,6 @@
               "visualType": "shape",
               "objects": {}
             }
-          },
-          "9e344b01314fd8196e35": {
-            "filters": {
-              "byExpr": [
-                {
-                  "name": "d76e3f07b27494b7a936",
-                  "type": "Categorical",
-                  "expression": {
-                    "Column": {
-                      "Expression": {
-                        "SourceRef": {
-                          "Entity": "Barricades"
-                        }
-                      },
-                      "Property": "ABCWUA_AREA"
-                    }
-                  },
-                  "howCreated": 0
-                }
-              ]
-            },
-            "singleVisual": {
-              "visualType": "slicer",
-              "objects": {
-                "merge": {
-                  "data": [
-                    {
-                      "properties": {
-                        "mode": {
-                          "expr": {
-                            "Literal": {
-                              "Value": "'Dropdown'"
-                            }
-                          }
-                        },
-                        "isInvertedSelectionMode": {
-                          "expr": {
-                            "Literal": {
-                              "Value": "true"
-                            }
-                          }
-                        }
-                      }
-                    }
-                  ]
-                }
-              },
-              "activeProjections": {
-                "Values": [
-                  {
-                    "Column": {
-                      "Expression": {
-                        "SourceRef": {
-                          "Entity": "Barricades"
-                        }
-                      },
-                      "Property": "ABCWUA_AREA"
-                    }
-                  }
-                ]
-              }
-            }
           }
         }
       }

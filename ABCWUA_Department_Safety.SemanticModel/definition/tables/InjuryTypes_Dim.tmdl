@@ -1,0 +1,82 @@
+table InjuryTypes_Dim
+	lineageTag: 8ca781fd-010e-4383-9b49-7cd9c00e8600
+
+	column InjuryType
+		dataType: string
+		lineageTag: c884f5e7-8509-48ca-92bb-20371a580c88
+		summarizeBy: none
+		sourceColumn: InjuryType
+
+		annotation SummarizationSetBy = Automatic
+
+	column MonthNumber
+		dataType: int64
+		formatString: 0
+		lineageTag: c3c21658-939c-48a2-aed9-f3aa7287dfb8
+		summarizeBy: sum
+		sourceColumn: MonthNumber
+
+		annotation SummarizationSetBy = Automatic
+
+	column CalendarYear
+		dataType: int64
+		formatString: 0
+		lineageTag: 577b4ba8-fdd7-47a3-b8de-858187e4dba1
+		summarizeBy: sum
+		sourceColumn: CalendarYear
+
+		annotation SummarizationSetBy = Automatic
+
+	column MonthStartDate
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: ab6566af-7a96-4e1d-bbe3-594008cd9490
+		summarizeBy: none
+		sourceColumn: MonthStartDate
+
+		variation Variation
+			isDefault
+			relationship: c134140d-9c30-4aea-b812-d53a1d2353b8
+			defaultHierarchy: LocalDateTable_fa194767-4a99-47f2-8b79-b2bea5299b91.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column InjuryGroup
+		dataType: string
+		lineageTag: edd16579-b8e1-4b4a-b142-6452ca57bdb1
+		summarizeBy: none
+		sourceColumn: InjuryGroup
+
+		annotation SummarizationSetBy = Automatic
+
+	partition InjuryTypes_Dim = m
+		mode: import
+		queryGroup: Gold
+		source =
+				let
+				    Source = InjuryData_History,
+				  #"Removed columns" = Table.RemoveColumns(Source, {"Month", "InjuryCount", "FY"}),
+				  #"Removed duplicates" = Table.Distinct(#"Removed columns", {"InjuryType"}),
+				  #"Duplicated column" = Table.DuplicateColumn(#"Removed duplicates", "InjuryType", "InjuryType - Copy"),
+				  #"Removed columns 1" = Table.RemoveColumns(#"Duplicated column", {"InjuryType - Copy"}),
+				  #"Added custom" = Table.AddColumn(#"Removed columns 1", "InjuryType_Clean", each Text.Trim([InjuryType])),
+				  #"Sorted rows" = Table.Sort(#"Added custom", {{"InjuryType_Clean", Order.Ascending}}),
+				  #"Replaced value" = Table.ReplaceValue(#"Sorted rows", "Ergo?", "Ergo", Replacer.ReplaceValue, {"InjuryType_Clean"}),
+				  #"Duplicated column 1" = Table.DuplicateColumn(#"Replaced value", "InjuryType_Clean", "InjuryType_Clean - Copy"),
+				  #"Renamed columns" = Table.RenameColumns(#"Duplicated column 1", {{"InjuryType_Clean - Copy", "InjuryGroup"}}),
+				  #"Changed column type" = Table.TransformColumnTypes(#"Renamed columns", {{"InjuryGroup", type text}}),
+				  #"Replaced value 2" = Table.ReplaceValue(#"Changed column type", "Cought", "Caught", Replacer.ReplaceValue, {"InjuryGroup"}),
+				  #"Replaced value 1" = Table.ReplaceValue(#"Replaced value 2", "Caught in Between", "Caught in Between", Replacer.ReplaceValue, {"InjuryGroup"}),
+				  #"Inserted conditional column" = Table.AddColumn(#"Replaced value 1", "InjuryGroup2", each if Text.Contains([InjuryGroup], "WW") then "WW" else if Text.Contains([InjuryGroup], "Contusion") then "Contusion" else if Text.Contains([InjuryGroup], "Chemical") then "Chemical exposure" else if Text.Contains([InjuryGroup], "Caught") then "Caught in between" else if Text.Contains([InjuryGroup], "Foreign") then "Foreign body" else if Text.Contains([InjuryGroup], "bite") then "Insect bite" else if Text.Contains([InjuryGroup], "Hit") then "Hit by" else if Text.Contains([InjuryGroup], "Pinch") then "Pinch by" else if Text.Contains([InjuryGroup], "Trip") then "Trip hazard" else if Text.Contains([InjuryGroup], "Walking") then "Walking/working" else if Text.Contains([InjuryGroup], "strain") then "Strain" else [InjuryGroup]),
+				  #"Removed columns 2" = Table.RemoveColumns(#"Inserted conditional column", {"InjuryGroup"}),
+				  #"Renamed columns 1" = Table.RenameColumns(#"Removed columns 2", {{"InjuryGroup2", "InjuryGroup"}}),
+				  #"Removed columns 3" = Table.RemoveColumns(#"Renamed columns 1", {"InjuryType_Clean"}),
+				  #"Changed column type 1" = Table.TransformColumnTypes(#"Removed columns 3", {{"InjuryGroup", type text}})
+				
+				in
+				    #"Changed column type 1"
+
+	annotation PBI_ResultType = Table
+

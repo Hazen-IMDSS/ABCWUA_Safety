@@ -1,0 +1,42 @@
+table TotalTrainingHours
+	lineageTag: d58ea357-212e-4216-b4d8-307986db09c0
+
+	column Month
+		dataType: string
+		lineageTag: e0168fd6-5fb1-4504-8474-076199d12009
+		summarizeBy: none
+		sourceColumn: Month
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Total Hours'
+		dataType: double
+		lineageTag: 1c9ce8a6-5ad9-42d5-bc87-3c6ef6eb6a82
+		summarizeBy: sum
+		sourceColumn: Total Hours
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition TotalTrainingHours = m
+		mode: import
+		queryGroup: Gold
+		source =
+				let
+				  Source = Source_SafetyInspections,
+				  Navigation = Source{[Item = "2026 Safety training hours", Kind = "Sheet"]}[Data],
+				  #"Promoted headers" = Table.PromoteHeaders(Navigation, [PromoteAllScalars = true]),
+				  #"Changed column type" = Table.TransformColumnTypes(#"Promoted headers", {{"SAFETY DEPARTMENT TRAINING CLASSES ", type text}, {"Column4", type text}, {"Column5", type text}, {"Column6", type text}, {"Column7", type text}, {"Column8", type text}, {"Column9", type text}, {"Column10", type text}, {"Column11", type text}, {"Column12", type text}, {"Column13", type text}, {"Column14", Int64.Type}}),
+				  #"Promoted headers 1" = Table.PromoteHeaders(#"Changed column type", [PromoteAllScalars = true]),
+				  #"Promoted headers 2" = Table.PromoteHeaders(#"Promoted headers 1", [PromoteAllScalars = true]),
+				  #"Removed columns 1" = Table.RemoveColumns(#"Promoted headers 2", {"Column14"}),
+				  #"Unpivoted other columns" = Table.UnpivotOtherColumns(#"Removed columns 1", {"Month"}, "Attribute", "Value"),
+				  #"Removed columns" = Table.RemoveColumns(#"Unpivoted other columns", {"Month"}),
+				  #"Renamed columns" = Table.RenameColumns(#"Removed columns", {{"Attribute", "Month"}, {"Value", "Total Hours"}}),
+				  #"Changed column type 1" = Table.TransformColumnTypes(#"Renamed columns", {{"Total Hours", type number}})
+				in
+				  #"Changed column type 1"
+
+	annotation PBI_ResultType = Table
+

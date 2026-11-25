@@ -1,0 +1,79 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-US
+	dataAccessOptions
+		fastCombine
+		legacyRedirects
+		returnErrorValuesAsNull
+
+queryGroup Sources
+
+	annotation PBI_QueryGroupOrder = 1
+
+queryGroup Intermediate
+
+	annotation PBI_QueryGroupOrder = 2
+
+queryGroup Gold
+
+	annotation PBI_QueryGroupOrder = 3
+
+queryGroup Parameters
+
+	annotation PBI_QueryGroupOrder = 0
+
+annotation PBI_QueryOrder = ["TotalTrainingHours","RecordableCases","fnKey","fnLeadingNumber","fnPromote","Hist_Sheets","fnHours","fnInjuries","fnAttendance","Hist_Hours","Hist_Injuries","Hist_AttendanceCases","Groups_CurrentFY","LIMS_Training","Source_SafetyInspections","Source_Historical","Source_LIMS","SafetyFieldAssessments_CurrentYear","GroupAttendance_CurrentYear","SafetyTrainingHours_History","InjuryData_History","AttendanceAndCases_History","InjuryTypes_Dim","Groups_Dim","InspectionDetails_CurrentYear","Hazards","URL_SafetyInspections_CurrentYear","URL_SafetyInspections_History","URL_LIMS"]
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table Calendar
+ref table DateTableTemplate_a0ef3979-b2ab-4e61-995b-809a5bcc5c96
+ref table LocalDateTable_f59b5a59-9d36-42cc-b4d3-37d130bd59fa
+ref table _Measures_Calendar
+ref table Calendar_Period
+ref table TimeSelect_Month
+ref table LocalDateTable_87d16ba5-4351-4251-8418-eed7c43f169b
+ref table TimeSelect_Quarter
+ref table TimeSelect_MonthYear
+ref table LocalDateTable_85405a75-2067-4095-ac44-5200f51453d5
+ref table LocalDateTable_c06e7876-9b8c-4746-b321-cafae0f3bf5c
+ref table Calendar_Period_Summary
+ref table MonthNames
+ref table OverviewSelect_Period
+ref table _Measures_Training
+ref table Time_FYSelect
+ref table LocalDateTable_7a7ddd3e-8e2f-47e5-8974-019aafb436e4
+ref table __Measures
+ref table LocalDateTable_57cfbf42-cbd0-4413-80d0-c11c9adabf61
+ref table Calendar_FiscalPeriod
+ref table LocalDateTable_1d5669df-a876-4461-87f1-6c200d0ecf7a
+ref table TotalTrainingHours
+ref table RecordableCases
+ref table Groups_CurrentFY
+ref table LocalDateTable_57a7ae3a-3f87-4163-a519-1f82fab41746
+ref table LIMS_Training
+ref table LocalDateTable_1178160c-e647-46dc-b667-c7ed7ab57f1a
+ref table LocalDateTable_5d9554d1-be5f-42fc-a6f8-f201f450e618
+ref table Source_SafetyInspections
+ref table Source_Historical
+ref table Source_LIMS
+ref table SafetyFieldAssessments_CurrentYear
+ref table LocalDateTable_1977c2f4-f760-4038-a922-d13207dcfe25
+ref table GroupAttendance_CurrentYear
+ref table SafetyTrainingHours_History
+ref table InjuryData_History
+ref table AttendanceAndCases_History
+ref table InjuryTypes_Dim
+ref table LocalDateTable_fa194767-4a99-47f2-8b79-b2bea5299b91
+ref table Groups_Dim
+ref table InspectionDetails_CurrentYear
+ref table Hazards
+ref table _Measures_Incidents
+ref table _Measures_Inspections
+ref table HazardView
+
+ref cultureInfo en-US
+

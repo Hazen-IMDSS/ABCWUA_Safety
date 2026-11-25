@@ -1,0 +1,69 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmark/2.1.0/schema.json",
+  "displayName": "Incidents-Hazards - Monthly",
+  "name": "cfa9655dfb05cfe2d0a0",
+  "options": {
+    "applyOnlyToTargetVisuals": true,
+    "targetVisualNames": [
+      "68b58f93ef9a705f869c",
+      "7608185d1bc44bab7ec9",
+      "709355cd03f2a88a776e",
+      "6b548c1be08483ef551d",
+      "b3a38a4c3c6dbde670fc",
+      "96850259f24e7bf26f8d",
+      "e541ec9d08dc209aa983",
+      "9d944ee5b877242061bb",
+      "8c54e1eebc8265deaf2a",
+      "ca2a724dd22c5c243c09",
+      "e006838646d129e18ac2",
+      "55bc54422d1cdb985424",
+      "f07060a050f2b87fe5de",
+      "1864925ea6b3224025d3"
+    ]
+  },
+  "explorationState": {
+    "version": "1.3",
+    "activeSection": "74541783b1b41497d3e9",
+    "sections": {
+      "74541783b1b41497d3e9": {
+        "visualContainers": {},
+        "visualContainerGroups": {
+          "68b58f93ef9a705f869c": {
+            "children": {
+              "e541ec9d08dc209aa983": {
+                "isHidden": false
+              },
+              "55bc54422d1cdb985424": {
+                "isHidden": true
+              }
+            }
+          }
+        }
+      }
+    },
+    "objects": {
+      "merge": {
+        "outspacePane": [
+          {
+            "properties": {
+              "expanded": {
+                "expr": {
+                  "Literal": {
+                    "Value": "false"
+                  }
+                }
+              },
+              "visible": {
+                "expr": {
+                  "Literal": {
+                    "Value": "false"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}

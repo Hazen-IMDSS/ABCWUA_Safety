@@ -1,0 +1,48 @@
+table OverviewSelect_Period
+	lineageTag: 02cad6c4-c805-4a53-af30-bdb1e9c728da
+
+	column OverviewSelect_Period
+		lineageTag: 78feb22d-4af1-4bda-b2cb-f116f5090c68
+		summarizeBy: none
+		sourceColumn: [Value1]
+		sortByColumn: 'OverviewSelect_Period Order'
+
+		relatedColumnDetails
+			groupByColumn: 'OverviewSelect_Period Fields'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'OverviewSelect_Period Fields'
+		isHidden
+		lineageTag: 2a90f193-a9b6-486b-a9fb-cd6f40586920
+		summarizeBy: none
+		sourceColumn: [Value2]
+		sortByColumn: 'OverviewSelect_Period Order'
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 3,
+				  "kind": 2
+				}
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'OverviewSelect_Period Order'
+		isHidden
+		formatString: 0
+		lineageTag: df40bac1-3476-4107-b801-537fe423be1c
+		summarizeBy: sum
+		sourceColumn: [Value3]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition OverviewSelect_Period = calculated
+		mode: import
+		source =
+				{
+				    ("Month", NAMEOF('Calendar'[MonthName]), 0),
+				    ("Quarter", NAMEOF('Calendar'[QuarterYear]), 1)
+				}
+
+	annotation PBI_Id = b7342beee7c745d7ab6a1ecf1eaa9093
+

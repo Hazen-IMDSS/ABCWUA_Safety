@@ -1,0 +1,43 @@
+table RecordableCases
+	lineageTag: 8f1de269-1eb1-4d23-9cbe-dc2e0aa26e7a
+
+	column Month
+		dataType: string
+		lineageTag: aa97f402-f6c6-45b8-a34e-29e2dc75fbf6
+		summarizeBy: none
+		sourceColumn: Month
+
+		annotation SummarizationSetBy = Automatic
+
+	column '# Personal Injury Reports /month'
+		dataType: string
+		lineageTag: ac868c52-6ac1-4897-88a9-5be746619ab3
+		summarizeBy: none
+		sourceColumn: # Personal Injury Reports /month
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Recordable cases'
+		dataType: int64
+		formatString: 0
+		lineageTag: 888c3c88-a38d-4021-8787-0f20bcb23865
+		summarizeBy: sum
+		sourceColumn: Recordable cases
+
+		annotation SummarizationSetBy = Automatic
+
+	partition RecordableCases = m
+		mode: import
+		queryGroup: Gold
+		source =
+				let
+				  Source = Source_SafetyInspections,
+				  Navigation = Source{[Item = "Total Recordable Cases For 2026", Kind = "Sheet"]}[Data],
+				  #"Promoted headers" = Table.PromoteHeaders(Navigation, [PromoteAllScalars = true]),
+				  #"Changed column type" = Table.TransformColumnTypes(#"Promoted headers", {{"Month", type text}, {"Recordable cases", Int64.Type}}),
+				  #"Filtered rows" = Table.SelectRows(#"Changed column type", each ([Month] <> null))
+				in
+				  #"Filtered rows"
+
+	annotation PBI_ResultType = Table
+

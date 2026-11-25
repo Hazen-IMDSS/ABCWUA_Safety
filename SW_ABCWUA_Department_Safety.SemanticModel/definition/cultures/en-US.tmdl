@@ -23435,6 +23435,174 @@ cultureInfo en-US
 			          }
 			        }
 			      ]
+			    },
+			    "table_measures_training.training_hours_chart": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures_Training",
+			          "ConceptualProperty": "Training Hours (Chart)"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Training Hours": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures_training.attendance__chart": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures_Training",
+			          "ConceptualProperty": "Attendance % (Chart)"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Attendance %": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures_incidents.injuries_chart": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures_Incidents",
+			          "ConceptualProperty": "Injuries (Chart)"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Injuries": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures_incidents.recordable_cases_chart": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures_Incidents",
+			          "ConceptualProperty": "Recordable Cases (Chart)"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Recordable Cases": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures_incidents.hazards_resolved_chart": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures_Incidents",
+			          "ConceptualProperty": "Hazards Resolved (Chart)"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Resolved": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures_incidents.hazards_unresolved_chart": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures_Incidents",
+			          "ConceptualProperty": "Hazards Unresolved (Chart)"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Unresolved": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures_inspections.inspections_chart": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures_Inspections",
+			          "ConceptualProperty": "Inspections (Chart)"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Inspections": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "table_measures_inspections.hazards_identified_chart": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures_Inspections",
+			          "ConceptualProperty": "Hazards Identified (Chart)"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Hazards Identified": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
 			    }
 			  },
 			  "Relationships": {

@@ -1,0 +1,33 @@
+table TimeSelect_MonthYear
+	lineageTag: f67a8f09-b522-4128-9916-166540f4635f
+
+	column MonthYear
+		formatString: mmmm yyyy
+		lineageTag: 24b89580-e850-44e8-9615-3fa507ccbb23
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: Calendar[MonthYear]
+		sortByColumn: MonthSort
+
+		variation Variation
+			isDefault
+			relationship: fd5660b4-0caf-422d-95e5-5f3514956211
+			defaultHierarchy: LocalDateTable_85405a75-2067-4095-ac44-5200f51453d5.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column MonthSort
+		isHidden
+		formatString: 0
+		lineageTag: 5425659d-4bfa-4406-bc4c-f7446f39fb17
+		summarizeBy: none
+		sourceColumn: [MonthSort]
+
+	partition TimeSelect_MonthYear = calculated
+		mode: import
+		source = ADDCOLUMNS(FILTER(DISTINCT('Calendar'[MonthYear]), [MonthYear] >= DATE(2021, 7, 31) && [MonthYear] <= EOMONTH(TODAY(), 0)), "MonthSort", -(YEAR([MonthYear]) * 12 + MONTH([MonthYear])))
+
+	annotation PBI_Id = b0a1017cdea840f2a627446b47d5923c
+

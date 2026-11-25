@@ -1,0 +1,48 @@
+table Calendar_Period
+	lineageTag: a262d3c1-aa01-4db2-8a08-ff0682f9c9d6
+
+	column Calendar_Period
+		lineageTag: 1a01c9b3-4746-47b0-b28b-d2237d9b07bc
+		summarizeBy: none
+		sourceColumn: [Value1]
+		sortByColumn: 'Calendar_Period Order'
+
+		relatedColumnDetails
+			groupByColumn: 'Period Fields'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Period Fields'
+		isHidden
+		lineageTag: 94cf1149-5e9d-42b6-8091-b511835e9091
+		summarizeBy: none
+		sourceColumn: [Value2]
+		sortByColumn: 'Calendar_Period Order'
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 3,
+				  "kind": 2
+				}
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Calendar_Period Order'
+		isHidden
+		formatString: 0
+		lineageTag: 45b27e15-28ad-4b6a-a260-a35a8c05a65b
+		summarizeBy: sum
+		sourceColumn: [Value3]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Calendar_Period = calculated
+		mode: import
+		source =
+				{
+				    ("Month", NAMEOF('Calendar'[MonthYear]), 0),
+				    ("Quarter", NAMEOF('Calendar'[QuarterYear]), 1)
+				}
+
+	annotation PBI_Id = 9e4a4660de104c6790bd2f40ff71a802
+

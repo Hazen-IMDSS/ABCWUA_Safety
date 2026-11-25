@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
   "name": "5d8653da60b4710227b0",
   "position": {
-    "x": 228,
-    "y": 164,
+    "x": 200,
+    "y": 204,
     "z": 500,
-    "height": 250,
-    "width": 1040,
-    "tabOrder": 1300
+    "height": 220,
+    "width": 1068,
+    "tabOrder": 2000
   },
   "visual": {
     "visualType": "columnChart",
@@ -71,22 +71,18 @@
           "projections": [
             {
               "field": {
-                "Aggregation": {
+                "Measure": {
                   "Expression": {
-                    "Column": {
-                      "Expression": {
-                        "SourceRef": {
-                          "Entity": "InspectionDetails_CurrentYear"
-                        }
-                      },
-                      "Property": "Inspection"
+                    "SourceRef": {
+                      "Entity": "_Measures_Inspections"
                     }
                   },
-                  "Function": 5
+                  "Property": "Inspections (Chart)"
                 }
               },
-              "queryRef": "CountNonNull(InspectionDetails_CurrentYear.Inspection)",
-              "nativeQueryRef": "Count of Inspection"
+              "queryRef": "_Measures_Inspections.Inspections (Chart)",
+              "nativeQueryRef": "Inspections",
+              "displayName": "Inspections"
             }
           ]
         }
@@ -154,7 +150,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#1F2A3C'"
+                      "Value": "'#1F1F1F'"
                     }
                   }
                 }
@@ -229,7 +225,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#D9DEE6'"
+                      "Value": "'#D4D4D4'"
                     }
                   }
                 }
@@ -302,58 +298,5 @@
         }
       ]
     }
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "75deef25592d4008a91d",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "_Measures_Calendar"
-              }
-            },
-            "Property": "InSelectedPeriod"
-          }
-        },
-        "type": "Advanced",
-        "filter": {
-          "Version": 2,
-          "From": [
-            {
-              "Name": "m",
-              "Entity": "_Measures_Calendar",
-              "Type": 0
-            }
-          ],
-          "Where": [
-            {
-              "Condition": {
-                "Comparison": {
-                  "ComparisonKind": 0,
-                  "Left": {
-                    "Measure": {
-                      "Expression": {
-                        "SourceRef": {
-                          "Source": "m"
-                        }
-                      },
-                      "Property": "InSelectedPeriod"
-                    }
-                  },
-                  "Right": {
-                    "Literal": {
-                      "Value": "1L"
-                    }
-                  }
-                }
-              }
-            }
-          ]
-        },
-        "howCreated": "User"
-      }
-    ]
   }
 }

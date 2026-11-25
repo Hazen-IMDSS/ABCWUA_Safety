@@ -1,0 +1,161 @@
+expression URL_SafetyInspections_CurrentYear = "https://hazenandsawyer.sharepoint.com/sites/IMDigitalStrategiesSolutions/Shared%20Documents/General/Client/ABCWUA/Departmental%20KPIs/Departments/Safety/MASTER%20_%20Safety%20Inspections%20FY%2026_CURRENT.xlsx" meta [IsParameterQuery = true, IsParameterQueryRequired = true, Type = type text, List = {"https://hazenandsawyer.sharepoint.com/sites/IMDigitalStrategiesSolutions/Shared%20Documents/General/Client/ABCWUA/Departmental%20KPIs/Departments/Safety/MASTER%20_%20Safety%20Inspections%20FY%2026_CURRENT.xlsx"}, DefaultValue = "https://hazenandsawyer.sharepoint.com/sites/IMDigitalStrategiesSolutions/Shared%20Documents/General/Client/ABCWUA/Departmental%20KPIs/Departments/Safety/MASTER%20_%20Safety%20Inspections%20FY%2026_CURRENT.xlsx"]
+	lineageTag: a662de28-2124-4f2d-8e0c-111207776108
+	queryGroup: Parameters
+
+	annotation PBI_ResultType = Text
+
+expression URL_SafetyInspections_History = "https://hazenandsawyer.sharepoint.com/sites/IMDigitalStrategiesSolutions/Shared%20Documents/General/Client/ABCWUA/Departmental%20KPIs/Departments/Safety/Required%20Safety%20Training%20Statistics_From%20FY22-26_HISTORICAL.xlsx" meta [IsParameterQuery = true, IsParameterQueryRequired = true, Type = type text, List = {"https://hazenandsawyer.sharepoint.com/sites/IMDigitalStrategiesSolutions/Shared%20Documents/General/Client/ABCWUA/Departmental%20KPIs/Departments/Safety/Required%20Safety%20Training%20Statistics_From%20FY22-26_HISTORICAL.xlsx", ""}, DefaultValue = "https://hazenandsawyer.sharepoint.com/sites/IMDigitalStrategiesSolutions/Shared%20Documents/General/Client/ABCWUA/Departmental%20KPIs/Departments/Safety/Required%20Safety%20Training%20Statistics_From%20FY22-26_HISTORICAL.xlsx"]
+	lineageTag: c519a911-beca-4dd7-a231-ff4b8e39447e
+	queryGroup: Parameters
+
+	annotation PBI_ResultType = Text
+
+expression URL_LIMS = "https://hazenandsawyer.sharepoint.com/sites/IMDigitalStrategiesSolutions/Shared%20Documents/General/Client/ABCWUA/Departmental%20KPIs/Departments/Safety/ABCWUA_LMS_User_report_v2.xlsx" meta [IsParameterQuery = true, IsParameterQueryRequired = true, Type = type text, List = {"https://hazenandsawyer.sharepoint.com/sites/IMDigitalStrategiesSolutions/Shared%20Documents/General/Client/ABCWUA/Departmental%20KPIs/Departments/Safety/ABCWUA_LMS_User_report_v2.xlsx"}, DefaultValue = "https://hazenandsawyer.sharepoint.com/sites/IMDigitalStrategiesSolutions/Shared%20Documents/General/Client/ABCWUA/Departmental%20KPIs/Departments/Safety/ABCWUA_LMS_User_report_v2.xlsx"]
+	lineageTag: f6c1cdb8-8df6-4a39-a68c-35360e938d72
+	queryGroup: Parameters
+
+	annotation PBI_ResultType = Text
+
+expression fnKey =
+		(s as nullable text) as text =>
+		    Text.Lower(Text.Trim(Text.Replace(if s = null then "" else s, "*", "")))
+	lineageTag: 7e9d647c-21fd-4e56-93d9-945a26efff1d
+	queryGroup: Intermediate
+
+	annotation PBI_ResultType = Function
+
+expression fnLeadingNumber =
+		(v as any) as nullable number =>
+		let
+		    asText = if v = null then null else Text.From(v),
+		    digits = if asText = null then {} else List.FirstN(Text.ToList(asText), each List.Contains({"0".."9"}, _)),
+		    result = if v is number then v else if List.Count(digits) = 0 then null else Number.FromText(Text.Combine(digits))
+		in
+		    result
+	lineageTag: 1e8ac200-52b7-4b07-98da-03ec09d557c9
+	queryGroup: Intermediate
+
+	annotation PBI_ResultType = Function
+
+expression fnPromote =
+		(t as table) as table =>
+		let
+		    p1 = Table.PromoteHeaders(t, [PromoteAllScalars = true]),
+		    p2 = Table.PromoteHeaders(p1, [PromoteAllScalars = true]),
+		    p3 = Table.PromoteHeaders(p2, [PromoteAllScalars = true]),
+		    p4 = Table.PromoteHeaders(p3, [PromoteAllScalars = true]),
+		    typed = Table.TransformColumnTypes(p4, {{"GROUPS", type text}, {"Total", type number}})
+		in
+		    typed
+	lineageTag: e1e54a7e-7a2f-4156-90d4-13a1f6321225
+	queryGroup: Intermediate
+
+	annotation PBI_ResultType = Function
+
+expression Hist_Sheets =
+		let
+		    Source = Source_Historical,
+		    FYSheets = Table.SelectRows(Source, each [Kind] = "Sheet" and Text.Length([Item]) = 4 and Text.StartsWith([Item], "FY") and (try Number.FromText(Text.End([Item], 2)) otherwise null) <> null),
+		    Prepared = Table.AddColumn(FYSheets, "Prepared", each fnPromote([Data]), type table),
+		    WithFY = Table.AddColumn(Prepared, "FY", each "20" & Text.End([Item], 2), type text),
+		    Result = Table.SelectColumns(WithFY, {"Item", "FY", "Prepared"})
+		in
+		    Result
+	lineageTag: 57b80944-88b6-4e6e-82db-095c3287a996
+	queryGroup: Intermediate
+
+	annotation PBI_ResultType = Table
+
+expression fnHours =
+		(t as table, fy as text) as table =>
+		let
+		    Groups = {"CO", "CON, CI, PD", "CS", "ENG", "SAF", "WUC", "GW", "FLEET+Warehouse", "FD", "HR, 5FP", "WQLAB SJCWTP", "SWRPOM", "WQlab (SWRP)", "IT", "SJCWTP"},
+		    Filtered = Table.SelectRows(t, each List.Contains(Groups, [GROUPS])),
+		    NoTotal = Table.RemoveColumns(Filtered, {"Total"}),
+		    Unpivoted = Table.UnpivotOtherColumns(NoTotal, {"GROUPS"}, "Attribute", "Value"),
+		    NoCol1 = Table.SelectRows(Unpivoted, each [Attribute] <> "Column1"),
+		    Numbers = Table.TransformColumns(NoCol1, {{"Value", each fnLeadingNumber(_), type nullable number}}),
+		    WithFY = Table.AddColumn(Numbers, "FY", each fy, type text)
+		in
+		    WithFY
+	lineageTag: ba2a769d-c057-4460-bf54-78092ea3e58c
+	queryGroup: Intermediate
+
+	annotation PBI_ResultType = Function
+
+expression fnInjuries =
+		(t as table, fy as text) as table =>
+		let
+		    Filtered = Table.SelectRows(t, each List.Contains({"type accidents", "accident type"}, fnKey([GROUPS]))),
+		    Unpivoted = Table.UnpivotOtherColumns(Filtered, {"GROUPS"}, "Attribute", "Value"),
+		    AsText = Table.TransformColumnTypes(Unpivoted, {{"Value", type text}}),
+		    SplitLines = Table.ExpandListColumn(Table.TransformColumns(AsText, {{"Value", Splitter.SplitTextByDelimiter("#(lf)"), let itemType = (type nullable text) meta [Serialized.Text = true] in type {itemType}}}), "Value"),
+		    NonEmpty = Table.SelectRows(SplitLines, each [Value] <> null and [Value] <> ""),
+		    SplitNum = Table.SplitColumn(NonEmpty, "Value", Splitter.SplitTextByCharacterTransition({"0".."9"}, (c) => not List.Contains({"0".."9"}, c)), {"InjuryCount", "InjuryType"}),
+		    CleanType = Table.ReplaceValue(SplitNum, "-", "", Replacer.ReplaceText, {"InjuryType"}),
+		    Renamed = Table.RenameColumns(CleanType, {{"Attribute", "Month"}}),
+		    NoGroups = Table.RemoveColumns(Renamed, {"GROUPS"}),
+		    Typed = Table.TransformColumnTypes(NoGroups, {{"InjuryCount", Int64.Type}}),
+		    WithFY = Table.AddColumn(Typed, "FY", each fy, type text)
+		in
+		    WithFY
+	lineageTag: dea7c536-a9bc-4b88-83f4-c4c33639b03e
+	queryGroup: Intermediate
+
+	annotation PBI_ResultType = Function
+
+expression fnAttendance =
+		(t as table, fy as text) as table =>
+		let
+		    Keyed = Table.AddColumn(t, "RowKey", each fnKey([GROUPS]), type text),
+		    Filtered = Table.SelectRows(Keyed, each [RowKey] = "% attendance per month" or [RowKey] = "recordable cases"),
+		    Labeled = Table.AddColumn(Filtered, "Label", each if [RowKey] = "recordable cases" then "Recordable cases" else "% Attendance per month", type text),
+		    Slim = Table.RemoveColumns(Labeled, {"GROUPS", "RowKey", "Total"}),
+		    Unpivoted = Table.UnpivotOtherColumns(Slim, {"Label"}, "Attribute", "Value"),
+		    NoCol1 = Table.SelectRows(Unpivoted, each [Attribute] <> "Column1"),
+		    Numbers = Table.TransformColumns(NoCol1, {{"Value", each if _ is number then _ else try Number.From(_) otherwise null, type nullable number}}),
+		    WithFY = Table.AddColumn(Numbers, "FY", each fy, type text),
+		    Pivoted = Table.Pivot(WithFY, {"% Attendance per month", "Recordable cases"}, "Label", "Value")
+		in
+		    Pivoted
+	lineageTag: eb10a57c-64d2-40ff-b4fc-667a9fd12ecc
+	queryGroup: Intermediate
+
+	annotation PBI_ResultType = Function
+
+expression Hist_Hours =
+		let
+		    Sheets = Hist_Sheets,
+		    Parts = List.Transform(Table.ToRecords(Sheets), each fnHours([Prepared], [FY])),
+		    Combined = Table.Combine(Parts)
+		in
+		    Combined
+	lineageTag: 861fdf59-ddf2-4d9e-99a6-133fe60a065c
+	queryGroup: Intermediate
+
+	annotation PBI_ResultType = Table
+
+expression Hist_Injuries =
+		let
+		    Sheets = Hist_Sheets,
+		    Parts = List.Transform(Table.ToRecords(Sheets), each fnInjuries([Prepared], [FY])),
+		    Combined = Table.Combine(Parts)
+		in
+		    Combined
+	lineageTag: a7d143ab-b17a-4e84-bcfe-66347bcdd516
+	queryGroup: Intermediate
+
+	annotation PBI_ResultType = Table
+
+expression Hist_AttendanceCases =
+		let
+		    Sheets = Hist_Sheets,
+		    Parts = List.Transform(Table.ToRecords(Sheets), each fnAttendance([Prepared], [FY])),
+		    Combined = Table.Combine(Parts)
+		in
+		    Combined
+	lineageTag: bfbd9e71-d1d7-45b3-a07f-433a47ca8556
+	queryGroup: Intermediate
+
+	annotation PBI_ResultType = Table
+

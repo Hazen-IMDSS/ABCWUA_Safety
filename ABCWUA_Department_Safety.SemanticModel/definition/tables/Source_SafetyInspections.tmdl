@@ -1,0 +1,47 @@
+table Source_SafetyInspections
+	lineageTag: e41bfb36-0eee-4c9f-88c6-fb8efda9fb33
+
+	column Name
+		dataType: string
+		lineageTag: cd1f54d3-a535-46d4-89c9-4493f2506efa
+		summarizeBy: none
+		sourceColumn: Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Item
+		dataType: string
+		lineageTag: d156672d-498e-40a4-8bb5-95b5ccd251ac
+		summarizeBy: none
+		sourceColumn: Item
+
+		annotation SummarizationSetBy = Automatic
+
+	column Kind
+		dataType: string
+		lineageTag: 4f9edde2-2b08-4ba2-bdea-f5ae9d5c1d56
+		summarizeBy: none
+		sourceColumn: Kind
+
+		annotation SummarizationSetBy = Automatic
+
+	column Hidden
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: c897c055-282e-4a67-9ee4-22ffe4973fb9
+		summarizeBy: none
+		sourceColumn: Hidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Source_SafetyInspections = m
+		mode: import
+		queryGroup: Sources
+		source =
+				let
+				  Source = Excel.Workbook(Web.Contents(URL_SafetyInspections_CurrentYear), null, true)
+				in
+				  Source
+
+	annotation PBI_ResultType = Table
+

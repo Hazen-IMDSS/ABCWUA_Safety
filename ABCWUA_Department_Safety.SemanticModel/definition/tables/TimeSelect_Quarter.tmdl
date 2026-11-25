@@ -1,0 +1,25 @@
+table TimeSelect_Quarter
+	lineageTag: fc3a6399-f232-45e8-82e0-6a42e4e0f48e
+
+	column QuarterYear
+		lineageTag: abb36ebf-88c4-4147-8701-7c7d7f23e065
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: Calendar[QuarterYear]
+		sortByColumn: QuarterSort
+
+		annotation SummarizationSetBy = Automatic
+
+	column QuarterSort
+		isHidden
+		formatString: 0
+		lineageTag: 95214f46-f39a-42d6-a252-442819760010
+		summarizeBy: none
+		sourceColumn: [QuarterSort]
+
+	partition TimeSelect_Quarter = calculated
+		mode: import
+		source = ADDCOLUMNS(FILTER(DISTINCT('Calendar'[QuarterYear]), CALCULATE(MIN('Calendar'[Date])) >= DATE(2021, 7, 1) && CALCULATE(MIN('Calendar'[Date])) <= TODAY()), "QuarterSort", -(VALUE(MID([QuarterYear], 3, 2)) * 10 + VALUE(RIGHT([QuarterYear], 1))))
+
+	annotation PBI_Id = a016dbd8e354450398eae75356761d16
+

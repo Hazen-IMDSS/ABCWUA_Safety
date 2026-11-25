@@ -1,0 +1,83 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmark/2.1.0/schema.json",
+  "displayName": "Inspections - Clear Filters",
+  "name": "62aecbac1c1d4ee49e2c",
+  "options": {
+    "applyOnlyToTargetVisuals": true,
+    "targetVisualNames": [
+      "9bbec21283a84d979d9d"
+    ]
+  },
+  "explorationState": {
+    "version": "1.0",
+    "activeSection": "26551e816e6d4da99eae",
+    "sections": {
+      "26551e816e6d4da99eae": {
+        "visualContainers": {
+          "9bbec21283a84d979d9d": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "87e83ad5ff98413dada9",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "InspectionDetails_CurrentYear"
+                        }
+                      },
+                      "Property": "Group"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Dropdown'"
+                            }
+                          }
+                        },
+                        "isInvertedSelectionMode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "true"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "InspectionDetails_CurrentYear"
+                        }
+                      },
+                      "Property": "Group"
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

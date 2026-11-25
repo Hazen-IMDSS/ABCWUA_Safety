@@ -1,0 +1,96 @@
+relationship f7680000-3985-4c31-9f22-c0d89806230d
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Calendar.MonthYear
+	toColumn: LocalDateTable_f59b5a59-9d36-42cc-b4d3-37d130bd59fa.Date
+
+relationship 32f6f2df-c535-4cbf-94b8-1fc48e3c5ecc
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Calendar.Date_MonthView
+	toColumn: LocalDateTable_87d16ba5-4351-4251-8418-eed7c43f169b.Date
+
+relationship fd5660b4-0caf-422d-95e5-5f3514956211
+	joinOnDateBehavior: datePartOnly
+	fromColumn: TimeSelect_MonthYear.MonthYear
+	toColumn: LocalDateTable_85405a75-2067-4095-ac44-5200f51453d5.Date
+
+relationship 08d4b06e-9357-432a-ab73-524f5a9b55cc
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Calendar.BeginningofQuarter
+	toColumn: LocalDateTable_c06e7876-9b8c-4746-b321-cafae0f3bf5c.Date
+
+relationship d1429e60-bdcc-471d-bb21-cef40844e476
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Calendar.'FY Start Date'
+	toColumn: LocalDateTable_7a7ddd3e-8e2f-47e5-8974-019aafb436e4.Date
+
+relationship 29434dea-3d06-4298-9d9e-98c80b153e4a
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Calendar.BeginningofMonth
+	toColumn: LocalDateTable_57cfbf42-cbd0-4413-80d0-c11c9adabf61.Date
+
+relationship d1ab67a8-cf18-481e-be77-c060b634293e
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Calendar.Date
+	toColumn: LocalDateTable_1d5669df-a876-4461-87f1-6c200d0ecf7a.Date
+
+relationship e3fea268-2634-4f46-b309-3f62772108b7
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Groups_CurrentFY.MonthStartDate
+	toColumn: LocalDateTable_57a7ae3a-3f87-4163-a519-1f82fab41746.Date
+
+relationship d1e364bf-b887-459a-907d-5ae3c51ec84e
+	joinOnDateBehavior: datePartOnly
+	fromColumn: LIMS_Training.'Course Creation Date'
+	toColumn: LocalDateTable_1178160c-e647-46dc-b667-c7ed7ab57f1a.Date
+
+relationship ecbfa868-742c-4a78-b2a2-49b93b97527b
+	joinOnDateBehavior: datePartOnly
+	fromColumn: LIMS_Training.'Course end date'
+	toColumn: LocalDateTable_5d9554d1-be5f-42fc-a6f8-f201f450e618.Date
+
+relationship 816d5e3a-9926-4249-828d-a109dd8210a8
+	joinOnDateBehavior: datePartOnly
+	fromColumn: SafetyFieldAssessments_CurrentYear.MonthStartDate
+	toColumn: LocalDateTable_1977c2f4-f760-4038-a922-d13207dcfe25.Date
+
+relationship c134140d-9c30-4aea-b812-d53a1d2353b8
+	joinOnDateBehavior: datePartOnly
+	fromColumn: InjuryTypes_Dim.MonthStartDate
+	toColumn: LocalDateTable_fa194767-4a99-47f2-8b79-b2bea5299b91.Date
+
+relationship b4b12aac-4cc7-b347-1dac-456d67f64b4d
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: AttendanceAndCases_History.MonthStartDate
+	toColumn: Calendar.Date
+
+relationship 7cb2716e-5398-681b-7101-17cbbc6d92c4
+	fromColumn: GroupAttendance_CurrentYear.MonthStartDate
+	toColumn: Calendar.Date
+
+relationship 6321821f-e176-252c-f1fc-d1f21068fafd
+	crossFilteringBehavior: bothDirections
+	toCardinality: many
+	fromColumn: InjuryTypes_Dim.InjuryType
+	toColumn: InjuryData_History.InjuryType
+
+relationship e1f20b48-5a4e-3467-09ad-86c67ddaf4ed
+	fromColumn: InjuryData_History.MonthStartDate
+	toColumn: Calendar.Date
+
+relationship 87f895e0-b143-abd1-f5f6-f4eb1a3a8792
+	fromColumn: LIMS_Training.'Course Start Date'
+	toColumn: Calendar.Date
+
+relationship c917df1c-bcf8-3d83-e151-1f5aac7691e4
+	fromColumn: SafetyTrainingHours_History.MonthStartDate
+	toColumn: Calendar.Date
+
+relationship 0029bc48-1d96-f3da-9a19-2b7d85606f20
+	fromColumn: Hazards.MonthStartDate
+	toColumn: Calendar.Date
+
+relationship e9e63d81-ce95-fa53-ee32-0fc8b172c90c
+	fromColumn: InspectionDetails_CurrentYear.MonthStartDate
+	toColumn: Calendar.Date
+

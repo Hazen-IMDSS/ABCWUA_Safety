@@ -1,0 +1,192 @@
+table Calendar
+	lineageTag: 2415320b-ba28-458a-b009-9f26f0ff337d
+
+	column Date
+		formatString: Short Date
+		lineageTag: 191e2281-c2eb-40d2-bd0a-90de61782539
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Date]
+
+		variation Variation
+			isDefault
+			relationship: d1ab67a8-cf18-481e-be77-c060b634293e
+			defaultHierarchy: LocalDateTable_1d5669df-a876-4461-87f1-6c200d0ecf7a.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column MonthYear = EOMONTH([Date],0)
+		formatString: mmmm yyyy
+		lineageTag: fa72a17e-7ab2-4460-85b7-cbf20cec68ce
+		summarizeBy: none
+
+		variation Variation
+			isDefault
+			relationship: f7680000-3985-4c31-9f22-c0d89806230d
+			defaultHierarchy: LocalDateTable_f59b5a59-9d36-42cc-b4d3-37d130bd59fa.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column QuarterYear = ```
+			
+			    "FY" & 
+			    RIGHT([FiscalYear],2)
+			    & " " & 
+			    SWITCH(
+			        TRUE(),
+			        MONTH('Calendar'[Date]) IN {7, 8, 9}, "Q1",
+			        MONTH('Calendar'[Date]) IN {10, 11, 12}, "Q2",
+			        MONTH('Calendar'[Date]) IN {1, 2, 3}, "Q3",
+			        MONTH('Calendar'[Date]) IN {4, 5, 6}, "Q4"
+			    )
+			
+			```
+		lineageTag: cbbbe429-dcfb-4503-a27e-3a4619d0373f
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column FiscalYear = ```
+			"FY" &
+			YEAR('Calendar'[Date]) + 
+			IF(MONTH('Calendar'[Date]) >= 7, 1, 0)
+			
+			```
+		lineageTag: 2b4cf32c-c350-40a8-8437-711c25d69672
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Year = YEAR('Calendar'[Date])
+		formatString: 0
+		lineageTag: bc7cba09-1f97-4254-a285-8f1c0b80ed26
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column FYMonthNumber = IF(MONTH('Calendar'[Date]) > 6, MONTH('Calendar'[Date]) - 6, MONTH('Calendar'[Date]) +6)
+		formatString: 0
+		lineageTag: 8d7f23d8-59f8-4116-be68-2986fcb3c337
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column FQ = RIGHT('Calendar'[QuarterYear],1)
+		lineageTag: 2772c6eb-fca5-4d00-8328-ea561a9abcc5
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Date_MonthView = 'Calendar'[Date]
+		formatString: mmmm yyyy
+		lineageTag: ed788ea1-c363-4eeb-bae9-3ff0ca5ca7ed
+		summarizeBy: none
+
+		variation Variation
+			isDefault
+			relationship: 32f6f2df-c535-4cbf-94b8-1fc48e3c5ecc
+			defaultHierarchy: LocalDateTable_87d16ba5-4351-4251-8418-eed7c43f169b.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column MonthYear_Text = FORMAT('Calendar'[Date].[Month],"MMM") & " " &  'Calendar'[Year]
+		lineageTag: 2015c9ce-7884-4690-9cf3-803794f1c1ec
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column MonthNumber = Month([Date])
+		formatString: 0
+		lineageTag: 891ebcc8-d8fb-433b-b1f2-db27a771e502
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column BeginningofMonth = DATE(YEAR([Date]),MONTH([Date]),1)
+		formatString: Long Date
+		lineageTag: a09a8902-6cf2-4d93-924a-c9836a905dcc
+		summarizeBy: none
+		sortByColumn: FYMonthNumber
+
+		variation Variation
+			isDefault
+			relationship: 29434dea-3d06-4298-9d9e-98c80b153e4a
+			defaultHierarchy: LocalDateTable_57cfbf42-cbd0-4413-80d0-c11c9adabf61.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column BeginningofQuarter =
+			
+			VAR ThisRowFY = 'Calendar'[FiscalYear]
+			VAR ThisRowFQ = 'Calendar'[FQ]
+			VAR EOQuarter = CALCULATE(FIRSTDATE('Calendar'[Date]),ALL('Calendar'),'Calendar'[FiscalYear] = ThisRowFY && 'Calendar'[FQ] = ThisRowFQ)
+			RETURN EOQuarter
+		formatString: Long Date
+		lineageTag: d08c054a-2fda-4dfc-8158-54b30b830b3d
+		summarizeBy: none
+
+		variation Variation
+			isDefault
+			relationship: 08d4b06e-9357-432a-ab73-524f5a9b55cc
+			defaultHierarchy: LocalDateTable_c06e7876-9b8c-4746-b321-cafae0f3bf5c.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column MonthName = FORMAT('Calendar'[Date].[Month],"MMM")
+		lineageTag: 9437a569-8e4d-4976-be87-e583f06ba89c
+		summarizeBy: none
+		sortByColumn: FYMonthNumber
+
+		annotation SummarizationSetBy = Automatic
+
+	column Quarter = "Q" &  RIGHT('Calendar'[QuarterYear],1)
+		lineageTag: 02efe523-81e1-44f0-b65d-85c9dda3dc60
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column FY = ```
+			
+			"FY" &
+			RIGHT(YEAR('Calendar'[Date]) + 
+			IF(MONTH('Calendar'[Date]) >= 7, 1, 0),2)
+			```
+		lineageTag: 7427c402-efbd-4b39-84a6-ed64de5a7bd8
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'FY Start Date' =
+			
+			VAR FYCutoffMonth = 7
+			VAR FYCutoffDayofCutoffMonth = 1
+			VAR DateisOnorAfterFYCutoffforCalendarYear = DATE(YEAR('Calendar'[Date]),FYCutoffMonth,FYCutoffDayofCutoffMonth) <= 'Calendar'[Date] //test if the given date is ON OR AFTER the FY cutoff for the given calendar year
+			VAR CalendarYear = YEAR('Calendar'[Date])
+			RETURN DATE(IF(DateisOnorAfterFYCutoffforCalendarYear,CalendarYear,CalendarYear - 1),FYCutoffMonth,FYCutoffDayofCutoffMonth)
+		formatString: General Date
+		lineageTag: 5193a970-8e26-494f-afee-1105c8f7cbe2
+		summarizeBy: none
+
+		variation Variation
+			isDefault
+			relationship: d1429e60-bdcc-471d-bb21-cef40844e476
+			defaultHierarchy: LocalDateTable_7a7ddd3e-8e2f-47e5-8974-019aafb436e4.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Calendar = calculated
+		mode: import
+		source = CALENDAR(DATE(2009,1,1),DATE(2040,10,1))
+
+	annotation PBI_Id = 114e104eb610427d929fe1ab8684193b
+

@@ -1,0 +1,37 @@
+table MonthNames
+	lineageTag: ec23d3dd-b7ed-4f6b-b482-f9693f11573c
+
+	column MonthName
+		lineageTag: 68f8bc1d-87d6-4335-a29f-0cfe5566a6bf
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [MonthName]
+		sortByColumn: FyMonthNum
+
+		annotation SummarizationSetBy = Automatic
+
+	column FyMonthNum
+		formatString: 0
+		lineageTag: bb2c4a64-da46-4278-aa1a-a61cb7ea8b6c
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [FyMonthNum]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition MonthNames = calculated
+		mode: import
+		source = ```
+				
+				DISTINCT (
+				    SELECTCOLUMNS (
+				        'Calendar',
+				        "MonthName", 'Calendar'[MonthName],
+				        "FyMonthNum", 'Calendar'[FYMonthNumber]
+				    )
+				)
+				
+				```
+
+	annotation PBI_Id = 3dac74a2ce694ebd865d1cf49da816f8
+

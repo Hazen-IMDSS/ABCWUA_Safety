@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "ABCWUA_Department_Safety"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "0ccf24bf-9027-4918-bc6f-eac1c4ab40dd"
+  }
+}
